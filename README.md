@@ -22,31 +22,26 @@ The observation is a 5×5 matrix:
 - **Rows 1-4**: Other cars on the highway
 - **Columns**:
   - Col 0: Presence (1 if car exists, 0 otherwise)
-  - Col 1: X-offset (longitudinal position, positive means ahead)
-  - Col 2: Y-offset (lateral position, 0 means same lane)
-  - Col 3: X-velocity (forward velocity)
-  - Col 4: Y-velocity (lateral velocity)
+  - Col 1: X-offset (longitudinal position, positive means ahead, relative to the ego car)
+  - Col 2: Y-offset (lateral position, absolute value, lanes are split by 0.25 apart)
+  - Col 3: X-velocity (forward velocity, relative to ego car)
+  - Col 4: Y-velocity (lateral velocity, relative to ego car)
 
 ### Baseline Strategy
 
-The baseline agent follows a safe and efficient driving strategy:
+The baseline agent follows a simple driving strategy:
 
 1. **No car ahead**: Speed up until reaching the target velocity (default 1.0)
 
 2. **Car ahead detected**:
-   - If too close (distance < 0.2) or car ahead is slow:
-     - Check left lane - if empty and safe, change to left lane
-     - Otherwise, check right lane - if empty and safe, change to right lane
+   - If too close (distance < 0.2):
+     - Check left lane - if empty, change to left lane
+     - Otherwise, check right lane - if empty, change to right lane
    
-   - If following at safe distance:
+   - Otherwise follow the car at front:
      - If distance < 0.1: Slow down (too close)
      - If distance > 0.2: Speed up (too far)
      - Otherwise: Match the velocity of the car ahead
-
-3. **Lane detection**: 
-   - Monitors adjacent lanes (left/right) for safe lane changes
-   - Lane separation: 0.25 units
-   - Only changes lanes when safe and necessary
 
 ## Running the Baseline Agent
 
