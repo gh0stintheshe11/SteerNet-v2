@@ -56,3 +56,69 @@ python highway_baseline.py
 - Environment: `highway-v0`
 - Duration: 100 steps (modified from default 40)
 - Render mode: `rgb_array`
+
+## DQN Agent
+
+The DQN (Deep Q-Network) agent implements a reinforcement learning approach to learn optimal driving behavior using deep neural networks.
+
+### Model Architecture
+
+The DQN uses a 3-layer fully connected neural network:
+- **Input Layer**: 25 features (flattened 5×5 kinematic observation)
+- **Hidden Layer 1**: 128 neurons with ReLU activation
+- **Hidden Layer 2**: 24 neurons with ReLU activation
+- **Output Layer**: 5 neurons (one Q-value per action)
+
+### Key Features
+
+- **Experience Replay**: Stores and samples past experiences to break temporal correlations
+- **Target Network**: Separate target network updated periodically for stable learning
+- **Epsilon-Greedy Exploration**: Balances exploration and exploitation during training
+- **Gradient Clipping**: Prevents exploding gradients during training
+
+### Hyperparameters
+
+Default training configuration:
+- Learning Rate: `1e-4`
+- Discount Factor (γ): `0.99`
+- Epsilon Start: `1.0`
+- Epsilon End: `0.025`
+- Epsilon Decay: `0.998`
+- Batch Size: `64`
+- Replay Buffer Capacity: `6000`
+- Target Network Update Frequency: `1000` steps
+- Training Episodes: `1000`
+
+## Running the DQN Agent
+
+### Training a New Model
+
+To train a new DQN agent from scratch:
+
+```bash
+python highway_dqn_kinematic.py
+```
+
+This will:
+- Train for 1000 episodes
+- Save the trained model to `highway_dqn_kinematic.pth`
+- Generate a training progress plot: `training_progress_dqn_kinematic.png`
+- Evaluate the trained model for 10 episodes
+
+### Visualizing Performance
+
+To render episodes with the trained model, set `render_mode="human"` or `render_mode="rgb_array"`:
+
+```python
+agent = HighwayKinematicDQNAgent(render_mode="human")
+agent.load_model("highway_dqn_kinematic.pth")
+agent.render_episode(num_episodes=5)
+agent.close()
+```
+
+## Files
+
+- `highway_baseline.py` - Rule-based baseline agent implementation
+- `highway_dqn_kinematic.py` - DQN agent implementation with kinematic observations
+- `highway_dqn_kinematic.pth` - Trained DQN model weights (generated after training)
+- `training_progress_dqn_kinematic.png` - Training progress visualization (generated after training)
