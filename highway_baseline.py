@@ -118,7 +118,7 @@ class BaselineAgent:
             velocity_diff = ego_vx - car_ahead_vx
             
             if distance_diff < 0.1:
-                #print("Too close to the car ahead")
+                print("Too close to the car ahead ", obs[car_ahead, 3])
                 return 4  # SLOWER
             elif distance_diff > 0.2:
                 #print("Too far from the car ahead")
@@ -150,11 +150,13 @@ class BaselineAgent:
 
 # Test the baseline agent
 env = gymnasium.make('highway-v0', render_mode='rgb_array')
+env.unwrapped.config["duration"] = 100
 agent = BaselineAgent(target_velocity=1.0)
 
 seed = random.randint(0, 1000000)
 print(f"Seed: {seed}")
-obs, info = env.reset(seed=seed)
+#obs, info = env.reset(seed=763936)
+obs, info = env.reset()
 total_reward = 0
 
 print("Running baseline agent...")
