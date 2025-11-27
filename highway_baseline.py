@@ -76,7 +76,7 @@ class BaselineAgent:
             # Check if car exists, is in same lane, and is ahead
             if abs(y_offset) < self.same_lane_threshold and x_offset > 0:
                 # Found a car in front in the same lane
-                print(f"Car ahead found at x_offset: {x_offset:.3f}")
+                #print(f"Car ahead found at x_offset: {x_offset:.3f}")
                 if x_offset < min_distance:
                     min_distance = x_offset
                     car_ahead = i
@@ -118,7 +118,7 @@ class BaselineAgent:
             velocity_diff = ego_vx - car_ahead_vx
             
             if distance_diff < 0.1:
-                print("Too close to the car ahead ", obs[car_ahead, 3])
+                #print("Too close to the car ahead ", obs[car_ahead, 3])
                 return 4  # SLOWER
             elif distance_diff > 0.2:
                 #print("Too far from the car ahead")
@@ -135,7 +135,7 @@ class BaselineAgent:
                     return 1  # IDLE
         else:
             # No car ahead in current lane
-            print("No car ahead, maintaining speed")
+            #print("No car ahead, maintaining speed")
             # No car ahead, try to reach target velocity
             if ego_vx < self.target_velocity - self.velocity_threshold:
                 # Speed up to reach target velocity
@@ -147,12 +147,48 @@ class BaselineAgent:
                 # At target velocity
                 return 1  # IDLE
 
+    def evaluate(self, env, num_episodes=10):
+        """Evaluate the baseline agent"""
+        print(f"Evaluating baseline agent for {num_episodes} episodes...")
+        eval_rewards = []
+        for episode in range(num_episodes):
+            state, _ = env.reset()
+            episode_reward = 0
+            done = False
+            steps = 0
+            
+            while not done and steps < 1000:
+                action = self.get_action(state)
+                next_state, reward, done, truncated, info = env.step(action)
+                state = next_state
+                episode_reward += reward
+                steps += 1
+                if done or truncated:
+                    break
+            eval_rewards.append(episode_reward)
+            print(f"Episode {episode + 1}: Reward = {episode_reward:.2f}, Steps = {steps}")
+        avg_reward = np.mean(eval_rewards)
+        print(f"Average evaluation reward: {avg_reward:.2f} over {num_episodes} episodes")
+        return eval_rewards
 
 # Test the baseline agent
 env = gymnasium.make('highway-v0', render_mode='rgb_array')
-env.unwrapped.config["duration"] = 100
+config = {
+    "simulation_frequency": 10,  # Hz (lower = faster, default is 15)
+    #"policy_frequency": 1,  # Hz (higher = fewer steps per episode, default is 1)
+    "duration": 100,  # Shorter episodes (default is 40)
+    "vehicles_count": 20,  # Fewer vehicles to simulate (default is 50)
+    #"lanes_count": 4,  # Fewer lanes (default is 4)
+    #"offscreen_rendering": False,
+    #"real_time_rendering": False,
+}
+env.unwrapped.configure(config)
 agent = BaselineAgent(target_velocity=1.0)
 
+agent.evaluate(env, num_episodes=10)
+#--------------------------------
+# Render the baseline agent for 1 episode
+#--------------------------------
 seed = random.randint(0, 1000000)
 print(f"Seed: {seed}")
 #obs, info = env.reset(seed=763936)
@@ -179,7 +215,6 @@ for step in range(1000):
     print()
     
     env.render()
-    #sleep(0.5)
     
     if done or truncated:
         print(f"Episode ended at step {step + 1}")
