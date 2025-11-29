@@ -254,7 +254,7 @@ class HighwayKinematicDQNAgent:
         print(f"\nAverage Evaluation Reward: {avg_reward:.2f}")
         return eval_rewards
 
-    def plot_training_progress(self, save_path="training_progress.png"):
+    def plot_training_progress(self, save_path="training_progress_dqn_kinematic.png"):
         """Plot training progress"""
         fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8))
         
@@ -268,7 +268,7 @@ class HighwayKinematicDQNAgent:
                     moving_avg, 'r-', linewidth=2, label=f'{window}-Episode Moving Avg')
         ax1.set_xlabel('Episode')
         ax1.set_ylabel('Reward')
-        ax1.set_title('Training Rewards Over Time')
+        ax1.set_title('Training Rewards Over Time DQN Kinematic')
         ax1.legend()
         ax1.grid(True)
         
@@ -282,7 +282,7 @@ class HighwayKinematicDQNAgent:
                     moving_avg, 'r-', linewidth=2, label=f'{window}-Episode Moving Avg')
         ax2.set_xlabel('Episode')
         ax2.set_ylabel('Steps')
-        ax2.set_title('Episode Lengths Over Time')
+        ax2.set_title('Episode Lengths Over Time DQN Kinematic')
         ax2.legend()
         ax2.grid(True)
         
@@ -313,6 +313,24 @@ class HighwayKinematicDQNAgent:
         self.episode_rewards = checkpoint['episode_rewards']
         self.episode_lengths = checkpoint['episode_lengths']
         print(f"Model loaded from {path}")
+
+    def render_episode(self, num_episodes=5):
+        """Render a single episode"""
+        for episode in range(num_episodes):
+            state, _ = self.env.reset()
+            state = self.preprocess_state(state)
+            done = False
+            steps = 0
+            while not done and steps < 1000:
+                action = self.select_action(state, training=False)
+                next_state, reward, terminated, truncated, _ = self.env.step(action)
+                done = terminated or truncated
+                next_state = self.preprocess_state(next_state)
+                state = next_state
+                steps += 1
+                if done or truncated:
+                    break
+        return
     
     def close(self):
         """Close the environment"""
@@ -331,27 +349,30 @@ def main():
         learning_rate=1e-4,
         gamma=0.99,
         epsilon_start=1.0,
-        epsilon_end=0.01,
+        epsilon_end=0.025,
         epsilon_decay=0.995,
         batch_size=64,
         target_update_freq=1000,
         buffer_capacity=6000,
         render_mode=None
     )
-    
+    #agent.load_model("highway_dqn_kinematic.pth")
     # Train agent
-    agent.train(num_episodes=1000, max_steps_per_episode=1000, print_every=10)
+    agent.train(num_episodes=500, max_steps_per_episode=1000, print_every=10)
     
     # Plot progress
-    agent.plot_training_progress("training_progress.png")
+    agent.plot_training_progress("training_progress_dqn_kinematic.png")
     
     # Save model
     agent.save_model("highway_dqn_kinematic.pth")
     
     # Evaluate agent
     agent.load_model("highway_dqn_kinematic.pth")
-    agent.evaluate(num_episodes=3)
+    rewards = agent.evaluate(num_episodes=10)
+    print(f"Average reward: {np.mean(rewards):.2f}")
+
     
+    #steps = agent.render_episode(num_episodes=1)
     # Close environment
     agent.close()
 
