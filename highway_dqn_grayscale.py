@@ -9,9 +9,38 @@ import torch.nn as nn
 import torch.optim as optim
 from collections import deque
 import os
+import pickle
 
 #disable audio to avoid weird warnings
 os.environ["SDL_AUDIODRIVER"] = "dummy"
+
+class FrameStackResetWrapper(gymnasium.Wrapper):
+    """
+    Wrapper to fix the black frames issue in highway-env during reset.
+    On reset, the first 3 frames are black, only the 4th frame has content.
+    This wrapper copies the 4th frame to frames 1-3 to provide meaningful initial state.
+    """
+    def __init__(self, env):
+        super().__init__(env)
+        
+    def reset(self, **kwargs):
+        """Reset the environment and fix the black frames issue"""
+        obs, info = self.env.reset(**kwargs)
+        
+        # obs shape: (stack_size, height, width) = (4, 240, 64)
+        # The first 3 frames (indices 0, 1, 2) are black
+        # The 4th frame (index 3) has actual content
+        # Copy frame 3 to frames 0, 1, 2
+        if len(obs.shape) == 3 and obs.shape[0] >= 4:
+            obs[0] = obs[3]
+            obs[1] = obs[3]
+            obs[2] = obs[3]
+        
+        return obs, info
+    
+    def step(self, action):
+        """Step function passes through normally"""
+        return self.env.step(action)
 
 class DQN_CNN(nn.Module):
     """CNN-based Deep Q-Network for processing frame stacks"""
@@ -21,7 +50,7 @@ class DQN_CNN(nn.Module):
         
         # CNN layers with asymmetric kernels for highway view (tall 240px, narrow 64px)
         # Kernel format: (height, width) - larger for height (240px), smaller for width (64px)
-        self.conv1 = nn.Conv2d(input_channels, 32, kernel_size=(8, 4), stride=(4, 2))
+        self.conv1 = nn.Conv2d(input_channels, 32, kernel_size=(8, 4), stride=(4, 4))
         self.conv2 = nn.Conv2d(32, 64, kernel_size=(4, 3), stride=(2, 2))
         self.conv3 = nn.Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1))
         
@@ -29,8 +58,9 @@ class DQN_CNN(nn.Module):
         conv_output_size = self._calculate_conv_output_size(input_height, input_width)
         
         # Fully connected layers
-        self.fc1 = nn.Linear(conv_output_size, 512)
-        self.fc2 = nn.Linear(512, num_actions)
+        self.fc1 = nn.Linear(conv_output_size, 354)
+        self.fc2 = nn.Linear(354, 128)
+        self.fc3 = nn.Linear(128, num_actions)
     
     def _calculate_conv_output_size(self, height, width):
         """Calculate the flattened size after all conv layers
@@ -43,7 +73,7 @@ class DQN_CNN(nn.Module):
         """
         # Conv1: kernel=(8, 4), stride=(4, 2)
         height = (height - 8) // 4 + 1
-        width = (width - 4) // 2 + 1
+        width = (width - 4) // 4 + 1
         
         # Conv2: kernel=(4, 3), stride=(2, 2)
         height = (height - 4) // 2 + 1
@@ -53,6 +83,9 @@ class DQN_CNN(nn.Module):
         height = (height - 3) // 1 + 1
         width = (width - 3) // 1 + 1
         
+        #print("CNN output height: ", height)
+        #print("CNN output width: ", width)
+        print("conv_output_size: ", 64 * height * width)
         # Final size: 64 channels * height * width
         return 64 * height * width
         
@@ -69,8 +102,9 @@ class DQN_CNN(nn.Module):
         #print("flatten x shape: ", x.shape)
         x = torch.relu(self.fc1(x))
         #print("fc1 x shape: ", x.shape)
-        x = self.fc2(x)
+        x = torch.relu(self.fc2(x))
         #print("fc2 x shape: ", x.shape)
+        x = self.fc3(x)
         return x
 
 
@@ -96,12 +130,56 @@ class ReplayBuffer:
     
     def __len__(self):
         return len(self.buffer)
+    
+    def save(self, path="replay_buffer.pkl"):
+        """Save the replay buffer to a file
+        
+        Args:
+            path: Path to save the replay buffer (default: replay_buffer.pkl)
+        """
+        # Convert deque to list for pickling
+        buffer_list = list(self.buffer)
+        
+        # Save buffer data along with capacity info
+        data = {
+            'buffer': buffer_list,
+            'capacity': self.buffer.maxlen,
+            'size': len(self.buffer)
+        }
+        
+        with open(path, 'wb') as f:
+            pickle.dump(data, f)
+        
+        print(f"Replay buffer saved to {path} ({len(self.buffer)} experiences)")
+    
+    def load(self, path="replay_buffer.pkl"):
+        """Load the replay buffer from a file
+        
+        Args:
+            path: Path to load the replay buffer from (default: replay_buffer.pkl)
+        """
+        if not os.path.exists(path):
+            print(f"Warning: Replay buffer file {path} not found. Starting with empty buffer.")
+            return
+        
+        with open(path, 'rb') as f:
+            data = pickle.load(f)
+        
+        # Restore capacity if it was saved
+        if 'capacity' in data:
+            self.buffer = deque(data['buffer'], maxlen=data['capacity'])
+        else:
+            # Fallback for older saved buffers
+            self.buffer = deque(data['buffer'], maxlen=self.buffer.maxlen)
+        
+        print(f"Replay buffer loaded from {path} ({len(self.buffer)} experiences)")
 
 class HighwayGrayscaleDQNAgent:
-    """DQN Agent for Highway with Kinematic Observation"""
+    """DQN Agent for Highway with Grayscale Observation"""
     
     def __init__(
         self,
+        env,
         learning_rate=1e-4,
         gamma=0.99,
         epsilon_start=1.0,
@@ -110,27 +188,9 @@ class HighwayGrayscaleDQNAgent:
         batch_size=32,
         target_update_freq=1000,
         buffer_capacity=10000,
-        fast_skip = False,
-        render_mode="rgb_array",
         stack_size=4
     ):
-        config = {
-            "observation": {
-                "type": "GrayscaleObservation",
-                "observation_shape": (240, 64),
-                "stack_size": stack_size,
-                "weights": [0.2989, 0.5870, 0.1140],  # weights for RGB conversion
-                "scaling": 2.0,
-            },
-            "simulation_frequency": 10,  # Hz (lower = faster, default is 15)
-            #"policy_frequency": 1,  # Hz (higher = fewer steps per episode, default is 1)
-            "duration": 100,  # Shorter episodes (default is 40)
-            "vehicles_count": 20,  # Fewer vehicles to simulate (default is 50)
-            #"lanes_count": 4,  # Fewer lanes (default is 4)
-            #"offscreen_rendering": False,
-            #"real_time_rendering": False,
-        }
-        self.env = gymnasium.make('highway-v0', config=config, render_mode=render_mode)
+        self.env = env
         self.num_actions = self.env.action_space.n
         print ("num_actions: ", self.num_actions)
         print ("observation_space: ", self.env.observation_space.shape)
@@ -211,7 +271,7 @@ class HighwayGrayscaleDQNAgent:
         self.optimizer.zero_grad()
         loss.backward()
         # Gradient clipping
-        torch.nn.utils.clip_grad_norm_(self.online_net.parameters(), 10)
+        torch.nn.utils.clip_grad_norm_(self.online_net.parameters(), 5)
         self.optimizer.step()
         
         return loss.item()
@@ -282,7 +342,45 @@ class HighwayGrayscaleDQNAgent:
         
         print("Training completed!")
     
-    
+    def train_offline(self, num_steps=10000, print_every=1000):
+        """Train the DQN agent using only existing replay buffer experiences
+        
+        Args:
+            num_steps: Number of training steps (gradient updates) to perform
+            print_every: Print progress every N steps
+        """
+        if len(self.replay_buffer) < self.batch_size:
+            print(f"Error: Replay buffer has only {len(self.replay_buffer)} experiences, "
+                  f"but batch_size is {self.batch_size}. Cannot train offline.")
+            return
+        
+        print(f"Starting offline training for {num_steps} steps...")
+        print(f"Replay buffer size: {len(self.replay_buffer)}")
+        
+        losses = []
+        
+        for step in range(num_steps):
+            # Train network
+            loss = self.update_network()
+            if loss is not None:
+                losses.append(loss)
+            
+            # Update target network
+            if (step + 1) % self.target_update_freq == 0:
+                self.target_net.load_state_dict(self.online_net.state_dict())
+            
+            # Print progress
+            if (step + 1) % print_every == 0:
+                avg_loss = np.mean(losses[-print_every:]) if losses else 0
+                print(f"Step {step + 1}/{num_steps} | "
+                      f"Avg Loss: {avg_loss:.4f} | "
+                      f"Epsilon: {self.epsilon:.3f}")
+        
+        # Final statistics
+        avg_loss = np.mean(losses) if losses else 0
+        print(f"Offline training completed!")
+        print(f"Average loss: {avg_loss:.4f}")
+        print(f"Total training steps: {num_steps}")
 
     def evaluate(self, num_episodes=10, render=False):
         """Evaluate the trained agent"""
@@ -313,7 +411,7 @@ class HighwayGrayscaleDQNAgent:
         print(f"\nAverage Evaluation Reward: {avg_reward:.2f}")
         return eval_rewards
 
-    def plot_training_progress(self, save_path="training_progress_dqn_kinematic.png"):
+    def plot_training_progress(self, save_path="training_progress_dqn_grayscale.png"):
         """Plot training progress"""
         fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8))
         
@@ -327,7 +425,7 @@ class HighwayGrayscaleDQNAgent:
                     moving_avg, 'r-', linewidth=2, label=f'{window}-Episode Moving Avg')
         ax1.set_xlabel('Episode')
         ax1.set_ylabel('Reward')
-        ax1.set_title('Training Rewards Over Time DQN Kinematic')
+        ax1.set_title('Training Rewards Over Time DQN Grayscale')
         ax1.legend()
         ax1.grid(True)
         
@@ -341,7 +439,7 @@ class HighwayGrayscaleDQNAgent:
                     moving_avg, 'r-', linewidth=2, label=f'{window}-Episode Moving Avg')
         ax2.set_xlabel('Episode')
         ax2.set_ylabel('Steps')
-        ax2.set_title('Episode Lengths Over Time DQN Kinematic')
+        ax2.set_title('Episode Lengths Over Time DQN Grayscale')
         ax2.legend()
         ax2.grid(True)
         
@@ -350,7 +448,7 @@ class HighwayGrayscaleDQNAgent:
         print(f"Training progress plot saved to {save_path}")
         plt.close()
     
-    def save_model(self, path="highway_dqn_kinematic.pth"):
+    def save_model(self, path="highway_dqn_grayscale.pth"):
         """Save the trained model"""
         torch.save({
             'online_net_state_dict': self.online_net.state_dict(),
@@ -362,7 +460,7 @@ class HighwayGrayscaleDQNAgent:
         }, path)
         print(f"Model saved to {path}")
     
-    def load_model(self, path="highway_dqn_kinematic.pth"):
+    def load_model(self, path="highway_dqn_grayscale.pth"):
         """Load a trained model"""
         checkpoint = torch.load(path, map_location=self.device, weights_only=False)
         self.online_net.load_state_dict(checkpoint['online_net_state_dict'])
@@ -372,6 +470,22 @@ class HighwayGrayscaleDQNAgent:
         self.episode_rewards = checkpoint['episode_rewards']
         self.episode_lengths = checkpoint['episode_lengths']
         print(f"Model loaded from {path}")
+    
+    def save_replay_buffer(self, path="replay_buffer.pkl"):
+        """Save the replay buffer to a file
+        
+        Args:
+            path: Path to save the replay buffer (default: replay_buffer.pkl)
+        """
+        self.replay_buffer.save(path)
+    
+    def load_replay_buffer(self, path="replay_buffer.pkl"):
+        """Load the replay buffer from a file
+        
+        Args:
+            path: Path to load the replay buffer from (default: replay_buffer.pkl)
+        """
+        self.replay_buffer.load(path)
 
     def render_episode(self, num_episodes=5):
         """Render a single episode"""
@@ -380,6 +494,7 @@ class HighwayGrayscaleDQNAgent:
             state = self.preprocess_state(state)
             done = False
             steps = 0
+            total_reward = 0
             while not done and steps < 1000:
                 action = self.select_action(state, training=False)
                 next_state, reward, terminated, truncated, _ = self.env.step(action)
@@ -387,8 +502,11 @@ class HighwayGrayscaleDQNAgent:
                 next_state = self.preprocess_state(next_state)
                 state = next_state
                 steps += 1
+                total_reward += reward
                 if done or truncated:
                     break
+            print ("Episode ended with reward: ", total_reward)
+                #sleep(0.1)
         return
     
     def close(self):
@@ -403,23 +521,51 @@ def main():
     np.random.seed(42)
     torch.manual_seed(42)
     
+    # Create environment
+    stack_size = 4
+    config = {
+        "observation": {
+            "type": "GrayscaleObservation",
+            "observation_shape": (240, 64),
+            "stack_size": stack_size,
+            "weights": [0.2989, 0.5870, 0.1140],  # weights for RGB conversion
+            "scaling": 2.0,
+        },
+        "simulation_frequency": 10,  # Hz (lower = faster, default is 15)
+        #"policy_frequency": 1,  # Hz (higher = fewer steps per episode, default is 1)
+        "duration": 100,  # Shorter episodes (default is 40)
+        "vehicles_count": 20,  # Fewer vehicles to simulate (default is 50)
+        #"lanes_count": 4,  # Fewer lanes (default is 4)
+        #"offscreen_rendering": False,
+        #"real_time_rendering": False,
+    }
+    env = gymnasium.make('highway-v0', config=config, render_mode=None)
+    env = FrameStackResetWrapper(env)
+    
     # Create agent
     agent = HighwayGrayscaleDQNAgent(
+        env=env,
         learning_rate=1e-4,
         gamma=0.99,
         epsilon_start=1.0,
-        epsilon_end=0.025,
+        epsilon_end=0.020,
         epsilon_decay=0.998,
-        batch_size=64,
-        target_update_freq=1000,
-        buffer_capacity=6000,
-        render_mode=None
+        batch_size=128,
+        target_update_freq=2000,
+        buffer_capacity=100000,
+        stack_size=stack_size
     )
+    #agent.load_model("highway_dqn_grayscale.pth")
     # Train agent
-    agent.train(num_episodes=1000, max_steps_per_episode=1000, print_every=10)
+    agent.train(num_episodes=2000, max_steps_per_episode=1000, print_every=10)
     
+    # Train offline using pre-generated replay buffer
+    #agent.load_replay_buffer("replay_buffer.pkl")
+    #agent.train_offline(num_steps=10000, print_every=1000)
+
     # Plot progress
     agent.plot_training_progress("training_progress_dqn_grayscale.png")
+    agent.save_replay_buffer("replay_buffer.pkl")
     
     # Save model
     agent.save_model("highway_dqn_grayscale.pth")
@@ -430,7 +576,7 @@ def main():
     print(f"Average reward: {np.mean(rewards):.2f}")
 
     
-    #steps = agent.render_episode(num_episodes=1)
+    #steps = agent.render_episode(num_episodes=10)
     # Close environment
     agent.close()
 
