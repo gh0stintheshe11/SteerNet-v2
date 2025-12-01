@@ -531,6 +531,7 @@ def main():
             "weights": [0.2989, 0.5870, 0.1140],  # weights for RGB conversion
             "scaling": 2.0,
         },
+        "collision_reward" : -10.0,
         "simulation_frequency": 10,  # Hz (lower = faster, default is 15)
         #"policy_frequency": 1,  # Hz (higher = fewer steps per episode, default is 1)
         "duration": 100,  # Shorter episodes (default is 40)
@@ -565,18 +566,18 @@ def main():
 
     # Plot progress
     agent.plot_training_progress("training_progress_dqn_grayscale.png")
-    agent.save_replay_buffer("replay_buffer.pkl")
     
     # Save model
     agent.save_model("highway_dqn_grayscale.pth")
-    
+    agent.save_replay_buffer("replay_buffer.pkl")
+
     # Evaluate agent
     agent.load_model("highway_dqn_grayscale.pth")
-    rewards = agent.evaluate(num_episodes=10)
+    rewards = agent.evaluate(num_episodes=30)
     print(f"Average reward: {np.mean(rewards):.2f}")
 
     
-    #steps = agent.render_episode(num_episodes=10)
+    #steps = agent.render_episode(num_episodes=5)
     # Close environment
     agent.close()
 
