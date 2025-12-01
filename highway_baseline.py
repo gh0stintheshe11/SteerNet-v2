@@ -17,7 +17,7 @@ class BaselineAgent:
     4: SLOWER
     """
     
-    def __init__(self, target_velocity=1.0, same_lane_threshold=0.2, velocity_threshold=0.05,
+    def __init__(self, target_velocity=1.0, same_lane_threshold=0.2, velocity_threshold=0.04,
                  lane_separation=0.25, adjacent_lane_range=0.05):
         """
         Args:
@@ -102,8 +102,12 @@ class BaselineAgent:
         # Decision making
         if car_ahead is not None:
             # There's a car ahead in our lane
+            #print("Car ahead found at x_offset: ", obs[car_ahead, 1])
             distance_diff = obs[car_ahead, 1]
-            
+            car_ahead_vx = obs[car_ahead, 3]
+            if (distance_diff < 0.1):
+                #print("Too close to the car ahead ", obs[car_ahead, 1])
+                return 4  # SLOWER
             # If too close or car ahead is slow, consider changing lanes
             if distance_diff < 0.2:
                 if not left_lane_occupied and ego_y >= 0.25:
@@ -114,20 +118,15 @@ class BaselineAgent:
                     return 2  # LANE_RIGHT
             
             # Follow the car ahead - match its velocity and distance
-            car_ahead_vx = obs[car_ahead, 3]
-            velocity_diff = ego_vx - car_ahead_vx
-            
-            if distance_diff < 0.1:
-                #print("Too close to the car ahead ", obs[car_ahead, 3])
-                return 4  # SLOWER
-            elif distance_diff > 0.2:
+                        
+            if distance_diff > 0.3:
                 #print("Too far from the car ahead")
                 return 3  # FASTER
             else:
-                if velocity_diff > self.velocity_threshold:
+                if car_ahead_vx < -self.velocity_threshold:
                     # We're going too fast, slow down
                     return 4  # SLOWER
-                elif velocity_diff < -self.velocity_threshold:
+                elif car_ahead_vx > self.velocity_threshold:
                     # We're going too slow, speed up
                     return 3  # FASTER
                 else:
@@ -178,6 +177,13 @@ config = {
     #"policy_frequency": 1,  # Hz (higher = fewer steps per episode, default is 1)
     "duration": 100,  # Shorter episodes (default is 40)
     "vehicles_count": 20,  # Fewer vehicles to simulate (default is 50)
+    "vehicles_density": 1.5,
+    'reward_speed_range': [10, 30],  # Changed to allow lower speeds in reward calculation
+    # Configure action type with custom target speeds
+    "action": {
+        "type": "DiscreteMetaAction",
+        "target_speeds": np.linspace(0, 30, 7).tolist(),  # [0, 5, 10, 15, 20, 25, 30] m/s
+    },
     #"lanes_count": 4,  # Fewer lanes (default is 4)
     #"offscreen_rendering": False,
     #"real_time_rendering": False,
@@ -185,7 +191,9 @@ config = {
 env.unwrapped.configure(config)
 agent = BaselineAgent(target_velocity=1.0)
 
-agent.evaluate(env, num_episodes=10)
+agent.evaluate(env, num_episodes=30)
+
+exit()
 #--------------------------------
 # Render the baseline agent for 1 episode
 #--------------------------------
@@ -204,8 +212,10 @@ for step in range(1000):
     
     # Execute action
     obs, reward, done, truncated, info = env.step(action)
+    #ego_vehicle = env.unwrapped.controlled_vehicles[0]
+    #print ("observation: ", obs)
     total_reward += reward
-    
+    #exit()
     # Print information
     action_names = ['LANE_LEFT', 'IDLE', 'LANE_RIGHT', 'FASTER', 'SLOWER']
     print(f"Step {step + 1}:")
