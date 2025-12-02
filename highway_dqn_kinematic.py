@@ -9,6 +9,62 @@ import torch.nn as nn
 import torch.optim as optim
 from collections import deque
 
+
+class SpeedRewardWrapper(gymnasium.Wrapper):
+    """
+    Wrapper to enforce minimum speed threshold for rewards.
+    Replace the original reward function with a new one that penalizes low speed.
+    The original reward function doesn't work for some reason.
+    Action space:
+    0: LANE_LEFT
+    1: IDLE
+    2: LANE_RIGHT
+    3: FASTER
+    4: SLOWER
+    """
+    def __init__(self, env, absolute_min_speed=0.0, cutoff_speed=20.0, max_speed=30.0, crash_reward=-1.0):
+
+        super().__init__(env)
+        self.absolute_min_speed = absolute_min_speed
+        self.cutoff_speed = cutoff_speed
+        self.max_speed = max_speed
+        self.crash_reward = crash_reward
+
+        
+    def step(self, action):
+        """Step and modify reward based on speed"""
+        obs, reward, done, truncated, info = self.env.step(action)
+        
+        # Get ego vehicle speed from the environment
+        if hasattr(self.env.unwrapped, 'controlled_vehicles') and len(self.env.unwrapped.controlled_vehicles) > 0:
+            ego_speed = self.env.unwrapped.controlled_vehicles[0].speed
+
+            # Check if ego car has crashed
+            crashed = False
+            if 'crashed' in info:
+                crashed = info['crashed']
+            else:
+                crashed = getattr(self.env.unwrapped.controlled_vehicles[0], "crashed", False)
+            #print ("crashed: ", crashed)
+            
+            # If speed is below threshold, penalize the reward
+            if crashed == True:
+                reward = self.crash_reward
+            #elif ego_speed < self.cutoff_speed:
+            #    reward = 0.0
+            else:
+                reward = (ego_speed - self.absolute_min_speed) / (self.max_speed - self.absolute_min_speed)
+                if ego_speed > 20.0:
+                    reward = reward + ego_speed/20.0
+                #else:
+                #    reward = 0.0
+                if (action == 0 or action == 2):
+                    reward = reward - 0.5
+                    reward = max(reward, 0.0)
+        #print ("reward: ", reward)
+        return obs, reward, done, truncated, info
+
+
 class DQN(nn.Module):
     """
     The Deep Q-Network (DQN) model 
@@ -17,9 +73,9 @@ class DQN(nn.Module):
     
     def __init__(self, num_actions, feature_size):
         super(DQN, self).__init__()
-        self.fc1 = nn.Linear(feature_size, 128)
-        self.fc2 = nn.Linear(128, 24)
-        self.out = nn.Linear(24, num_actions)
+        self.fc1 = nn.Linear(feature_size, 364)
+        self.fc2 = nn.Linear(364, 64)
+        self.out = nn.Linear(64, num_actions)
 
     def forward(self, x):
         x = torch.relu(self.fc1(x))
@@ -55,6 +111,7 @@ class HighwayKinematicDQNAgent:
     
     def __init__(
         self,
+        env,
         learning_rate=1e-4,
         gamma=0.99,
         epsilon_start=1.0,
@@ -63,20 +120,8 @@ class HighwayKinematicDQNAgent:
         batch_size=32,
         target_update_freq=1000,
         buffer_capacity=10000,
-        fast_skip = False,
-        render_mode="rgb_array"
     ):
-        self.env = gymnasium.make('highway-v0', render_mode=render_mode)
-        config = {
-            "simulation_frequency": 10,  # Hz (lower = faster, default is 15)
-            #"policy_frequency": 1,  # Hz (higher = fewer steps per episode, default is 1)
-            "duration": 100,  # Shorter episodes (default is 40)
-            "vehicles_count": 20,  # Fewer vehicles to simulate (default is 50)
-            #"lanes_count": 4,  # Fewer lanes (default is 4)
-            #"offscreen_rendering": False,
-            #"real_time_rendering": False,
-        }
-        self.env.unwrapped.configure(config)
+        self.env = env
 
         self.num_actions = self.env.action_space.n
         print ("num_actions: ", self.num_actions)
@@ -87,8 +132,8 @@ class HighwayKinematicDQNAgent:
         print(f"Using device: {self.device}")
         
         # Networks
-        self.online_net = DQN(num_actions=self.num_actions, feature_size=5*5).to(self.device)
-        self.target_net = DQN(num_actions=self.num_actions, feature_size=5*5).to(self.device)
+        self.online_net = DQN(num_actions=self.num_actions, feature_size=10*5).to(self.device)
+        self.target_net = DQN(num_actions=self.num_actions, feature_size=10*5).to(self.device)
         self.target_net.load_state_dict(self.online_net.state_dict())
         self.target_net.eval()
         
@@ -113,7 +158,7 @@ class HighwayKinematicDQNAgent:
         
     def preprocess_state(self, state):
         """Preprocess state from kinematic observation"""
-        # Flatten the 5x5 kinematic observation to a 25-element vector
+        # Flatten the 8x5 kinematic observation to a 40-element vector
         state = state.flatten()
         return state
     
@@ -321,6 +366,7 @@ class HighwayKinematicDQNAgent:
             state = self.preprocess_state(state)
             done = False
             steps = 0
+            total_reward = 0
             while not done and steps < 1000:
                 action = self.select_action(state, training=False)
                 next_state, reward, terminated, truncated, _ = self.env.step(action)
@@ -328,8 +374,12 @@ class HighwayKinematicDQNAgent:
                 next_state = self.preprocess_state(next_state)
                 state = next_state
                 steps += 1
+                total_reward += reward
+                print ("car speed: ", self.env.unwrapped.controlled_vehicles[0].speed)
+                sleep(0.05)
                 if done or truncated:
                     break
+            print ("Episode ended with reward: ", total_reward)
         return
     
     def close(self):
@@ -340,25 +390,54 @@ class HighwayKinematicDQNAgent:
 def main():
     """Main training function"""
     # Set random seeds for reproducibility
-    random.seed(42)
-    np.random.seed(42)
-    torch.manual_seed(42)
-    
+    #random.seed(42)
+    #np.random.seed(42)
+    #torch.manual_seed(42)
+
+    config = {
+        "simulation_frequency": 10,  # Hz (lower = faster, default is 15)
+        #"policy_frequency": 1,  # Hz (higher = fewer steps per episode, default is 1)
+        "duration": 100,  # Shorter episodes (default is 40)
+        "vehicles_count": 20,  # Fewer vehicles to simulate (default is 50)
+        "vehicles_density": 1.5, # Increases traffic density
+        #'lane_change_reward': -0.5,
+        "action": {
+            "type": "DiscreteMetaAction",
+            "target_speeds": np.linspace(10, 30, 5).tolist(),  # [10, 15, 20, 25, 30] m/s
+        },
+        "observation": {
+            "type": "Kinematics",
+            "vehicles_count": 10,
+            "features": [
+                "presence",
+                "x",
+                "y",
+                "vx",
+                "vy"
+            ],
+        },
+        #"lanes_count": 4,  # Fewer lanes (default is 4)
+        #"offscreen_rendering": False,
+        #"real_time_rendering": False,
+    }
+    env = gymnasium.make('highway-v0', config=config, render_mode=None)
     # Create agent
+    env = SpeedRewardWrapper(env, absolute_min_speed=0.0, cutoff_speed=20.0, max_speed=30.0, crash_reward=0)
+
     agent = HighwayKinematicDQNAgent(
+        env=env,
         learning_rate=1e-4,
         gamma=0.99,
         epsilon_start=1.0,
-        epsilon_end=0.025,
-        epsilon_decay=0.995,
+        epsilon_end=0.02,
+        epsilon_decay=0.9975,
         batch_size=64,
         target_update_freq=1000,
-        buffer_capacity=6000,
-        render_mode=None
+        buffer_capacity=40000,
     )
     #agent.load_model("highway_dqn_kinematic.pth")
     # Train agent
-    agent.train(num_episodes=500, max_steps_per_episode=1000, print_every=10)
+    agent.train(num_episodes=1500, max_steps_per_episode=1000, print_every=10)
     
     # Plot progress
     agent.plot_training_progress("training_progress_dqn_kinematic.png")
@@ -368,11 +447,11 @@ def main():
     
     # Evaluate agent
     agent.load_model("highway_dqn_kinematic.pth")
-    rewards = agent.evaluate(num_episodes=10)
+    rewards = agent.evaluate(num_episodes=30)
     print(f"Average reward: {np.mean(rewards):.2f}")
 
     
-    #steps = agent.render_episode(num_episodes=1)
+    #steps = agent.render_episode(num_episodes=5)
     # Close environment
     agent.close()
 

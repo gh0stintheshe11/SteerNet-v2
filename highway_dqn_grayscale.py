@@ -42,6 +42,57 @@ class FrameStackResetWrapper(gymnasium.Wrapper):
         """Step function passes through normally"""
         return self.env.step(action)
 
+class SpeedRewardWrapper(gymnasium.Wrapper):
+    """
+    Wrapper to enforce minimum speed threshold for rewards.
+    Replace the original reward function with a new one that penalizes low speed.
+    The original reward function doesn't work for some reason.
+    Action space:
+    0: LANE_LEFT
+    1: IDLE
+    2: LANE_RIGHT
+    3: FASTER
+    4: SLOWER
+    """
+    def __init__(self, env, absolute_min_speed=0.0, cutoff_speed=20.0, max_speed=30.0, crash_reward=0.0):
+
+        super().__init__(env)
+        self.absolute_min_speed = absolute_min_speed
+        self.cutoff_speed = cutoff_speed
+        self.max_speed = max_speed
+        self.crash_reward = crash_reward
+
+        
+    def step(self, action):
+        """Step and modify reward based on speed"""
+        obs, reward, done, truncated, info = self.env.step(action)
+        
+        # Get ego vehicle speed from the environment
+        if hasattr(self.env.unwrapped, 'controlled_vehicles') and len(self.env.unwrapped.controlled_vehicles) > 0:
+            ego_speed = self.env.unwrapped.controlled_vehicles[0].speed
+
+            # Check if ego car has crashed
+            crashed = False
+            if 'crashed' in info:
+                crashed = info['crashed']
+            else:
+                crashed = getattr(self.env.unwrapped.controlled_vehicles[0], "crashed", False)
+            #print ("crashed: ", crashed)
+            
+            # If speed is below threshold, penalize the reward
+            if crashed == True:
+                reward = self.crash_reward
+            else:
+                reward = (ego_speed - self.absolute_min_speed) / (self.max_speed - self.absolute_min_speed)
+                if ego_speed > 20.0:
+                    reward = reward + ego_speed/20.0
+                if (action == 0 or action == 2):
+                    reward = reward - 0.5
+                    reward = max(reward, 0.0)
+        #print ("reward: ", reward)
+        return obs, reward, done, truncated, info
+
+
 class DQN_CNN(nn.Module):
     """CNN-based Deep Q-Network for processing frame stacks"""
     
@@ -223,6 +274,8 @@ class HighwayGrayscaleDQNAgent:
         self.steps = 0
         self.episode_rewards = []
         self.episode_lengths = []
+        self.episode_speeds = []
+        self.episode_collisions = []
         
     def preprocess_state(self, state):
         """Preprocess state from grayscale observation"""
@@ -271,7 +324,7 @@ class HighwayGrayscaleDQNAgent:
         self.optimizer.zero_grad()
         loss.backward()
         # Gradient clipping
-        torch.nn.utils.clip_grad_norm_(self.online_net.parameters(), 5)
+        torch.nn.utils.clip_grad_norm_(self.online_net.parameters(), 10)
         self.optimizer.step()
         
         return loss.item()
@@ -292,13 +345,21 @@ class HighwayGrayscaleDQNAgent:
             episode_reward = 0
             episode_loss = 0
             loss_count = 0
+            episode_speed_sum = 0
+            episode_crashed = False
             #exit()
             for step in range(max_steps_per_episode):
                 # Select and perform action
                 action = self.select_action(state, training=True)
-                next_state, reward, terminated, truncated, _ = self.env.step(action)
+                next_state, reward, terminated, truncated, info = self.env.step(action)
                 done = terminated or truncated
                 next_state = self.preprocess_state(next_state)
+                
+                # Track speed and collision
+                if 'speed' in info:
+                    episode_speed_sum += info['speed']
+                if 'crashed' in info and info['crashed']:
+                    episode_crashed = True
                 
                 # Store transition
                 self.replay_buffer.push(state, action, reward, next_state, done)
@@ -327,6 +388,9 @@ class HighwayGrayscaleDQNAgent:
             # Store statistics
             self.episode_rewards.append(episode_reward)
             self.episode_lengths.append(step + 1)
+            avg_speed = episode_speed_sum / (step + 1)
+            self.episode_speeds.append(avg_speed)
+            self.episode_collisions.append(1 if episode_crashed else 0)
             
             # Print progress
             if (episode + 1) % print_every == 0:
@@ -413,7 +477,7 @@ class HighwayGrayscaleDQNAgent:
 
     def plot_training_progress(self, save_path="training_progress_dqn_grayscale.png"):
         """Plot training progress"""
-        fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8))
+        fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(15, 10))
         
         # Plot rewards
         ax1.plot(self.episode_rewards, alpha=0.6, label='Episode Reward')
@@ -438,10 +502,38 @@ class HighwayGrayscaleDQNAgent:
             ax2.plot(range(window-1, len(self.episode_lengths)), 
                     moving_avg, 'r-', linewidth=2, label=f'{window}-Episode Moving Avg')
         ax2.set_xlabel('Episode')
-        ax2.set_ylabel('Steps')
+        ax2.set_ylabel('Episodes Length')
         ax2.set_title('Episode Lengths Over Time DQN Grayscale')
         ax2.legend()
         ax2.grid(True)
+        
+        # Plot average speed
+        ax3.plot(self.episode_speeds, alpha=0.6, label='Average Speed')
+        if len(self.episode_speeds) >= 20:
+            window = 20
+            moving_avg = np.convolve(self.episode_speeds, 
+                                     np.ones(window)/window, mode='valid')
+            ax3.plot(range(window-1, len(self.episode_speeds)), 
+                    moving_avg, 'r-', linewidth=2, label=f'{window}-Episode Moving Avg')
+        ax3.set_xlabel('Episode')
+        ax3.set_ylabel('Average Speed')
+        ax3.set_title('Average Speed Over Time DQN Grayscale')
+        ax3.legend()
+        ax3.grid(True)
+        
+        # Plot collision rate
+        ax4.plot(self.episode_collisions, alpha=0.6, label='Collision (0 or 1)')
+        if len(self.episode_collisions) >= 20:
+            window = 20
+            moving_avg = np.convolve(self.episode_collisions, 
+                                     np.ones(window)/window, mode='valid')
+            ax4.plot(range(window-1, len(self.episode_collisions)), 
+                    moving_avg, 'r-', linewidth=2, label=f'{window}-Episode Moving Avg (Collision Rate)')
+        ax4.set_xlabel('Episode')
+        ax4.set_ylabel('Collision Rate')
+        ax4.set_title('Collision Rate Over Time DQN Grayscale')
+        ax4.legend()
+        ax4.grid(True)
         
         plt.tight_layout()
         plt.savefig(save_path)
@@ -456,7 +548,9 @@ class HighwayGrayscaleDQNAgent:
             'optimizer_state_dict': self.optimizer.state_dict(),
             'epsilon': self.epsilon,
             'episode_rewards': self.episode_rewards,
-            'episode_lengths': self.episode_lengths
+            'episode_lengths': self.episode_lengths,
+            'episode_speeds': self.episode_speeds,
+            'episode_collisions': self.episode_collisions
         }, path)
         print(f"Model saved to {path}")
     
@@ -469,6 +563,8 @@ class HighwayGrayscaleDQNAgent:
         self.epsilon = checkpoint['epsilon']
         self.episode_rewards = checkpoint['episode_rewards']
         self.episode_lengths = checkpoint['episode_lengths']
+        self.episode_speeds = checkpoint.get('episode_speeds', [])
+        self.episode_collisions = checkpoint.get('episode_collisions', [])
         print(f"Model loaded from {path}")
     
     def save_replay_buffer(self, path="replay_buffer.pkl"):
@@ -497,7 +593,10 @@ class HighwayGrayscaleDQNAgent:
             total_reward = 0
             while not done and steps < 1000:
                 action = self.select_action(state, training=False)
+                print ("ego speed: ", self.env.unwrapped.controlled_vehicles[0].speed)
+                print ("action: ", action)
                 next_state, reward, terminated, truncated, _ = self.env.step(action)
+                print ("reward: ", reward)
                 done = terminated or truncated
                 next_state = self.preprocess_state(next_state)
                 state = next_state
@@ -505,8 +604,9 @@ class HighwayGrayscaleDQNAgent:
                 total_reward += reward
                 if done or truncated:
                     break
+                sleep(0.05)
             print ("Episode ended with reward: ", total_reward)
-                #sleep(0.1)
+                
         return
     
     def close(self):
@@ -517,9 +617,9 @@ class HighwayGrayscaleDQNAgent:
 def main():
     """Main training function"""
     # Set random seeds for reproducibility
-    random.seed(42)
-    np.random.seed(42)
-    torch.manual_seed(42)
+    #random.seed(42)
+    #np.random.seed(42)
+    #torch.manual_seed(42)
     
     # Create environment
     stack_size = 4
@@ -531,18 +631,23 @@ def main():
             "weights": [0.2989, 0.5870, 0.1140],  # weights for RGB conversion
             "scaling": 2.0,
         },
-        "collision_reward" : -10.0,
         "simulation_frequency": 10,  # Hz (lower = faster, default is 15)
         #"policy_frequency": 1,  # Hz (higher = fewer steps per episode, default is 1)
         "duration": 100,  # Shorter episodes (default is 40)
         "vehicles_count": 20,  # Fewer vehicles to simulate (default is 50)
+        "vehicles_density": 1.25, # Increases traffic density
+        #'lane_change_reward': -0.5,
+        "action": {
+            "type": "DiscreteMetaAction",
+            "target_speeds": np.linspace(10, 30, 5).tolist(),  # [10, 15, 20, 25, 30] m/s
+        },
         #"lanes_count": 4,  # Fewer lanes (default is 4)
         #"offscreen_rendering": False,
         #"real_time_rendering": False,
     }
     env = gymnasium.make('highway-v0', config=config, render_mode=None)
     env = FrameStackResetWrapper(env)
-    
+    env = SpeedRewardWrapper(env, absolute_min_speed=0.0, cutoff_speed=20.0, max_speed=30.0, crash_reward=-100.0)
     # Create agent
     agent = HighwayGrayscaleDQNAgent(
         env=env,
@@ -551,14 +656,14 @@ def main():
         epsilon_start=1.0,
         epsilon_end=0.020,
         epsilon_decay=0.998,
-        batch_size=128,
+        batch_size=64,
         target_update_freq=2000,
         buffer_capacity=100000,
         stack_size=stack_size
     )
     #agent.load_model("highway_dqn_grayscale.pth")
     # Train agent
-    agent.train(num_episodes=2000, max_steps_per_episode=1000, print_every=10)
+    agent.train(num_episodes=500, max_steps_per_episode=1000, print_every=10)
     
     # Train offline using pre-generated replay buffer
     #agent.load_replay_buffer("replay_buffer.pkl")
@@ -569,7 +674,7 @@ def main():
     
     # Save model
     agent.save_model("highway_dqn_grayscale.pth")
-    agent.save_replay_buffer("replay_buffer.pkl")
+    #agent.save_replay_buffer("replay_buffer.pkl")
 
     # Evaluate agent
     agent.load_model("highway_dqn_grayscale.pth")
