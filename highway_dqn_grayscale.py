@@ -109,9 +109,9 @@ class DQN_CNN(nn.Module):
         conv_output_size = self._calculate_conv_output_size(input_height, input_width)
         
         # Fully connected layers
-        self.fc1 = nn.Linear(conv_output_size, 354)
-        self.fc2 = nn.Linear(354, 128)
-        self.fc3 = nn.Linear(128, num_actions)
+        self.fc1 = nn.Linear(conv_output_size, 512)
+        self.fc2 = nn.Linear(512, 256)
+        self.fc3 = nn.Linear(256, num_actions)
     
     def _calculate_conv_output_size(self, height, width):
         """Calculate the flattened size after all conv layers
@@ -153,6 +153,8 @@ class DQN_CNN(nn.Module):
         #print("flatten x shape: ", x.shape)
         x = torch.relu(self.fc1(x))
         #print("fc1 x shape: ", x.shape)
+        #x = torch.relu(self.fc2(x))
+        #print("fc2 x shape: ", x.shape)
         x = torch.relu(self.fc2(x))
         #print("fc2 x shape: ", x.shape)
         x = self.fc3(x)
@@ -447,33 +449,56 @@ class HighwayGrayscaleDQNAgent:
         print(f"Total training steps: {num_steps}")
 
     def evaluate(self, num_episodes=10, render=False):
-        """Evaluate the trained agent"""
+        """Evaluate the trained agent and track average speed per episode"""
         print(f"\nEvaluating agent for {num_episodes} episodes...")
         eval_rewards = []
+        eval_avg_speeds = []
+
         for episode in range(num_episodes):
             state, _ = self.env.reset()
             state = self.preprocess_state(state)
 
             episode_reward = 0
+            speeds = []
             done = False
             steps = 0
-            
+
             while not done and steps < 1000:
+                # Try to extract ego vehicle speed before/after action
+                # Most environments will make the speed available after .step()
                 action = self.select_action(state, training=False)
-                next_state, reward, terminated, truncated, _ = self.env.step(action)
+                next_state, reward, terminated, truncated, info = self.env.step(action)
+
+                # Try to get ego speed: robust to wrappers
+                ego_speed = None
+                try:
+                    if hasattr(self.env.unwrapped, 'controlled_vehicles') and len(self.env.unwrapped.controlled_vehicles) > 0:
+                        ego_speed = self.env.unwrapped.controlled_vehicles[0].speed
+                except Exception:
+                    pass
+                if ego_speed is None and isinstance(info, dict):
+                    # Sometimes speed is in info
+                    ego_speed = info.get("speed", None)
+                if ego_speed is not None:
+                    speeds.append(ego_speed)
+
                 done = terminated or truncated
                 next_state = self.preprocess_state(next_state)
-                
                 state = next_state
                 episode_reward += reward
                 steps += 1
-            
+
+            # Compute avg speed over all steps
+            avg_speed = np.mean(speeds) if speeds else 0.0
             eval_rewards.append(episode_reward)
-            print(f"Episode {episode + 1}: Reward = {episode_reward:.2f}, Steps = {steps}")
-        
+            eval_avg_speeds.append(avg_speed)
+            print(f"Episode {episode + 1}: Reward = {episode_reward:.2f}, Steps = {steps}, Avg Speed = {avg_speed:.2f}")
+
         avg_reward = np.mean(eval_rewards)
+        avg_speed_overall = np.mean(eval_avg_speeds)
         print(f"\nAverage Evaluation Reward: {avg_reward:.2f}")
-        return eval_rewards
+        print(f"Average Evaluation Speed: {avg_speed_overall:.2f}")
+        return eval_rewards, eval_avg_speeds
 
     def plot_training_progress(self, save_path="training_progress_dqn_grayscale.png"):
         """Plot training progress"""
@@ -631,7 +656,7 @@ def main():
             "weights": [0.2989, 0.5870, 0.1140],  # weights for RGB conversion
             "scaling": 2.0,
         },
-        "simulation_frequency": 10,  # Hz (lower = faster, default is 15)
+        "simulation_frequency": 15,  # Hz (lower = faster, default is 15)
         #"policy_frequency": 1,  # Hz (higher = fewer steps per episode, default is 1)
         "duration": 100,  # Shorter episodes (default is 40)
         "vehicles_count": 20,  # Fewer vehicles to simulate (default is 50)
@@ -646,8 +671,8 @@ def main():
         #"real_time_rendering": False,
     }
     env = gymnasium.make('highway-v0', config=config, render_mode=None)
-    env = FrameStackResetWrapper(env)
-    env = SpeedRewardWrapper(env, absolute_min_speed=0.0, cutoff_speed=20.0, max_speed=30.0, crash_reward=-100.0)
+    #env = FrameStackResetWrapper(env)
+    env = SpeedRewardWrapper(env, absolute_min_speed=0.0, cutoff_speed=20.0, max_speed=30.0, crash_reward=0.0)
     # Create agent
     agent = HighwayGrayscaleDQNAgent(
         env=env,
@@ -663,7 +688,7 @@ def main():
     )
     #agent.load_model("highway_dqn_grayscale.pth")
     # Train agent
-    agent.train(num_episodes=500, max_steps_per_episode=1000, print_every=10)
+    agent.train(num_episodes=2000, max_steps_per_episode=1000, print_every=10)
     
     # Train offline using pre-generated replay buffer
     #agent.load_replay_buffer("replay_buffer.pkl")
