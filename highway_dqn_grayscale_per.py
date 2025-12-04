@@ -783,7 +783,7 @@ def main():
         #"real_time_rendering": False,
     }
     env = gymnasium.make('highway-v0', config=config, render_mode=None)
-    #env = FrameStackResetWrapper(env)
+    env = FrameStackResetWrapper(env)
     env = SpeedRewardWrapper(env, absolute_min_speed=0.0, cutoff_speed=20.0, max_speed=30.0, crash_reward=0.0)
     # Create agent with PER (Prioritized Experience Replay)
     agent = HighwayGrayscaleDQNAgent(
