@@ -1,0 +1,348 @@
+/home/lang/SteerNet-v2/.venv/bin/python /home/lang/SteerNet-v2/highway_dqn_grayscale_per.py
+num_actions:  5
+observation_space:  (4, 240, 64)
+Using device: cuda
+conv_output_size:  8320
+conv_output_size:  8320
+Starting training for 3000 episodes...
+Observation shape: (4, 240, 64)
+Episode 10/3000 | Avg Reward: 12.69 | Avg Length: 9 | Epsilon: 0.980 | Loss: 0.0000 | Buffer: 88 | 0.30s/ep | Elapsed: 3s
+Episode 20/3000 | Avg Reward: 13.10 | Avg Length: 8 | Epsilon: 0.961 | Loss: 0.0000 | Buffer: 169 | 0.31s/ep | Elapsed: 6s
+Episode 30/3000 | Avg Reward: 13.72 | Avg Length: 15 | Epsilon: 0.942 | Loss: 0.0000 | Buffer: 321 | 0.51s/ep | Elapsed: 11s
+Episode 40/3000 | Avg Reward: 21.97 | Avg Length: 24 | Epsilon: 0.923 | Loss: 0.2082 | Buffer: 558 | 0.98s/ep | Elapsed: 21s
+Episode 50/3000 | Avg Reward: 35.08 | Avg Length: 28 | Epsilon: 0.905 | Loss: 0.0605 | Buffer: 839 | 2.19s/ep | Elapsed: 43s
+Episode 60/3000 | Avg Reward: 15.05 | Avg Length: 11 | Epsilon: 0.887 | Loss: 0.0285 | Buffer: 947 | 0.78s/ep | Elapsed: 51s
+Episode 70/3000 | Avg Reward: 17.99 | Avg Length: 12 | Epsilon: 0.869 | Loss: 0.0258 | Buffer: 1067 | 0.96s/ep | Elapsed: 1.0m
+Episode 80/3000 | Avg Reward: 11.54 | Avg Length: 8 | Epsilon: 0.852 | Loss: 0.0087 | Buffer: 1148 | 0.63s/ep | Elapsed: 1.1m
+Episode 90/3000 | Avg Reward: 8.96 | Avg Length: 6 | Epsilon: 0.835 | Loss: 0.0189 | Buffer: 1203 | 0.43s/ep | Elapsed: 1.2m
+Episode 100/3000 | Avg Reward: 13.41 | Avg Length: 10 | Epsilon: 0.819 | Loss: 0.0208 | Buffer: 1298 | 0.67s/ep | Elapsed: 1.3m
+Episode 110/3000 | Avg Reward: 11.64 | Avg Length: 8 | Epsilon: 0.802 | Loss: 0.0170 | Buffer: 1378 | 0.63s/ep | Elapsed: 1.4m
+Episode 120/3000 | Avg Reward: 14.21 | Avg Length: 8 | Epsilon: 0.786 | Loss: 0.0241 | Buffer: 1457 | 0.61s/ep | Elapsed: 1.5m
+Episode 130/3000 | Avg Reward: 18.29 | Avg Length: 14 | Epsilon: 0.771 | Loss: 0.0143 | Buffer: 1593 | 1.07s/ep | Elapsed: 1.7m
+Episode 140/3000 | Avg Reward: 13.39 | Avg Length: 8 | Epsilon: 0.756 | Loss: 0.0211 | Buffer: 1675 | 0.65s/ep | Elapsed: 1.8m
+Episode 150/3000 | Avg Reward: 17.83 | Avg Length: 13 | Epsilon: 0.741 | Loss: 0.0136 | Buffer: 1805 | 0.94s/ep | Elapsed: 1.9m
+Episode 160/3000 | Avg Reward: 11.60 | Avg Length: 7 | Epsilon: 0.726 | Loss: 0.0162 | Buffer: 1873 | 0.53s/ep | Elapsed: 2.0m
+Episode 170/3000 | Avg Reward: 21.72 | Avg Length: 15 | Epsilon: 0.712 | Loss: 0.1063 | Buffer: 2025 | 1.20s/ep | Elapsed: 2.2m
+Episode 180/3000 | Avg Reward: 21.14 | Avg Length: 13 | Epsilon: 0.697 | Loss: 0.0564 | Buffer: 2153 | 0.92s/ep | Elapsed: 2.4m
+Episode 190/3000 | Avg Reward: 24.10 | Avg Length: 14 | Epsilon: 0.684 | Loss: 0.0411 | Buffer: 2293 | 1.10s/ep | Elapsed: 2.6m
+Episode 200/3000 | Avg Reward: 19.15 | Avg Length: 11 | Epsilon: 0.670 | Loss: 0.0452 | Buffer: 2406 | 0.89s/ep | Elapsed: 2.7m
+Episode 210/3000 | Avg Reward: 12.63 | Avg Length: 7 | Epsilon: 0.657 | Loss: 0.0437 | Buffer: 2476 | 0.55s/ep | Elapsed: 2.8m
+Episode 220/3000 | Avg Reward: 31.93 | Avg Length: 22 | Epsilon: 0.644 | Loss: 0.0420 | Buffer: 2691 | 1.61s/ep | Elapsed: 3.1m
+Episode 230/3000 | Avg Reward: 20.33 | Avg Length: 12 | Epsilon: 0.631 | Loss: 0.0354 | Buffer: 2815 | 0.97s/ep | Elapsed: 3.2m
+Episode 240/3000 | Avg Reward: 23.26 | Avg Length: 16 | Epsilon: 0.618 | Loss: 0.0527 | Buffer: 2970 | 1.14s/ep | Elapsed: 3.4m
+Episode 250/3000 | Avg Reward: 16.03 | Avg Length: 9 | Epsilon: 0.606 | Loss: 0.0353 | Buffer: 3057 | 0.69s/ep | Elapsed: 3.5m
+Episode 260/3000 | Avg Reward: 16.37 | Avg Length: 10 | Epsilon: 0.594 | Loss: 0.0386 | Buffer: 3157 | 0.79s/ep | Elapsed: 3.7m
+Episode 270/3000 | Avg Reward: 14.16 | Avg Length: 9 | Epsilon: 0.582 | Loss: 0.0319 | Buffer: 3247 | 0.72s/ep | Elapsed: 3.8m
+Episode 280/3000 | Avg Reward: 22.55 | Avg Length: 14 | Epsilon: 0.571 | Loss: 0.0232 | Buffer: 3383 | 0.99s/ep | Elapsed: 4.0m
+Episode 290/3000 | Avg Reward: 15.93 | Avg Length: 10 | Epsilon: 0.560 | Loss: 0.0280 | Buffer: 3483 | 0.79s/ep | Elapsed: 4.1m
+Episode 300/3000 | Avg Reward: 19.08 | Avg Length: 10 | Epsilon: 0.548 | Loss: 0.0314 | Buffer: 3588 | 0.83s/ep | Elapsed: 4.2m
+Episode 310/3000 | Avg Reward: 18.09 | Avg Length: 9 | Epsilon: 0.538 | Loss: 0.0314 | Buffer: 3677 | 0.70s/ep | Elapsed: 4.3m
+Episode 320/3000 | Avg Reward: 22.89 | Avg Length: 14 | Epsilon: 0.527 | Loss: 0.0264 | Buffer: 3820 | 1.05s/ep | Elapsed: 4.5m
+Episode 330/3000 | Avg Reward: 11.47 | Avg Length: 6 | Epsilon: 0.517 | Loss: 0.0302 | Buffer: 3882 | 0.49s/ep | Elapsed: 4.6m
+Episode 340/3000 | Avg Reward: 15.59 | Avg Length: 8 | Epsilon: 0.506 | Loss: 0.0156 | Buffer: 3967 | 0.67s/ep | Elapsed: 4.7m
+Episode 350/3000 | Avg Reward: 14.15 | Avg Length: 8 | Epsilon: 0.496 | Loss: 0.1033 | Buffer: 4043 | 0.60s/ep | Elapsed: 4.8m
+Episode 360/3000 | Avg Reward: 15.91 | Avg Length: 8 | Epsilon: 0.486 | Loss: 0.0725 | Buffer: 4127 | 0.67s/ep | Elapsed: 4.9m
+Episode 370/3000 | Avg Reward: 20.63 | Avg Length: 12 | Epsilon: 0.477 | Loss: 0.0646 | Buffer: 4251 | 0.90s/ep | Elapsed: 5.1m
+Episode 380/3000 | Avg Reward: 17.49 | Avg Length: 10 | Epsilon: 0.467 | Loss: 0.0519 | Buffer: 4346 | 0.75s/ep | Elapsed: 5.2m
+Episode 390/3000 | Avg Reward: 21.73 | Avg Length: 12 | Epsilon: 0.458 | Loss: 0.0344 | Buffer: 4464 | 0.94s/ep | Elapsed: 5.4m
+Episode 400/3000 | Avg Reward: 17.03 | Avg Length: 9 | Epsilon: 0.449 | Loss: 0.0427 | Buffer: 4556 | 0.64s/ep | Elapsed: 5.5m
+Episode 410/3000 | Avg Reward: 15.24 | Avg Length: 8 | Epsilon: 0.440 | Loss: 0.0374 | Buffer: 4640 | 0.67s/ep | Elapsed: 5.6m
+Episode 420/3000 | Avg Reward: 16.02 | Avg Length: 11 | Epsilon: 0.431 | Loss: 0.0669 | Buffer: 4746 | 0.85s/ep | Elapsed: 5.7m
+Episode 430/3000 | Avg Reward: 19.40 | Avg Length: 10 | Epsilon: 0.423 | Loss: 0.0587 | Buffer: 4848 | 0.81s/ep | Elapsed: 5.9m
+Episode 440/3000 | Avg Reward: 20.95 | Avg Length: 11 | Epsilon: 0.414 | Loss: 0.0385 | Buffer: 4959 | 0.80s/ep | Elapsed: 6.0m
+Episode 450/3000 | Avg Reward: 13.96 | Avg Length: 7 | Epsilon: 0.406 | Loss: 0.0210 | Buffer: 5031 | 0.56s/ep | Elapsed: 6.1m
+Episode 460/3000 | Avg Reward: 12.83 | Avg Length: 7 | Epsilon: 0.398 | Loss: 0.0295 | Buffer: 5099 | 0.54s/ep | Elapsed: 6.2m
+Episode 470/3000 | Avg Reward: 29.56 | Avg Length: 16 | Epsilon: 0.390 | Loss: 0.0364 | Buffer: 5260 | 1.28s/ep | Elapsed: 6.4m
+Episode 480/3000 | Avg Reward: 13.80 | Avg Length: 8 | Epsilon: 0.383 | Loss: 0.0506 | Buffer: 5335 | 0.59s/ep | Elapsed: 6.5m
+Episode 490/3000 | Avg Reward: 18.82 | Avg Length: 11 | Epsilon: 0.375 | Loss: 0.0289 | Buffer: 5445 | 0.78s/ep | Elapsed: 6.6m
+Episode 500/3000 | Avg Reward: 37.52 | Avg Length: 21 | Epsilon: 0.368 | Loss: 0.0327 | Buffer: 5651 | 1.63s/ep | Elapsed: 6.9m
+Episode 510/3000 | Avg Reward: 14.76 | Avg Length: 8 | Epsilon: 0.360 | Loss: 0.0350 | Buffer: 5728 | 0.61s/ep | Elapsed: 7.0m
+Episode 520/3000 | Avg Reward: 20.29 | Avg Length: 11 | Epsilon: 0.353 | Loss: 0.0130 | Buffer: 5835 | 0.77s/ep | Elapsed: 7.1m
+Episode 530/3000 | Avg Reward: 18.17 | Avg Length: 10 | Epsilon: 0.346 | Loss: 0.0127 | Buffer: 5932 | 0.77s/ep | Elapsed: 7.2m
+Episode 540/3000 | Avg Reward: 15.59 | Avg Length: 8 | Epsilon: 0.339 | Loss: 0.1410 | Buffer: 6012 | 0.64s/ep | Elapsed: 7.4m
+Episode 550/3000 | Avg Reward: 20.33 | Avg Length: 12 | Epsilon: 0.333 | Loss: 0.0779 | Buffer: 6137 | 0.98s/ep | Elapsed: 7.5m
+Episode 560/3000 | Avg Reward: 24.40 | Avg Length: 14 | Epsilon: 0.326 | Loss: 0.0726 | Buffer: 6275 | 1.01s/ep | Elapsed: 7.7m
+Episode 570/3000 | Avg Reward: 15.37 | Avg Length: 9 | Epsilon: 0.319 | Loss: 0.0558 | Buffer: 6364 | 0.71s/ep | Elapsed: 7.8m
+Episode 580/3000 | Avg Reward: 9.13 | Avg Length: 5 | Epsilon: 0.313 | Loss: 0.0599 | Buffer: 6418 | 0.43s/ep | Elapsed: 7.9m
+Episode 590/3000 | Avg Reward: 28.30 | Avg Length: 16 | Epsilon: 0.307 | Loss: 0.0515 | Buffer: 6573 | 1.23s/ep | Elapsed: 8.1m
+Episode 600/3000 | Avg Reward: 22.69 | Avg Length: 12 | Epsilon: 0.301 | Loss: 0.0488 | Buffer: 6690 | 0.84s/ep | Elapsed: 8.2m
+Episode 610/3000 | Avg Reward: 23.12 | Avg Length: 12 | Epsilon: 0.295 | Loss: 0.0537 | Buffer: 6805 | 0.91s/ep | Elapsed: 8.4m
+Episode 620/3000 | Avg Reward: 31.81 | Avg Length: 16 | Epsilon: 0.289 | Loss: 0.0459 | Buffer: 6961 | 1.25s/ep | Elapsed: 8.6m
+Episode 630/3000 | Avg Reward: 22.83 | Avg Length: 12 | Epsilon: 0.283 | Loss: 0.0376 | Buffer: 7077 | 0.83s/ep | Elapsed: 8.7m
+Episode 640/3000 | Avg Reward: 24.90 | Avg Length: 12 | Epsilon: 0.278 | Loss: 0.0403 | Buffer: 7200 | 0.98s/ep | Elapsed: 8.9m
+Episode 650/3000 | Avg Reward: 29.50 | Avg Length: 14 | Epsilon: 0.272 | Loss: 0.0487 | Buffer: 7340 | 1.12s/ep | Elapsed: 9.1m
+Episode 660/3000 | Avg Reward: 14.61 | Avg Length: 8 | Epsilon: 0.267 | Loss: 0.0364 | Buffer: 7418 | 0.53s/ep | Elapsed: 9.2m
+Episode 670/3000 | Avg Reward: 14.88 | Avg Length: 8 | Epsilon: 0.261 | Loss: 0.0318 | Buffer: 7495 | 0.60s/ep | Elapsed: 9.3m
+Episode 680/3000 | Avg Reward: 33.45 | Avg Length: 18 | Epsilon: 0.256 | Loss: 0.0333 | Buffer: 7677 | 1.46s/ep | Elapsed: 9.5m
+Episode 690/3000 | Avg Reward: 17.41 | Avg Length: 10 | Epsilon: 0.251 | Loss: 0.0347 | Buffer: 7774 | 0.77s/ep | Elapsed: 9.6m
+Episode 700/3000 | Avg Reward: 21.57 | Avg Length: 12 | Epsilon: 0.246 | Loss: 0.0256 | Buffer: 7890 | 0.83s/ep | Elapsed: 9.8m
+Episode 710/3000 | Avg Reward: 69.51 | Avg Length: 32 | Epsilon: 0.241 | Loss: 0.0825 | Buffer: 8210 | 2.46s/ep | Elapsed: 10.2m
+Episode 720/3000 | Avg Reward: 20.94 | Avg Length: 10 | Epsilon: 0.237 | Loss: 0.0867 | Buffer: 8314 | 0.83s/ep | Elapsed: 10.3m
+Episode 730/3000 | Avg Reward: 38.37 | Avg Length: 21 | Epsilon: 0.232 | Loss: 0.0834 | Buffer: 8523 | 1.67s/ep | Elapsed: 10.6m
+Episode 740/3000 | Avg Reward: 62.66 | Avg Length: 30 | Epsilon: 0.227 | Loss: 0.0608 | Buffer: 8821 | 2.31s/ep | Elapsed: 11.0m
+Episode 750/3000 | Avg Reward: 23.08 | Avg Length: 12 | Epsilon: 0.223 | Loss: 0.0448 | Buffer: 8940 | 0.95s/ep | Elapsed: 11.1m
+Episode 760/3000 | Avg Reward: 50.45 | Avg Length: 24 | Epsilon: 0.218 | Loss: 0.0440 | Buffer: 9176 | 1.80s/ep | Elapsed: 11.4m
+Episode 770/3000 | Avg Reward: 41.75 | Avg Length: 20 | Epsilon: 0.214 | Loss: 0.0428 | Buffer: 9371 | 1.56s/ep | Elapsed: 11.7m
+Episode 780/3000 | Avg Reward: 25.17 | Avg Length: 13 | Epsilon: 0.210 | Loss: 0.0502 | Buffer: 9497 | 0.93s/ep | Elapsed: 11.9m
+Episode 790/3000 | Avg Reward: 49.78 | Avg Length: 23 | Epsilon: 0.206 | Loss: 0.0321 | Buffer: 9724 | 1.83s/ep | Elapsed: 12.2m
+Episode 800/3000 | Avg Reward: 59.52 | Avg Length: 28 | Epsilon: 0.202 | Loss: 0.0516 | Buffer: 9999 | 2.14s/ep | Elapsed: 12.5m
+Episode 810/3000 | Avg Reward: 42.46 | Avg Length: 20 | Epsilon: 0.198 | Loss: 0.0897 | Buffer: 10194 | 1.57s/ep | Elapsed: 12.8m
+Episode 820/3000 | Avg Reward: 68.67 | Avg Length: 32 | Epsilon: 0.194 | Loss: 0.0766 | Buffer: 10511 | 2.48s/ep | Elapsed: 13.2m
+Episode 830/3000 | Avg Reward: 25.76 | Avg Length: 13 | Epsilon: 0.190 | Loss: 0.0700 | Buffer: 10638 | 0.95s/ep | Elapsed: 13.3m
+Episode 840/3000 | Avg Reward: 37.14 | Avg Length: 18 | Epsilon: 0.186 | Loss: 0.0595 | Buffer: 10817 | 1.44s/ep | Elapsed: 13.6m
+Episode 850/3000 | Avg Reward: 49.80 | Avg Length: 24 | Epsilon: 0.182 | Loss: 0.0837 | Buffer: 11060 | 1.87s/ep | Elapsed: 13.9m
+Episode 860/3000 | Avg Reward: 34.39 | Avg Length: 16 | Epsilon: 0.179 | Loss: 0.0635 | Buffer: 11225 | 1.34s/ep | Elapsed: 14.1m
+Episode 870/3000 | Avg Reward: 49.41 | Avg Length: 23 | Epsilon: 0.175 | Loss: 0.0437 | Buffer: 11456 | 1.78s/ep | Elapsed: 14.4m
+Episode 880/3000 | Avg Reward: 60.43 | Avg Length: 28 | Epsilon: 0.172 | Loss: 0.0720 | Buffer: 11733 | 2.24s/ep | Elapsed: 14.8m
+Episode 890/3000 | Avg Reward: 64.94 | Avg Length: 31 | Epsilon: 0.168 | Loss: 0.0877 | Buffer: 12045 | 2.48s/ep | Elapsed: 15.2m
+Episode 900/3000 | Avg Reward: 80.35 | Avg Length: 38 | Epsilon: 0.165 | Loss: 0.0868 | Buffer: 12422 | 2.97s/ep | Elapsed: 15.7m
+Episode 910/3000 | Avg Reward: 79.60 | Avg Length: 36 | Epsilon: 0.162 | Loss: 0.0524 | Buffer: 12779 | 2.81s/ep | Elapsed: 16.2m
+Episode 920/3000 | Avg Reward: 57.42 | Avg Length: 27 | Epsilon: 0.159 | Loss: 0.0659 | Buffer: 13052 | 2.11s/ep | Elapsed: 16.5m
+Episode 930/3000 | Avg Reward: 69.54 | Avg Length: 32 | Epsilon: 0.155 | Loss: 0.0682 | Buffer: 13367 | 2.54s/ep | Elapsed: 16.9m
+Episode 940/3000 | Avg Reward: 44.39 | Avg Length: 21 | Epsilon: 0.152 | Loss: 0.0753 | Buffer: 13581 | 1.65s/ep | Elapsed: 17.2m
+Episode 950/3000 | Avg Reward: 53.15 | Avg Length: 24 | Epsilon: 0.149 | Loss: 0.0708 | Buffer: 13823 | 1.86s/ep | Elapsed: 17.5m
+Episode 960/3000 | Avg Reward: 27.53 | Avg Length: 13 | Epsilon: 0.146 | Loss: 0.0725 | Buffer: 13956 | 1.07s/ep | Elapsed: 17.7m
+Episode 970/3000 | Avg Reward: 70.32 | Avg Length: 32 | Epsilon: 0.143 | Loss: 0.1171 | Buffer: 14281 | 2.55s/ep | Elapsed: 18.1m
+Episode 980/3000 | Avg Reward: 59.84 | Avg Length: 27 | Epsilon: 0.141 | Loss: 0.0997 | Buffer: 14553 | 2.19s/ep | Elapsed: 18.5m
+Episode 990/3000 | Avg Reward: 84.11 | Avg Length: 38 | Epsilon: 0.138 | Loss: 0.0966 | Buffer: 14936 | 3.00s/ep | Elapsed: 19.0m
+Episode 1000/3000 | Avg Reward: 102.17 | Avg Length: 45 | Epsilon: 0.135 | Loss: 0.0767 | Buffer: 15390 | 3.49s/ep | Elapsed: 19.6m
+Episode 1010/3000 | Avg Reward: 27.80 | Avg Length: 14 | Epsilon: 0.132 | Loss: 0.0870 | Buffer: 15529 | 1.13s/ep | Elapsed: 19.8m
+Episode 1020/3000 | Avg Reward: 127.26 | Avg Length: 56 | Epsilon: 0.130 | Loss: 0.1456 | Buffer: 16092 | 4.48s/ep | Elapsed: 20.5m
+Episode 1030/3000 | Avg Reward: 87.25 | Avg Length: 40 | Epsilon: 0.127 | Loss: 0.1390 | Buffer: 16493 | 3.17s/ep | Elapsed: 21.0m
+Episode 1040/3000 | Avg Reward: 94.01 | Avg Length: 43 | Epsilon: 0.125 | Loss: 0.0942 | Buffer: 16919 | 3.35s/ep | Elapsed: 21.6m
+Episode 1050/3000 | Avg Reward: 53.74 | Avg Length: 25 | Epsilon: 0.122 | Loss: 0.0982 | Buffer: 17166 | 1.93s/ep | Elapsed: 21.9m
+Episode 1060/3000 | Avg Reward: 57.79 | Avg Length: 27 | Epsilon: 0.120 | Loss: 0.0773 | Buffer: 17432 | 2.06s/ep | Elapsed: 22.3m
+Episode 1070/3000 | Avg Reward: 90.96 | Avg Length: 41 | Epsilon: 0.117 | Loss: 0.0620 | Buffer: 17838 | 3.20s/ep | Elapsed: 22.8m
+Episode 1080/3000 | Avg Reward: 42.50 | Avg Length: 21 | Epsilon: 0.115 | Loss: 0.1677 | Buffer: 18045 | 1.70s/ep | Elapsed: 23.1m
+Episode 1090/3000 | Avg Reward: 61.60 | Avg Length: 27 | Epsilon: 0.113 | Loss: 0.1284 | Buffer: 18319 | 2.12s/ep | Elapsed: 23.4m
+Episode 1100/3000 | Avg Reward: 49.08 | Avg Length: 23 | Epsilon: 0.111 | Loss: 0.1337 | Buffer: 18550 | 1.88s/ep | Elapsed: 23.8m
+Episode 1110/3000 | Avg Reward: 58.35 | Avg Length: 27 | Epsilon: 0.108 | Loss: 0.0964 | Buffer: 18816 | 2.07s/ep | Elapsed: 24.1m
+Episode 1120/3000 | Avg Reward: 73.96 | Avg Length: 33 | Epsilon: 0.106 | Loss: 0.1735 | Buffer: 19150 | 2.62s/ep | Elapsed: 24.5m
+Episode 1130/3000 | Avg Reward: 75.23 | Avg Length: 34 | Epsilon: 0.104 | Loss: 0.1165 | Buffer: 19494 | 2.71s/ep | Elapsed: 25.0m
+Episode 1140/3000 | Avg Reward: 96.61 | Avg Length: 44 | Epsilon: 0.102 | Loss: 0.1086 | Buffer: 19937 | 3.52s/ep | Elapsed: 25.6m
+Episode 1150/3000 | Avg Reward: 75.86 | Avg Length: 34 | Epsilon: 0.100 | Loss: 0.0796 | Buffer: 20274 | 2.64s/ep | Elapsed: 26.0m
+Episode 1160/3000 | Avg Reward: 65.95 | Avg Length: 30 | Epsilon: 0.098 | Loss: 0.1664 | Buffer: 20578 | 2.39s/ep | Elapsed: 26.4m
+Episode 1170/3000 | Avg Reward: 55.98 | Avg Length: 26 | Epsilon: 0.096 | Loss: 0.1442 | Buffer: 20833 | 2.08s/ep | Elapsed: 26.8m
+Episode 1180/3000 | Avg Reward: 50.85 | Avg Length: 24 | Epsilon: 0.094 | Loss: 0.1765 | Buffer: 21077 | 1.90s/ep | Elapsed: 27.1m
+Episode 1190/3000 | Avg Reward: 92.04 | Avg Length: 41 | Epsilon: 0.092 | Loss: 0.1560 | Buffer: 21491 | 3.31s/ep | Elapsed: 27.6m
+Episode 1200/3000 | Avg Reward: 84.77 | Avg Length: 37 | Epsilon: 0.091 | Loss: 0.1388 | Buffer: 21865 | 2.98s/ep | Elapsed: 28.1m
+Episode 1210/3000 | Avg Reward: 109.14 | Avg Length: 48 | Epsilon: 0.089 | Loss: 0.1874 | Buffer: 22340 | 3.86s/ep | Elapsed: 28.8m
+Episode 1220/3000 | Avg Reward: 88.42 | Avg Length: 40 | Epsilon: 0.087 | Loss: 0.1792 | Buffer: 22745 | 3.31s/ep | Elapsed: 29.3m
+Episode 1230/3000 | Avg Reward: 145.18 | Avg Length: 66 | Epsilon: 0.085 | Loss: 0.1525 | Buffer: 23406 | 5.30s/ep | Elapsed: 30.2m
+Episode 1240/3000 | Avg Reward: 116.91 | Avg Length: 53 | Epsilon: 0.084 | Loss: 0.1581 | Buffer: 23933 | 4.26s/ep | Elapsed: 30.9m
+Episode 1250/3000 | Avg Reward: 91.99 | Avg Length: 42 | Epsilon: 0.082 | Loss: 0.3571 | Buffer: 24356 | 3.41s/ep | Elapsed: 31.5m
+Episode 1260/3000 | Avg Reward: 140.37 | Avg Length: 62 | Epsilon: 0.080 | Loss: 0.1858 | Buffer: 24977 | 4.95s/ep | Elapsed: 32.3m
+Episode 1270/3000 | Avg Reward: 92.75 | Avg Length: 41 | Epsilon: 0.079 | Loss: 0.1956 | Buffer: 25388 | 3.32s/ep | Elapsed: 32.9m
+Episode 1280/3000 | Avg Reward: 95.40 | Avg Length: 42 | Epsilon: 0.077 | Loss: 0.1639 | Buffer: 25807 | 3.39s/ep | Elapsed: 33.4m
+Episode 1290/3000 | Avg Reward: 93.92 | Avg Length: 42 | Epsilon: 0.076 | Loss: 0.2138 | Buffer: 26228 | 3.39s/ep | Elapsed: 34.0m
+Episode 1300/3000 | Avg Reward: 112.53 | Avg Length: 51 | Epsilon: 0.074 | Loss: 0.1875 | Buffer: 26734 | 4.14s/ep | Elapsed: 34.7m
+Episode 1310/3000 | Avg Reward: 128.89 | Avg Length: 57 | Epsilon: 0.073 | Loss: 0.2269 | Buffer: 27302 | 4.90s/ep | Elapsed: 35.5m
+Episode 1320/3000 | Avg Reward: 104.48 | Avg Length: 47 | Epsilon: 0.071 | Loss: 0.1678 | Buffer: 27769 | 3.77s/ep | Elapsed: 36.1m
+Episode 1330/3000 | Avg Reward: 87.59 | Avg Length: 41 | Epsilon: 0.070 | Loss: 0.2658 | Buffer: 28180 | 3.30s/ep | Elapsed: 36.7m
+Episode 1340/3000 | Avg Reward: 67.96 | Avg Length: 30 | Epsilon: 0.068 | Loss: 0.2924 | Buffer: 28483 | 2.40s/ep | Elapsed: 37.1m
+Episode 1350/3000 | Avg Reward: 91.27 | Avg Length: 42 | Epsilon: 0.067 | Loss: 0.2302 | Buffer: 28907 | 3.41s/ep | Elapsed: 37.6m
+Episode 1360/3000 | Avg Reward: 53.60 | Avg Length: 24 | Epsilon: 0.066 | Loss: 0.2468 | Buffer: 29152 | 1.92s/ep | Elapsed: 38.0m
+Episode 1370/3000 | Avg Reward: 107.17 | Avg Length: 47 | Epsilon: 0.064 | Loss: 0.2836 | Buffer: 29623 | 3.79s/ep | Elapsed: 38.6m
+Episode 1380/3000 | Avg Reward: 96.36 | Avg Length: 45 | Epsilon: 0.063 | Loss: 0.3159 | Buffer: 30069 | 3.58s/ep | Elapsed: 39.2m
+Episode 1390/3000 | Avg Reward: 98.13 | Avg Length: 46 | Epsilon: 0.062 | Loss: 0.2343 | Buffer: 30534 | 3.74s/ep | Elapsed: 39.8m
+Episode 1400/3000 | Avg Reward: 108.16 | Avg Length: 48 | Epsilon: 0.061 | Loss: 0.2936 | Buffer: 31009 | 3.84s/ep | Elapsed: 40.4m
+Episode 1410/3000 | Avg Reward: 65.17 | Avg Length: 29 | Epsilon: 0.059 | Loss: 0.3829 | Buffer: 31303 | 2.32s/ep | Elapsed: 40.8m
+Episode 1420/3000 | Avg Reward: 68.42 | Avg Length: 32 | Epsilon: 0.058 | Loss: 0.3530 | Buffer: 31622 | 2.54s/ep | Elapsed: 41.3m
+Episode 1430/3000 | Avg Reward: 55.64 | Avg Length: 26 | Epsilon: 0.057 | Loss: 0.2431 | Buffer: 31885 | 2.09s/ep | Elapsed: 41.6m
+Episode 1440/3000 | Avg Reward: 131.61 | Avg Length: 58 | Epsilon: 0.056 | Loss: 0.3904 | Buffer: 32465 | 4.73s/ep | Elapsed: 42.4m
+Episode 1450/3000 | Avg Reward: 119.49 | Avg Length: 53 | Epsilon: 0.055 | Loss: 0.2728 | Buffer: 32996 | 4.21s/ep | Elapsed: 43.1m
+Episode 1460/3000 | Avg Reward: 124.95 | Avg Length: 56 | Epsilon: 0.054 | Loss: 0.2824 | Buffer: 33558 | 4.57s/ep | Elapsed: 43.9m
+Episode 1470/3000 | Avg Reward: 170.65 | Avg Length: 74 | Epsilon: 0.053 | Loss: 0.3033 | Buffer: 34302 | 5.98s/ep | Elapsed: 44.9m
+Episode 1480/3000 | Avg Reward: 104.79 | Avg Length: 46 | Epsilon: 0.052 | Loss: 0.2332 | Buffer: 34767 | 3.76s/ep | Elapsed: 45.5m
+Episode 1490/3000 | Avg Reward: 106.70 | Avg Length: 48 | Epsilon: 0.051 | Loss: 0.3248 | Buffer: 35247 | 3.89s/ep | Elapsed: 46.1m
+Episode 1500/3000 | Avg Reward: 109.73 | Avg Length: 48 | Epsilon: 0.050 | Loss: 0.2993 | Buffer: 35730 | 3.81s/ep | Elapsed: 46.8m
+Episode 1510/3000 | Avg Reward: 96.89 | Avg Length: 44 | Epsilon: 0.049 | Loss: 0.3040 | Buffer: 36171 | 3.59s/ep | Elapsed: 47.4m
+Episode 1520/3000 | Avg Reward: 108.38 | Avg Length: 48 | Epsilon: 0.048 | Loss: 0.3315 | Buffer: 36649 | 3.84s/ep | Elapsed: 48.0m
+Episode 1530/3000 | Avg Reward: 143.26 | Avg Length: 64 | Epsilon: 0.047 | Loss: 0.3290 | Buffer: 37289 | 5.16s/ep | Elapsed: 48.9m
+Episode 1540/3000 | Avg Reward: 115.75 | Avg Length: 51 | Epsilon: 0.046 | Loss: 0.3321 | Buffer: 37801 | 4.16s/ep | Elapsed: 49.6m
+Episode 1550/3000 | Avg Reward: 71.43 | Avg Length: 34 | Epsilon: 0.045 | Loss: 0.3636 | Buffer: 38139 | 2.72s/ep | Elapsed: 50.0m
+Episode 1560/3000 | Avg Reward: 110.25 | Avg Length: 49 | Epsilon: 0.044 | Loss: 0.3418 | Buffer: 38630 | 4.01s/ep | Elapsed: 50.7m
+Episode 1570/3000 | Avg Reward: 118.37 | Avg Length: 53 | Epsilon: 0.043 | Loss: 0.4202 | Buffer: 39158 | 4.33s/ep | Elapsed: 51.4m
+Episode 1580/3000 | Avg Reward: 93.52 | Avg Length: 41 | Epsilon: 0.042 | Loss: 0.4437 | Buffer: 39571 | 3.25s/ep | Elapsed: 51.9m
+Episode 1590/3000 | Avg Reward: 115.02 | Avg Length: 52 | Epsilon: 0.041 | Loss: 0.3914 | Buffer: 40088 | 4.24s/ep | Elapsed: 52.7m
+Episode 1600/3000 | Avg Reward: 133.32 | Avg Length: 59 | Epsilon: 0.041 | Loss: 0.3360 | Buffer: 40679 | 4.82s/ep | Elapsed: 53.5m
+Episode 1610/3000 | Avg Reward: 141.11 | Avg Length: 63 | Epsilon: 0.040 | Loss: 0.4350 | Buffer: 41312 | 5.11s/ep | Elapsed: 54.3m
+Episode 1620/3000 | Avg Reward: 112.75 | Avg Length: 50 | Epsilon: 0.039 | Loss: 0.4608 | Buffer: 41807 | 4.03s/ep | Elapsed: 55.0m
+Episode 1630/3000 | Avg Reward: 118.29 | Avg Length: 54 | Epsilon: 0.038 | Loss: 0.4627 | Buffer: 42348 | 4.31s/ep | Elapsed: 55.7m
+Episode 1640/3000 | Avg Reward: 91.83 | Avg Length: 44 | Epsilon: 0.038 | Loss: 0.5083 | Buffer: 42792 | 3.61s/ep | Elapsed: 56.3m
+Episode 1650/3000 | Avg Reward: 95.22 | Avg Length: 43 | Epsilon: 0.037 | Loss: 0.4215 | Buffer: 43224 | 3.52s/ep | Elapsed: 56.9m
+Episode 1660/3000 | Avg Reward: 111.42 | Avg Length: 51 | Epsilon: 0.036 | Loss: 0.4600 | Buffer: 43737 | 4.22s/ep | Elapsed: 57.6m
+Episode 1670/3000 | Avg Reward: 90.09 | Avg Length: 43 | Epsilon: 0.035 | Loss: 0.4337 | Buffer: 44165 | 3.52s/ep | Elapsed: 58.2m
+Episode 1680/3000 | Avg Reward: 134.52 | Avg Length: 59 | Epsilon: 0.035 | Loss: 0.5250 | Buffer: 44754 | 4.74s/ep | Elapsed: 59.0m
+Episode 1690/3000 | Avg Reward: 133.47 | Avg Length: 60 | Epsilon: 0.034 | Loss: 0.4141 | Buffer: 45354 | 4.82s/ep | Elapsed: 59.8m
+Episode 1700/3000 | Avg Reward: 97.61 | Avg Length: 46 | Epsilon: 0.033 | Loss: 0.4547 | Buffer: 45812 | 3.75s/ep | Elapsed: 1.0h
+Episode 1710/3000 | Avg Reward: 107.68 | Avg Length: 49 | Epsilon: 0.033 | Loss: 0.5221 | Buffer: 46306 | 4.05s/ep | Elapsed: 1.0h
+Episode 1720/3000 | Avg Reward: 102.37 | Avg Length: 46 | Epsilon: 0.032 | Loss: 0.5690 | Buffer: 46769 | 3.79s/ep | Elapsed: 1.0h
+Episode 1730/3000 | Avg Reward: 110.80 | Avg Length: 50 | Epsilon: 0.031 | Loss: 0.6322 | Buffer: 47266 | 3.96s/ep | Elapsed: 1.0h
+Episode 1740/3000 | Avg Reward: 107.17 | Avg Length: 50 | Epsilon: 0.031 | Loss: 0.5515 | Buffer: 47763 | 4.09s/ep | Elapsed: 1.1h
+Episode 1750/3000 | Avg Reward: 108.83 | Avg Length: 49 | Epsilon: 0.030 | Loss: 0.5661 | Buffer: 48249 | 3.98s/ep | Elapsed: 1.1h
+Episode 1760/3000 | Avg Reward: 107.28 | Avg Length: 50 | Epsilon: 0.029 | Loss: 0.5480 | Buffer: 48744 | 4.08s/ep | Elapsed: 1.1h
+Episode 1770/3000 | Avg Reward: 130.19 | Avg Length: 58 | Epsilon: 0.029 | Loss: 0.6009 | Buffer: 49328 | 4.72s/ep | Elapsed: 1.1h
+Episode 1780/3000 | Avg Reward: 120.06 | Avg Length: 53 | Epsilon: 0.028 | Loss: 0.5662 | Buffer: 49858 | 4.38s/ep | Elapsed: 1.1h
+Episode 1790/3000 | Avg Reward: 72.77 | Avg Length: 33 | Epsilon: 0.028 | Loss: 0.6019 | Buffer: 50190 | 2.69s/ep | Elapsed: 1.1h
+Episode 1800/3000 | Avg Reward: 79.76 | Avg Length: 37 | Epsilon: 0.027 | Loss: 0.6179 | Buffer: 50558 | 3.00s/ep | Elapsed: 1.1h
+Episode 1810/3000 | Avg Reward: 108.04 | Avg Length: 48 | Epsilon: 0.027 | Loss: 0.4680 | Buffer: 51038 | 3.94s/ep | Elapsed: 1.1h
+Episode 1820/3000 | Avg Reward: 170.84 | Avg Length: 76 | Epsilon: 0.026 | Loss: 0.6052 | Buffer: 51795 | 6.17s/ep | Elapsed: 1.1h
+Episode 1830/3000 | Avg Reward: 183.96 | Avg Length: 83 | Epsilon: 0.026 | Loss: 0.6355 | Buffer: 52621 | 6.72s/ep | Elapsed: 1.2h
+Episode 1840/3000 | Avg Reward: 86.87 | Avg Length: 39 | Epsilon: 0.025 | Loss: 0.5445 | Buffer: 53013 | 3.23s/ep | Elapsed: 1.2h
+Episode 1850/3000 | Avg Reward: 153.00 | Avg Length: 67 | Epsilon: 0.025 | Loss: 0.5184 | Buffer: 53682 | 5.56s/ep | Elapsed: 1.2h
+Episode 1860/3000 | Avg Reward: 110.64 | Avg Length: 51 | Epsilon: 0.024 | Loss: 0.6050 | Buffer: 54194 | 4.13s/ep | Elapsed: 1.2h
+Episode 1870/3000 | Avg Reward: 109.41 | Avg Length: 49 | Epsilon: 0.024 | Loss: 0.5976 | Buffer: 54686 | 4.09s/ep | Elapsed: 1.2h
+Episode 1880/3000 | Avg Reward: 149.26 | Avg Length: 65 | Epsilon: 0.023 | Loss: 0.5892 | Buffer: 55340 | 5.37s/ep | Elapsed: 1.2h
+Episode 1890/3000 | Avg Reward: 168.53 | Avg Length: 74 | Epsilon: 0.023 | Loss: 0.6957 | Buffer: 56078 | 6.07s/ep | Elapsed: 1.2h
+Episode 1900/3000 | Avg Reward: 93.26 | Avg Length: 43 | Epsilon: 0.022 | Loss: 0.6958 | Buffer: 56505 | 3.53s/ep | Elapsed: 1.2h
+Episode 1910/3000 | Avg Reward: 100.77 | Avg Length: 45 | Epsilon: 0.022 | Loss: 0.6828 | Buffer: 56957 | 3.74s/ep | Elapsed: 1.3h
+Episode 1920/3000 | Avg Reward: 146.41 | Avg Length: 65 | Epsilon: 0.021 | Loss: 0.7445 | Buffer: 57604 | 5.27s/ep | Elapsed: 1.3h
+Episode 1930/3000 | Avg Reward: 126.13 | Avg Length: 57 | Epsilon: 0.021 | Loss: 0.7312 | Buffer: 58172 | 4.72s/ep | Elapsed: 1.3h
+Episode 1940/3000 | Avg Reward: 99.40 | Avg Length: 44 | Epsilon: 0.021 | Loss: 0.6772 | Buffer: 58617 | 3.68s/ep | Elapsed: 1.3h
+Episode 1950/3000 | Avg Reward: 71.79 | Avg Length: 33 | Epsilon: 0.020 | Loss: 0.7020 | Buffer: 58943 | 2.68s/ep | Elapsed: 1.3h
+Episode 1960/3000 | Avg Reward: 110.21 | Avg Length: 49 | Epsilon: 0.020 | Loss: 0.7206 | Buffer: 59432 | 4.08s/ep | Elapsed: 1.3h
+Episode 1970/3000 | Avg Reward: 116.52 | Avg Length: 53 | Epsilon: 0.020 | Loss: 0.5930 | Buffer: 59965 | 4.32s/ep | Elapsed: 1.3h
+Episode 1980/3000 | Avg Reward: 122.18 | Avg Length: 57 | Epsilon: 0.020 | Loss: 0.7472 | Buffer: 60533 | 4.75s/ep | Elapsed: 1.3h
+Episode 1990/3000 | Avg Reward: 110.48 | Avg Length: 48 | Epsilon: 0.020 | Loss: 0.7744 | Buffer: 61015 | 3.87s/ep | Elapsed: 1.4h
+Episode 2000/3000 | Avg Reward: 150.25 | Avg Length: 66 | Epsilon: 0.020 | Loss: 0.6335 | Buffer: 61671 | 5.49s/ep | Elapsed: 1.4h
+Episode 2010/3000 | Avg Reward: 133.94 | Avg Length: 59 | Epsilon: 0.020 | Loss: 0.8214 | Buffer: 62260 | 4.84s/ep | Elapsed: 1.4h
+Episode 2020/3000 | Avg Reward: 97.21 | Avg Length: 44 | Epsilon: 0.020 | Loss: 0.7186 | Buffer: 62697 | 3.59s/ep | Elapsed: 1.4h
+Episode 2030/3000 | Avg Reward: 129.51 | Avg Length: 59 | Epsilon: 0.020 | Loss: 0.5083 | Buffer: 63288 | 4.85s/ep | Elapsed: 1.4h
+Episode 2040/3000 | Avg Reward: 127.60 | Avg Length: 57 | Epsilon: 0.020 | Loss: 0.7042 | Buffer: 63854 | 4.72s/ep | Elapsed: 1.4h
+Episode 2050/3000 | Avg Reward: 96.14 | Avg Length: 43 | Epsilon: 0.020 | Loss: 1.1635 | Buffer: 64280 | 3.52s/ep | Elapsed: 1.4h
+Episode 2060/3000 | Avg Reward: 153.06 | Avg Length: 68 | Epsilon: 0.020 | Loss: 0.6203 | Buffer: 64960 | 5.61s/ep | Elapsed: 1.4h
+Episode 2070/3000 | Avg Reward: 103.88 | Avg Length: 49 | Epsilon: 0.020 | Loss: 0.7527 | Buffer: 65452 | 4.09s/ep | Elapsed: 1.5h
+Episode 2080/3000 | Avg Reward: 147.90 | Avg Length: 66 | Epsilon: 0.020 | Loss: 0.9050 | Buffer: 66110 | 5.38s/ep | Elapsed: 1.5h
+Episode 2090/3000 | Avg Reward: 93.37 | Avg Length: 44 | Epsilon: 0.020 | Loss: 0.7396 | Buffer: 66545 | 3.62s/ep | Elapsed: 1.5h
+Episode 2100/3000 | Avg Reward: 138.19 | Avg Length: 62 | Epsilon: 0.020 | Loss: 0.8152 | Buffer: 67165 | 5.12s/ep | Elapsed: 1.5h
+Episode 2110/3000 | Avg Reward: 107.24 | Avg Length: 48 | Epsilon: 0.020 | Loss: 0.4733 | Buffer: 67644 | 4.00s/ep | Elapsed: 1.5h
+Episode 2120/3000 | Avg Reward: 96.74 | Avg Length: 43 | Epsilon: 0.020 | Loss: 1.0416 | Buffer: 68077 | 3.60s/ep | Elapsed: 1.5h
+Episode 2130/3000 | Avg Reward: 141.38 | Avg Length: 64 | Epsilon: 0.020 | Loss: 0.7567 | Buffer: 68717 | 5.30s/ep | Elapsed: 1.5h
+Episode 2140/3000 | Avg Reward: 149.85 | Avg Length: 66 | Epsilon: 0.020 | Loss: 0.8466 | Buffer: 69378 | 5.44s/ep | Elapsed: 1.5h
+Episode 2150/3000 | Avg Reward: 135.68 | Avg Length: 62 | Epsilon: 0.020 | Loss: 0.7893 | Buffer: 69994 | 5.19s/ep | Elapsed: 1.6h
+Episode 2160/3000 | Avg Reward: 119.41 | Avg Length: 54 | Epsilon: 0.020 | Loss: 1.0710 | Buffer: 70538 | 4.48s/ep | Elapsed: 1.6h
+Episode 2170/3000 | Avg Reward: 118.18 | Avg Length: 54 | Epsilon: 0.020 | Loss: 1.0893 | Buffer: 71078 | 4.59s/ep | Elapsed: 1.6h
+Episode 2180/3000 | Avg Reward: 124.74 | Avg Length: 56 | Epsilon: 0.020 | Loss: 1.3890 | Buffer: 71633 | 4.57s/ep | Elapsed: 1.6h
+Episode 2190/3000 | Avg Reward: 165.43 | Avg Length: 74 | Epsilon: 0.020 | Loss: 0.9712 | Buffer: 72377 | 6.19s/ep | Elapsed: 1.6h
+Episode 2200/3000 | Avg Reward: 108.29 | Avg Length: 48 | Epsilon: 0.020 | Loss: 1.0317 | Buffer: 72858 | 4.03s/ep | Elapsed: 1.6h
+Episode 2210/3000 | Avg Reward: 129.14 | Avg Length: 61 | Epsilon: 0.020 | Loss: 0.9191 | Buffer: 73470 | 5.06s/ep | Elapsed: 1.6h
+Episode 2220/3000 | Avg Reward: 103.65 | Avg Length: 48 | Epsilon: 0.020 | Loss: 0.8948 | Buffer: 73946 | 4.00s/ep | Elapsed: 1.7h
+Episode 2230/3000 | Avg Reward: 148.70 | Avg Length: 69 | Epsilon: 0.020 | Loss: 0.9927 | Buffer: 74638 | 5.79s/ep | Elapsed: 1.7h
+Episode 2240/3000 | Avg Reward: 163.69 | Avg Length: 75 | Epsilon: 0.020 | Loss: 0.8561 | Buffer: 75384 | 6.23s/ep | Elapsed: 1.7h
+Episode 2250/3000 | Avg Reward: 126.40 | Avg Length: 55 | Epsilon: 0.020 | Loss: 1.0492 | Buffer: 75936 | 4.68s/ep | Elapsed: 1.7h
+Episode 2260/3000 | Avg Reward: 71.72 | Avg Length: 34 | Epsilon: 0.020 | Loss: 1.1071 | Buffer: 76274 | 2.84s/ep | Elapsed: 1.7h
+Episode 2270/3000 | Avg Reward: 150.34 | Avg Length: 68 | Epsilon: 0.020 | Loss: 1.2162 | Buffer: 76958 | 5.73s/ep | Elapsed: 1.7h
+Episode 2280/3000 | Avg Reward: 146.73 | Avg Length: 68 | Epsilon: 0.020 | Loss: 1.1901 | Buffer: 77638 | 5.75s/ep | Elapsed: 1.7h
+Episode 2290/3000 | Avg Reward: 90.41 | Avg Length: 43 | Epsilon: 0.020 | Loss: 1.0643 | Buffer: 78066 | 3.83s/ep | Elapsed: 1.7h
+Episode 2300/3000 | Avg Reward: 82.52 | Avg Length: 38 | Epsilon: 0.020 | Loss: 1.2932 | Buffer: 78447 | 3.25s/ep | Elapsed: 1.8h
+Episode 2310/3000 | Avg Reward: 170.56 | Avg Length: 75 | Epsilon: 0.020 | Loss: 1.1948 | Buffer: 79199 | 6.37s/ep | Elapsed: 1.8h
+Episode 2320/3000 | Avg Reward: 153.98 | Avg Length: 71 | Epsilon: 0.020 | Loss: 1.1059 | Buffer: 79909 | 5.97s/ep | Elapsed: 1.8h
+Episode 2330/3000 | Avg Reward: 160.30 | Avg Length: 72 | Epsilon: 0.020 | Loss: 1.0223 | Buffer: 80633 | 6.09s/ep | Elapsed: 1.8h
+Episode 2340/3000 | Avg Reward: 113.30 | Avg Length: 52 | Epsilon: 0.020 | Loss: 1.3173 | Buffer: 81153 | 4.33s/ep | Elapsed: 1.8h
+Episode 2350/3000 | Avg Reward: 136.91 | Avg Length: 62 | Epsilon: 0.020 | Loss: 1.0863 | Buffer: 81778 | 5.36s/ep | Elapsed: 1.8h
+Episode 2360/3000 | Avg Reward: 81.69 | Avg Length: 40 | Epsilon: 0.020 | Loss: 1.0399 | Buffer: 82174 | 3.33s/ep | Elapsed: 1.8h
+Episode 2370/3000 | Avg Reward: 120.83 | Avg Length: 59 | Epsilon: 0.020 | Loss: 1.2061 | Buffer: 82760 | 4.93s/ep | Elapsed: 1.9h
+Episode 2380/3000 | Avg Reward: 96.61 | Avg Length: 46 | Epsilon: 0.020 | Loss: 1.0804 | Buffer: 83222 | 3.93s/ep | Elapsed: 1.9h
+Episode 2390/3000 | Avg Reward: 160.87 | Avg Length: 76 | Epsilon: 0.020 | Loss: 1.1910 | Buffer: 83987 | 6.49s/ep | Elapsed: 1.9h
+Episode 2400/3000 | Avg Reward: 147.81 | Avg Length: 68 | Epsilon: 0.020 | Loss: 1.1442 | Buffer: 84667 | 5.71s/ep | Elapsed: 1.9h
+Episode 2410/3000 | Avg Reward: 146.04 | Avg Length: 69 | Epsilon: 0.020 | Loss: 0.8452 | Buffer: 85356 | 5.81s/ep | Elapsed: 1.9h
+Episode 2420/3000 | Avg Reward: 98.70 | Avg Length: 45 | Epsilon: 0.020 | Loss: 0.9927 | Buffer: 85802 | 3.81s/ep | Elapsed: 1.9h
+Episode 2430/3000 | Avg Reward: 131.12 | Avg Length: 62 | Epsilon: 0.020 | Loss: 1.3847 | Buffer: 86417 | 5.16s/ep | Elapsed: 1.9h
+Episode 2440/3000 | Avg Reward: 150.23 | Avg Length: 70 | Epsilon: 0.020 | Loss: 1.2443 | Buffer: 87113 | 5.98s/ep | Elapsed: 2.0h
+Episode 2450/3000 | Avg Reward: 147.51 | Avg Length: 67 | Epsilon: 0.020 | Loss: 1.1452 | Buffer: 87782 | 5.68s/ep | Elapsed: 2.0h
+Episode 2460/3000 | Avg Reward: 88.74 | Avg Length: 40 | Epsilon: 0.020 | Loss: 1.2812 | Buffer: 88183 | 3.44s/ep | Elapsed: 2.0h
+Episode 2470/3000 | Avg Reward: 114.08 | Avg Length: 52 | Epsilon: 0.020 | Loss: 1.4549 | Buffer: 88708 | 4.53s/ep | Elapsed: 2.0h
+Episode 2480/3000 | Avg Reward: 113.30 | Avg Length: 54 | Epsilon: 0.020 | Loss: 1.1701 | Buffer: 89247 | 4.56s/ep | Elapsed: 2.0h
+Episode 2490/3000 | Avg Reward: 96.87 | Avg Length: 45 | Epsilon: 0.020 | Loss: 1.1335 | Buffer: 89700 | 4.01s/ep | Elapsed: 2.0h
+Episode 2500/3000 | Avg Reward: 154.92 | Avg Length: 71 | Epsilon: 0.020 | Loss: 1.2430 | Buffer: 90413 | 6.05s/ep | Elapsed: 2.0h
+Episode 2510/3000 | Avg Reward: 168.41 | Avg Length: 77 | Epsilon: 0.020 | Loss: 1.2437 | Buffer: 91185 | 6.62s/ep | Elapsed: 2.1h
+Episode 2520/3000 | Avg Reward: 134.41 | Avg Length: 65 | Epsilon: 0.020 | Loss: 1.4191 | Buffer: 91835 | 5.50s/ep | Elapsed: 2.1h
+Episode 2530/3000 | Avg Reward: 141.49 | Avg Length: 64 | Epsilon: 0.020 | Loss: 1.4442 | Buffer: 92480 | 5.66s/ep | Elapsed: 2.1h
+Episode 2540/3000 | Avg Reward: 174.25 | Avg Length: 83 | Epsilon: 0.020 | Loss: 1.2646 | Buffer: 93306 | 7.20s/ep | Elapsed: 2.1h
+Episode 2550/3000 | Avg Reward: 72.00 | Avg Length: 33 | Epsilon: 0.020 | Loss: 1.5353 | Buffer: 93639 | 2.86s/ep | Elapsed: 2.1h
+Episode 2560/3000 | Avg Reward: 145.53 | Avg Length: 66 | Epsilon: 0.020 | Loss: 1.2881 | Buffer: 94295 | 5.61s/ep | Elapsed: 2.1h
+Episode 2570/3000 | Avg Reward: 144.87 | Avg Length: 73 | Epsilon: 0.020 | Loss: 1.1793 | Buffer: 95025 | 6.35s/ep | Elapsed: 2.1h
+Episode 2580/3000 | Avg Reward: 120.95 | Avg Length: 55 | Epsilon: 0.020 | Loss: 1.8821 | Buffer: 95579 | 4.79s/ep | Elapsed: 2.2h
+Episode 2590/3000 | Avg Reward: 133.65 | Avg Length: 63 | Epsilon: 0.020 | Loss: 1.5220 | Buffer: 96212 | 5.42s/ep | Elapsed: 2.2h
+Episode 2600/3000 | Avg Reward: 135.93 | Avg Length: 62 | Epsilon: 0.020 | Loss: 1.0132 | Buffer: 96833 | 5.32s/ep | Elapsed: 2.2h
+Episode 2610/3000 | Avg Reward: 165.93 | Avg Length: 75 | Epsilon: 0.020 | Loss: 1.2428 | Buffer: 97586 | 6.67s/ep | Elapsed: 2.2h
+Episode 2620/3000 | Avg Reward: 100.19 | Avg Length: 46 | Epsilon: 0.020 | Loss: 1.3876 | Buffer: 98050 | 4.02s/ep | Elapsed: 2.2h
+Episode 2630/3000 | Avg Reward: 135.47 | Avg Length: 62 | Epsilon: 0.020 | Loss: 1.4813 | Buffer: 98669 | 5.27s/ep | Elapsed: 2.2h
+Episode 2640/3000 | Avg Reward: 129.38 | Avg Length: 60 | Epsilon: 0.020 | Loss: 1.5422 | Buffer: 99264 | 5.10s/ep | Elapsed: 2.3h
+Episode 2650/3000 | Avg Reward: 151.89 | Avg Length: 68 | Epsilon: 0.020 | Loss: 1.3876 | Buffer: 99944 | 5.99s/ep | Elapsed: 2.3h
+Episode 2660/3000 | Avg Reward: 169.54 | Avg Length: 77 | Epsilon: 0.020 | Loss: 1.5870 | Buffer: 100000 | 6.56s/ep | Elapsed: 2.3h
+Episode 2670/3000 | Avg Reward: 125.38 | Avg Length: 56 | Epsilon: 0.020 | Loss: 1.2442 | Buffer: 100000 | 4.89s/ep | Elapsed: 2.3h
+Episode 2680/3000 | Avg Reward: 93.03 | Avg Length: 42 | Epsilon: 0.020 | Loss: 1.7575 | Buffer: 100000 | 3.63s/ep | Elapsed: 2.3h
+Episode 2690/3000 | Avg Reward: 160.59 | Avg Length: 73 | Epsilon: 0.020 | Loss: 1.4904 | Buffer: 100000 | 6.27s/ep | Elapsed: 2.3h
+Episode 2700/3000 | Avg Reward: 117.95 | Avg Length: 53 | Epsilon: 0.020 | Loss: 0.3548 | Buffer: 100000 | 4.51s/ep | Elapsed: 2.3h
+Episode 2710/3000 | Avg Reward: 127.04 | Avg Length: 60 | Epsilon: 0.020 | Loss: 1.8051 | Buffer: 100000 | 5.25s/ep | Elapsed: 2.4h
+Episode 2720/3000 | Avg Reward: 95.67 | Avg Length: 47 | Epsilon: 0.020 | Loss: 1.5192 | Buffer: 100000 | 4.01s/ep | Elapsed: 2.4h
+Episode 2730/3000 | Avg Reward: 127.36 | Avg Length: 60 | Epsilon: 0.020 | Loss: 1.6776 | Buffer: 100000 | 5.23s/ep | Elapsed: 2.4h
+Episode 2740/3000 | Avg Reward: 141.05 | Avg Length: 65 | Epsilon: 0.020 | Loss: 1.5144 | Buffer: 100000 | 5.63s/ep | Elapsed: 2.4h
+Episode 2750/3000 | Avg Reward: 139.74 | Avg Length: 64 | Epsilon: 0.020 | Loss: 1.5296 | Buffer: 100000 | 5.66s/ep | Elapsed: 2.4h
+Episode 2760/3000 | Avg Reward: 122.97 | Avg Length: 58 | Epsilon: 0.020 | Loss: 1.7410 | Buffer: 100000 | 5.04s/ep | Elapsed: 2.4h
+Episode 2770/3000 | Avg Reward: 116.67 | Avg Length: 57 | Epsilon: 0.020 | Loss: 1.5795 | Buffer: 100000 | 5.00s/ep | Elapsed: 2.4h
+Episode 2780/3000 | Avg Reward: 146.30 | Avg Length: 68 | Epsilon: 0.020 | Loss: 1.5399 | Buffer: 100000 | 5.81s/ep | Elapsed: 2.5h
+Episode 2790/3000 | Avg Reward: 94.61 | Avg Length: 44 | Epsilon: 0.020 | Loss: 1.2568 | Buffer: 100000 | 3.82s/ep | Elapsed: 2.5h
+Episode 2800/3000 | Avg Reward: 149.84 | Avg Length: 67 | Epsilon: 0.020 | Loss: 1.6807 | Buffer: 100000 | 5.93s/ep | Elapsed: 2.5h
+Episode 2810/3000 | Avg Reward: 186.34 | Avg Length: 88 | Epsilon: 0.020 | Loss: 1.6589 | Buffer: 100000 | 7.38s/ep | Elapsed: 2.5h
+Episode 2820/3000 | Avg Reward: 200.13 | Avg Length: 92 | Epsilon: 0.020 | Loss: 1.7242 | Buffer: 100000 | 7.75s/ep | Elapsed: 2.5h
+Episode 2830/3000 | Avg Reward: 153.16 | Avg Length: 75 | Epsilon: 0.020 | Loss: 0.9575 | Buffer: 100000 | 6.26s/ep | Elapsed: 2.5h
+Episode 2840/3000 | Avg Reward: 107.18 | Avg Length: 51 | Epsilon: 0.020 | Loss: 1.9270 | Buffer: 100000 | 4.19s/ep | Elapsed: 2.6h
+Episode 2850/3000 | Avg Reward: 169.19 | Avg Length: 76 | Epsilon: 0.020 | Loss: 1.7127 | Buffer: 100000 | 6.27s/ep | Elapsed: 2.6h
+Episode 2860/3000 | Avg Reward: 124.97 | Avg Length: 61 | Epsilon: 0.020 | Loss: 1.8550 | Buffer: 100000 | 5.15s/ep | Elapsed: 2.6h
+Episode 2870/3000 | Avg Reward: 115.39 | Avg Length: 53 | Epsilon: 0.020 | Loss: 1.6302 | Buffer: 100000 | 4.32s/ep | Elapsed: 2.6h
+Episode 2880/3000 | Avg Reward: 136.07 | Avg Length: 63 | Epsilon: 0.020 | Loss: 1.5499 | Buffer: 100000 | 5.53s/ep | Elapsed: 2.6h
+Episode 2890/3000 | Avg Reward: 156.09 | Avg Length: 74 | Epsilon: 0.020 | Loss: 2.2872 | Buffer: 100000 | 6.32s/ep | Elapsed: 2.6h
+Episode 2900/3000 | Avg Reward: 139.28 | Avg Length: 65 | Epsilon: 0.020 | Loss: 1.8251 | Buffer: 100000 | 5.50s/ep | Elapsed: 2.6h
+Episode 2910/3000 | Avg Reward: 98.98 | Avg Length: 47 | Epsilon: 0.020 | Loss: 1.7276 | Buffer: 100000 | 3.88s/ep | Elapsed: 2.7h
+Episode 2920/3000 | Avg Reward: 140.84 | Avg Length: 63 | Epsilon: 0.020 | Loss: 1.7286 | Buffer: 100000 | 5.33s/ep | Elapsed: 2.7h
+Episode 2930/3000 | Avg Reward: 132.26 | Avg Length: 63 | Epsilon: 0.020 | Loss: 1.3667 | Buffer: 100000 | 5.24s/ep | Elapsed: 2.7h
+Episode 2940/3000 | Avg Reward: 96.79 | Avg Length: 45 | Epsilon: 0.020 | Loss: 1.6071 | Buffer: 100000 | 3.77s/ep | Elapsed: 2.7h
+Episode 2950/3000 | Avg Reward: 104.88 | Avg Length: 48 | Epsilon: 0.020 | Loss: 1.5458 | Buffer: 100000 | 4.02s/ep | Elapsed: 2.7h
+Episode 2960/3000 | Avg Reward: 169.15 | Avg Length: 77 | Epsilon: 0.020 | Loss: 1.6761 | Buffer: 100000 | 6.47s/ep | Elapsed: 2.7h
+Episode 2970/3000 | Avg Reward: 103.61 | Avg Length: 50 | Epsilon: 0.020 | Loss: 1.6356 | Buffer: 100000 | 4.10s/ep | Elapsed: 2.7h
+Episode 2980/3000 | Avg Reward: 146.32 | Avg Length: 68 | Epsilon: 0.020 | Loss: 1.7193 | Buffer: 100000 | 5.64s/ep | Elapsed: 2.8h
+Episode 2990/3000 | Avg Reward: 168.08 | Avg Length: 78 | Epsilon: 0.020 | Loss: 1.3794 | Buffer: 100000 | 6.56s/ep | Elapsed: 2.8h
+Episode 3000/3000 | Avg Reward: 77.92 | Avg Length: 37 | Epsilon: 0.020 | Loss: 1.1799 | Buffer: 100000 | 3.10s/ep | Elapsed: 2.8h
+Training completed!
+Training progress plot saved to training_progress_dqn_grayscale_per.png
+Model saved to highway_dqn_grayscale_per.pth
+Model loaded from highway_dqn_grayscale_per.pth
+
+Evaluating agent for 30 episodes...
+Episode 1: Reward = 205.50, Steps = 100, Avg Speed = 27.37
+Episode 2: Reward = 226.34, Steps = 100, Avg Speed = 28.51
+Episode 3: Reward = 19.08, Steps = 10, Avg Speed = 28.02
+Episode 4: Reward = 60.01, Steps = 30, Avg Speed = 26.13
+Episode 5: Reward = 41.66, Steps = 19, Avg Speed = 28.37
+Episode 6: Reward = 34.92, Steps = 17, Avg Speed = 27.01
+Episode 7: Reward = 56.23, Steps = 29, Avg Speed = 26.07
+Episode 8: Reward = 231.58, Steps = 100, Avg Speed = 29.25
+Episode 9: Reward = 26.82, Steps = 13, Avg Speed = 26.86
+Episode 10: Reward = 9.41, Steps = 5, Avg Speed = 26.18
+Episode 11: Reward = 18.00, Steps = 9, Avg Speed = 28.90
+Episode 12: Reward = 229.56, Steps = 100, Avg Speed = 29.10
+Episode 13: Reward = 189.31, Steps = 100, Avg Speed = 25.68
+Episode 14: Reward = 214.49, Steps = 100, Avg Speed = 27.51
+Episode 15: Reward = 54.32, Steps = 25, Avg Speed = 28.28
+Episode 16: Reward = 24.49, Steps = 13, Avg Speed = 24.59
+Episode 17: Reward = 231.59, Steps = 100, Avg Speed = 29.25
+Episode 18: Reward = 27.33, Steps = 13, Avg Speed = 26.48
+Episode 19: Reward = 215.15, Steps = 100, Avg Speed = 27.81
+Episode 20: Reward = 22.25, Steps = 11, Avg Speed = 26.35
+Episode 21: Reward = 230.75, Steps = 100, Avg Speed = 29.15
+Episode 22: Reward = 232.91, Steps = 100, Avg Speed = 29.05
+Episode 23: Reward = 33.00, Steps = 15, Avg Speed = 28.38
+Episode 24: Reward = 32.90, Steps = 16, Avg Speed = 27.42
+Episode 25: Reward = 217.65, Steps = 100, Avg Speed = 27.71
+Episode 26: Reward = 27.00, Steps = 13, Avg Speed = 28.41
+Episode 27: Reward = 30.33, Steps = 15, Avg Speed = 26.89
+Episode 28: Reward = 38.24, Steps = 18, Avg Speed = 28.33
+Episode 29: Reward = 31.83, Steps = 15, Avg Speed = 27.24
+Episode 30: Reward = 224.15, Steps = 100, Avg Speed = 28.90
+
+Average Evaluation Reward: 107.89
+Average Evaluation Speed: 27.64
+Average reward: 67.77
