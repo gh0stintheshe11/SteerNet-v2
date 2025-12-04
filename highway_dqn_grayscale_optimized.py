@@ -1,12 +1,8 @@
 """
-Fixed version of highway_dqn_grayscale_optimized.py
-
-Key fixes:
-1. Added input normalization (x / 255.0) - CRITICAL
-2. Changed epsilon decay from per-episode to per-step (linear)
-3. Removed BatchNorm (optional: can keep but use eval() mode during action selection)
-4. Added warmup period
-5. Added Double DQN
+- Changed epsilon decay from per-episode to per-step (linear)
+- Removed BatchNorm
+- Added warmup period
+- Added Double DQN
 """
 
 import gymnasium
