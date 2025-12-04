@@ -453,6 +453,7 @@ class HighwayGrayscaleDQNAgent:
         print(f"\nEvaluating agent for {num_episodes} episodes...")
         eval_rewards = []
         eval_avg_speeds = []
+        eval_collisions = []
 
         for episode in range(num_episodes):
             state, _ = self.env.reset()
@@ -460,6 +461,7 @@ class HighwayGrayscaleDQNAgent:
 
             episode_reward = 0
             speeds = []
+            crashed = False
             done = False
             steps = 0
 
@@ -481,7 +483,9 @@ class HighwayGrayscaleDQNAgent:
                     ego_speed = info.get("speed", None)
                 if ego_speed is not None:
                     speeds.append(ego_speed)
-
+                if 'crashed' in info and info['crashed']:
+                    crashed = True
+                    
                 done = terminated or truncated
                 next_state = self.preprocess_state(next_state)
                 state = next_state
@@ -492,20 +496,22 @@ class HighwayGrayscaleDQNAgent:
             avg_speed = np.mean(speeds) if speeds else 0.0
             eval_rewards.append(episode_reward)
             eval_avg_speeds.append(avg_speed)
+            eval_collisions.append(1 if crashed else 0)
             print(f"Episode {episode + 1}: Reward = {episode_reward:.2f}, Steps = {steps}, Avg Speed = {avg_speed:.2f}")
 
         avg_reward = np.mean(eval_rewards)
         avg_speed_overall = np.mean(eval_avg_speeds)
+        avg_collisions_per_episode = np.sum(eval_collisions)/num_episodes
         print(f"\nAverage Evaluation Reward: {avg_reward:.2f}")
         print(f"Average Evaluation Speed: {avg_speed_overall:.2f}")
-        return eval_rewards, eval_avg_speeds
+        print(f"Average Evaluation Collisions Per Episode: {avg_collisions_per_episode*100:.2f}%")
+        return eval_rewards, eval_avg_speeds, eval_collisions
 
     def plot_training_progress(self, save_path="training_progress_dqn_grayscale.png"):
-        """Plot training progress"""
+        """Plot training progress (only moving averages)"""
         fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(15, 10))
-        
-        # Plot rewards
-        ax1.plot(self.episode_rewards, alpha=0.6, label='Episode Reward')
+
+        # Plot moving average rewards
         if len(self.episode_rewards) >= 10:
             window = 10
             moving_avg = np.convolve(self.episode_rewards, 
@@ -517,9 +523,8 @@ class HighwayGrayscaleDQNAgent:
         ax1.set_title('Training Rewards Over Time DQN Grayscale')
         ax1.legend()
         ax1.grid(True)
-        
-        # Plot episode lengths
-        ax2.plot(self.episode_lengths, alpha=0.6, label='Episode Length')
+
+        # Plot moving average episode lengths
         if len(self.episode_lengths) >= 10:
             window = 10
             moving_avg = np.convolve(self.episode_lengths, 
@@ -531,9 +536,8 @@ class HighwayGrayscaleDQNAgent:
         ax2.set_title('Episode Lengths Over Time DQN Grayscale')
         ax2.legend()
         ax2.grid(True)
-        
-        # Plot average speed
-        ax3.plot(self.episode_speeds, alpha=0.6, label='Average Speed')
+
+        # Plot moving average speed
         if len(self.episode_speeds) >= 20:
             window = 20
             moving_avg = np.convolve(self.episode_speeds, 
@@ -545,9 +549,8 @@ class HighwayGrayscaleDQNAgent:
         ax3.set_title('Average Speed Over Time DQN Grayscale')
         ax3.legend()
         ax3.grid(True)
-        
-        # Plot collision rate
-        ax4.plot(self.episode_collisions, alpha=0.6, label='Collision (0 or 1)')
+
+        # Plot moving average collision rate
         if len(self.episode_collisions) >= 20:
             window = 20
             moving_avg = np.convolve(self.episode_collisions, 
@@ -555,11 +558,11 @@ class HighwayGrayscaleDQNAgent:
             ax4.plot(range(window-1, len(self.episode_collisions)), 
                     moving_avg, 'r-', linewidth=2, label=f'{window}-Episode Moving Avg (Collision Rate)')
         ax4.set_xlabel('Episode')
-        ax4.set_ylabel('Collision Rate')
+        ax4.set_ylabel('Collision Rate Per Episode')
         ax4.set_title('Collision Rate Over Time DQN Grayscale')
         ax4.legend()
         ax4.grid(True)
-        
+
         plt.tight_layout()
         plt.savefig(save_path)
         print(f"Training progress plot saved to {save_path}")
@@ -704,8 +707,6 @@ def main():
     # Evaluate agent
     agent.load_model("highway_dqn_grayscale.pth")
     rewards = agent.evaluate(num_episodes=30)
-    print(f"Average reward: {np.mean(rewards):.2f}")
-
     
     #steps = agent.render_episode(num_episodes=5)
     # Close environment
