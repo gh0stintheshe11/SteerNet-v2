@@ -1,0 +1,368 @@
+num_actions: 5
+observation_space: (4, 240, 64)
+Using device: cuda
+conv_output_size: 8320
+conv_output_size: 8320
+Starting training for 3000 episodes...
+Observation shape: (4, 240, 64)
+Starting at Level 0: {'vehicles_count': 5, 'vehicles_density': 0.5}
+Epsilon: 1.0 -> 0.02 (decay: 0.99)
+Ep 10/3000 | Lv: 0 (10/200) | Reward: 43.0 | Crash: 50% | Speed: 22.3 | Len: 62 | Eps: 0.904 | Loss: 3.0456 | 1.01s/ep | 10s
+Ep 20/3000 | Lv: 0 (20/200) | Reward: 62.8 | Crash: 55% | Speed: 22.9 | Len: 64 | Eps: 0.818 | Loss: 0.3623 | 3.29s/ep | 43s
+Ep 30/3000 | Lv: 0 (30/200) | Reward: 28.1 | Crash: 63% | Speed: 23.3 | Len: 46 | Eps: 0.740 | Loss: 0.4170 | 2.33s/ep | 1.1m
+Ep 40/3000 | Lv: 0 (40/200) | Reward: 8.9 | Crash: 70% | Speed: 24.1 | Len: 28 | Eps: 0.669 | Loss: 0.8172 | 1.31s/ep | 1.3m
+Ep 50/3000 | Lv: 0 (50/200) | Reward: -9.5 | Crash: 76% | Speed: 24.5 | Len: 21 | Eps: 0.605 | Loss: 1.2731 | 1.17s/ep | 1.5m
+Ep 60/3000 | Lv: 0 (60/200) | Reward: -1.3 | Crash: 78% | Speed: 24.6 | Len: 29 | Eps: 0.547 | Loss: 1.3594 | 1.34s/ep | 1.7m
+Ep 70/3000 | Lv: 0 (70/200) | Reward: 44.5 | Crash: 77% | Speed: 24.5 | Len: 57 | Eps: 0.495 | Loss: 0.9139 | 2.84s/ep | 2.2m
+Ep 80/3000 | Lv: 0 (80/200) | Reward: -2.8 | Crash: 80% | Speed: 24.6 | Len: 26 | Eps: 0.448 | Loss: 0.9293 | 1.44s/ep | 2.5m
+Ep 90/3000 | Lv: 0 (90/200) | Reward: 31.6 | Crash: 80% | Speed: 24.7 | Len: 41 | Eps: 0.405 | Loss: 1.1251 | 2.01s/ep | 2.8m
+Ep 100/3000 | Lv: 0 (100/200) | Reward: 25.0 | Crash: 80% | Speed: 24.8 | Len: 40 | Eps: 0.366 | Loss: 1.1123 | 2.17s/ep | 3.2m
+Ep 110/3000 | Lv: 0 (110/200) | Reward: 3.3 | Crash: 84% | Speed: 25.2 | Len: 29 | Eps: 0.331 | Loss: 1.1775 | 1.34s/ep | 3.4m
+Ep 120/3000 | Lv: 0 (120/200) | Reward: 3.5 | Crash: 88% | Speed: 25.5 | Len: 28 | Eps: 0.299 | Loss: 1.2318 | 1.57s/ep | 3.6m
+Ep 130/3000 | Lv: 0 (130/200) | Reward: 26.4 | Crash: 88% | Speed: 25.6 | Len: 40 | Eps: 0.271 | Loss: 1.3667 | 1.97s/ep | 4.0m
+Ep 140/3000 | Lv: 0 (140/200) | Reward: 50.3 | Crash: 86% | Speed: 25.4 | Len: 54 | Eps: 0.245 | Loss: 1.4839 | 2.73s/ep | 4.4m
+Ep 150/3000 | Lv: 0 (150/200) | Reward: 46.7 | Crash: 83% | Speed: 25.4 | Len: 44 | Eps: 0.221 | Loss: 1.4173 | 2.23s/ep | 4.8m
+Ep 160/3000 | Lv: 0 (160/200) | Reward: 65.3 | Crash: 81% | Speed: 25.4 | Len: 55 | Eps: 0.200 | Loss: 1.3726 | 2.85s/ep | 5.3m
+Ep 170/3000 | Lv: 0 (170/200) | Reward: -9.6 | Crash: 84% | Speed: 25.7 | Len: 22 | Eps: 0.181 | Loss: 1.7524 | 1.19s/ep | 5.5m
+Ep 180/3000 | Lv: 0 (180/200) | Reward: 7.6 | Crash: 83% | Speed: 25.7 | Len: 30 | Eps: 0.164 | Loss: 1.0776 | 1.43s/ep | 5.7m
+Ep 190/3000 | Lv: 0 (190/200) | Reward: 2.4 | Crash: 84% | Speed: 25.8 | Len: 23 | Eps: 0.148 | Loss: 0.8865 | 1.28s/ep | 5.9m
+Ep 200/3000 | Lv: 0 (200/200) | Reward: 66.8 | Crash: 83% | Speed: 26.1 | Len: 47 | Eps: 0.134 | Loss: 0.9115 | 2.36s/ep | 6.3m
+Ep 210/3000 | Lv: 0 (210/200) | Reward: 99.3 | Crash: 80% | Speed: 26.1 | Len: 68 | Eps: 0.121 | Loss: 0.6751 | 3.52s/ep | 6.9m
+Ep 220/3000 | Lv: 0 (220/200) | Reward: 120.0 | Crash: 75% | Speed: 26.2 | Len: 70 | Eps: 0.110 | Loss: 0.4741 | 3.70s/ep | 7.5m
+Ep 230/3000 | Lv: 0 (230/200) | Reward: 25.9 | Crash: 76% | Speed: 26.2 | Len: 40 | Eps: 0.099 | Loss: 0.5275 | 2.02s/ep | 7.8m
+Ep 240/3000 | Lv: 0 (240/200) | Reward: 155.1 | Crash: 72% | Speed: 26.5 | Len: 80 | Eps: 0.090 | Loss: 0.5734 | 4.22s/ep | 8.6m
+Ep 250/3000 | Lv: 0 (250/200) | Reward: 86.8 | Crash: 71% | Speed: 26.5 | Len: 58 | Eps: 0.081 | Loss: 0.5104 | 2.97s/ep | 9.0m
+Ep 260/3000 | Lv: 0 (260/200) | Reward: 136.8 | Crash: 68% | Speed: 26.8 | Len: 70 | Eps: 0.073 | Loss: 0.3454 | 3.63s/ep | 9.7m
+Ep 270/3000 | Lv: 0 (270/200) | Reward: 159.2 | Crash: 61% | Speed: 27.0 | Len: 80 | Eps: 0.066 | Loss: 0.5146 | 4.04s/ep | 10.3m
+Ep 280/3000 | Lv: 0 (280/200) | Reward: 151.9 | Crash: 55% | Speed: 27.1 | Len: 78 | Eps: 0.060 | Loss: 0.4251 | 4.06s/ep | 11.0m
+Ep 290/3000 | Lv: 0 (290/200) | Reward: 154.2 | Crash: 49% | Speed: 27.2 | Len: 78 | Eps: 0.054 | Loss: 0.5444 | 4.04s/ep | 11.7m
+Ep 300/3000 | Lv: 0 (300/200) | Reward: 137.0 | Crash: 46% | Speed: 27.2 | Len: 75 | Eps: 0.049 | Loss: 0.4397 | 3.70s/ep | 12.3m
+Ep 310/3000 | Lv: 0 (310/200) | Reward: 139.6 | Crash: 44% | Speed: 27.3 | Len: 73 | Eps: 0.044 | Loss: 0.3670 | 3.79s/ep | 12.9m
+Ep 320/3000 | Lv: 0 (320/200) | Reward: 127.4 | Crash: 43% | Speed: 27.4 | Len: 66 | Eps: 0.040 | Loss: 0.3814 | 3.38s/ep | 13.5m
+Ep 330/3000 | Lv: 0 (330/200) | Reward: 148.5 | Crash: 37% | Speed: 27.6 | Len: 74 | Eps: 0.036 | Loss: 0.3698 | 3.86s/ep | 14.1m
+Ep 340/3000 | Lv: 0 (340/200) | Reward: 152.4 | Crash: 37% | Speed: 27.6 | Len: 79 | Eps: 0.033 | Loss: 0.3001 | 3.99s/ep | 14.8m
+Ep 350/3000 | Lv: 0 (350/200) | Reward: 188.2 | Crash: 33% | Speed: 27.8 | Len: 89 | Eps: 0.030 | Loss: 0.3239 | 4.82s/ep | 15.6m
+Ep 360/3000 | Lv: 0 (360/200) | Reward: 146.6 | Crash: 33% | Speed: 27.7 | Len: 76 | Eps: 0.027 | Loss: 0.3107 | 3.82s/ep | 16.2m
+Ep 370/3000 | Lv: 0 (370/200) | Reward: 133.0 | Crash: 34% | Speed: 27.9 | Len: 67 | Eps: 0.024 | Loss: 0.3377 | 3.52s/ep | 16.8m
+Ep 380/3000 | Lv: 0 (380/200) | Reward: 201.9 | Crash: 32% | Speed: 28.0 | Len: 92 | Eps: 0.022 | Loss: 0.3013 | 4.95s/ep | 17.6m
+Ep 390/3000 | Lv: 0 (390/200) | Reward: 161.3 | Crash: 32% | Speed: 28.1 | Len: 76 | Eps: 0.020 | Loss: 0.3466 | 3.87s/ep | 18.3m
+Ep 400/3000 | Lv: 0 (400/200) | Reward: 159.3 | Crash: 31% | Speed: 28.3 | Len: 76 | Eps: 0.020 | Loss: 0.3697 | 4.06s/ep | 19.0m
+Ep 410/3000 | Lv: 0 (410/200) | Reward: 201.5 | Crash: 28% | Speed: 28.4 | Len: 91 | Eps: 0.020 | Loss: 0.3272 | 4.66s/ep | 19.7m
+Ep 420/3000 | Lv: 0 (420/200) | Reward: 156.0 | Crash: 27% | Speed: 28.5 | Len: 76 | Eps: 0.020 | Loss: 0.3286 | 4.05s/ep | 20.4m
+Ep 430/3000 | Lv: 0 (430/200) | Reward: 103.3 | Crash: 29% | Speed: 28.5 | Len: 58 | Eps: 0.020 | Loss: 0.3791 | 3.06s/ep | 20.9m
+Ep 440/3000 | Lv: 0 (440/200) | Reward: 197.9 | Crash: 27% | Speed: 28.7 | Len: 91 | Eps: 0.020 | Loss: 0.3487 | 4.95s/ep | 21.8m
+Ep 450/3000 | Lv: 0 (450/200) | Reward: 173.2 | Crash: 27% | Speed: 28.8 | Len: 82 | Eps: 0.020 | Loss: 0.3664 | 4.24s/ep | 22.5m
+Ep 460/3000 | Lv: 0 (460/200) | Reward: 199.2 | Crash: 24% | Speed: 28.9 | Len: 93 | Eps: 0.020 | Loss: 0.3799 | 4.83s/ep | 23.3m
+Ep 470/3000 | Lv: 0 (470/200) | Reward: 154.9 | Crash: 23% | Speed: 28.9 | Len: 76 | Eps: 0.020 | Loss: 0.4581 | 4.11s/ep | 24.0m
+Ep 480/3000 | Lv: 0 (480/200) | Reward: 165.7 | Crash: 24% | Speed: 28.8 | Len: 82 | Eps: 0.020 | Loss: 0.4411 | 4.43s/ep | 24.7m
+Ep 490/3000 | Lv: 0 (490/200) | Reward: 171.1 | Crash: 23% | Speed: 28.8 | Len: 83 | Eps: 0.020 | Loss: 0.3723 | 4.30s/ep | 25.4m
+Ep 500/3000 | Lv: 0 (500/200) | Reward: 196.1 | Crash: 21% | Speed: 28.8 | Len: 92 | Eps: 0.020 | Loss: 0.4926 | 5.01s/ep | 26.2m
+Ep 510/3000 | Lv: 0 (510/200) | Reward: 132.6 | Crash: 24% | Speed: 28.7 | Len: 72 | Eps: 0.020 | Loss: 0.4043 | 3.64s/ep | 26.8m
+Ep 520/3000 | Lv: 0 (520/200) | Reward: 170.8 | Crash: 23% | Speed: 28.6 | Len: 83 | Eps: 0.020 | Loss: 0.4893 | 4.49s/ep | 27.6m
+Ep 530/3000 | Lv: 0 (530/200) | Reward: 187.6 | Crash: 20% | Speed: 28.7 | Len: 86 | Eps: 0.020 | Loss: 0.4605 | 4.44s/ep | 28.3m
+Ep 540/3000 | Lv: 0 (540/200) | Reward: 183.5 | Crash: 21% | Speed: 28.6 | Len: 86 | Eps: 0.020 | Loss: 0.5772 | 4.67s/ep | 29.1m
+Ep 550/3000 | Lv: 0 (550/200) | Reward: 150.3 | Crash: 22% | Speed: 28.6 | Len: 76 | Eps: 0.020 | Loss: 0.4586 | 3.90s/ep | 29.8m
+Ep 560/3000 | Lv: 0 (560/200) | Reward: 189.2 | Crash: 22% | Speed: 28.6 | Len: 91 | Eps: 0.020 | Loss: 0.4456 | 4.98s/ep | 30.6m
+Ep 570/3000 | Lv: 0 (570/200) | Reward: 197.1 | Crash: 20% | Speed: 28.5 | Len: 92 | Eps: 0.020 | Loss: 0.5568 | 4.80s/ep | 31.4m
+Ep 580/3000 | Lv: 0 (580/200) | Reward: 180.4 | Crash: 20% | Speed: 28.6 | Len: 86 | Eps: 0.020 | Loss: 0.5177 | 4.75s/ep | 32.2m
+Ep 590/3000 | Lv: 0 (590/200) | Reward: 168.5 | Crash: 20% | Speed: 28.6 | Len: 82 | Eps: 0.020 | Loss: 0.6190 | 4.29s/ep | 32.9m
+Ep 600/3000 | Lv: 0 (600/200) | Reward: 124.8 | Crash: 23% | Speed: 28.5 | Len: 66 | Eps: 0.020 | Loss: 0.6062 | 3.56s/ep | 33.5m
+Ep 610/3000 | Lv: 0 (610/200) | Reward: 222.3 | Crash: 19% | Speed: 28.6 | Len: 100 | Eps: 0.020 | Loss: 0.5209 | 5.29s/ep | 34.4m
+Ep 620/3000 | Lv: 0 (620/200) | Reward: 190.9 | Crash: 18% | Speed: 28.6 | Len: 92 | Eps: 0.020 | Loss: 0.5848 | 5.05s/ep | 35.2m
+Ep 630/3000 | Lv: 0 (630/200) | Reward: 188.7 | Crash: 17% | Speed: 28.5 | Len: 92 | Eps: 0.020 | Loss: 0.6156 | 4.88s/ep | 36.0m
+Ep 640/3000 | Lv: 0 (640/200) | Reward: 216.4 | Crash: 15% | Speed: 28.6 | Len: 100 | Eps: 0.020 | Loss: 0.5933 | 5.48s/ep | 36.9m
+
+============================================================
+LEVEL UP! Now at Level 1: {'vehicles_count': 10, 'vehicles_density': 0.75}
+Previous stats: Crash rate 15.0%, Speed 28.5
+New epsilon: 0.5 -> 0.02
+Buffer size: 43599
+============================================================
+
+Ep 650/3000 | Lv: 1 (0/200) | Reward: 158.3 | Crash: 0% | Speed: 0.0 | Len: 79 | Eps: 0.500 | Loss: 0.5484 | 4.13s/ep | 37.6m
+Ep 660/3000 | Lv: 1 (10/200) | Reward: 17.3 | Crash: 90% | Speed: 27.1 | Len: 33 | Eps: 0.452 | Loss: 0.6547 | 2.14s/ep | 38.0m
+Ep 670/3000 | Lv: 1 (20/200) | Reward: 14.5 | Crash: 90% | Speed: 26.8 | Len: 30 | Eps: 0.409 | Loss: 0.6435 | 1.69s/ep | 38.3m
+Ep 680/3000 | Lv: 1 (30/200) | Reward: -3.2 | Crash: 93% | Speed: 26.7 | Len: 25 | Eps: 0.370 | Loss: 0.7093 | 1.61s/ep | 38.5m
+Ep 690/3000 | Lv: 1 (40/200) | Reward: 30.3 | Crash: 92% | Speed: 26.6 | Len: 40 | Eps: 0.334 | Loss: 0.6785 | 2.40s/ep | 38.9m
+Ep 700/3000 | Lv: 1 (50/200) | Reward: -1.1 | Crash: 94% | Speed: 26.7 | Len: 24 | Eps: 0.303 | Loss: 0.6735 | 1.31s/ep | 39.2m
+Ep 710/3000 | Lv: 1 (60/200) | Reward: 104.6 | Crash: 87% | Speed: 26.7 | Len: 65 | Eps: 0.274 | Loss: 0.6112 | 4.04s/ep | 39.8m
+Ep 720/3000 | Lv: 1 (70/200) | Reward: 44.5 | Crash: 86% | Speed: 26.9 | Len: 40 | Eps: 0.247 | Loss: 0.8500 | 2.38s/ep | 40.2m
+Ep 730/3000 | Lv: 1 (80/200) | Reward: 22.8 | Crash: 86% | Speed: 26.9 | Len: 34 | Eps: 0.224 | Loss: 0.7339 | 1.99s/ep | 40.6m
+Ep 740/3000 | Lv: 1 (90/200) | Reward: 59.1 | Crash: 84% | Speed: 27.0 | Len: 45 | Eps: 0.202 | Loss: 0.7707 | 2.76s/ep | 41.0m
+Ep 750/3000 | Lv: 1 (100/200) | Reward: 66.0 | Crash: 83% | Speed: 27.0 | Len: 50 | Eps: 0.183 | Loss: 0.5755 | 3.10s/ep | 41.5m
+Ep 760/3000 | Lv: 1 (110/200) | Reward: 105.9 | Crash: 79% | Speed: 27.1 | Len: 61 | Eps: 0.166 | Loss: 0.8306 | 3.82s/ep | 42.2m
+Ep 770/3000 | Lv: 1 (120/200) | Reward: 87.4 | Crash: 76% | Speed: 27.2 | Len: 56 | Eps: 0.150 | Loss: 0.7752 | 3.53s/ep | 42.8m
+Ep 780/3000 | Lv: 1 (130/200) | Reward: 51.1 | Crash: 73% | Speed: 27.3 | Len: 43 | Eps: 0.135 | Loss: 0.6464 | 2.65s/ep | 43.2m
+Ep 790/3000 | Lv: 1 (140/200) | Reward: 66.1 | Crash: 71% | Speed: 27.4 | Len: 50 | Eps: 0.122 | Loss: 0.6962 | 3.13s/ep | 43.7m
+Ep 800/3000 | Lv: 1 (150/200) | Reward: 83.4 | Crash: 67% | Speed: 27.4 | Len: 57 | Eps: 0.111 | Loss: 0.7666 | 3.63s/ep | 44.3m
+Ep 810/3000 | Lv: 1 (160/200) | Reward: 82.3 | Crash: 68% | Speed: 27.4 | Len: 55 | Eps: 0.100 | Loss: 0.7483 | 3.45s/ep | 44.9m
+Ep 820/3000 | Lv: 1 (170/200) | Reward: 95.9 | Crash: 66% | Speed: 27.4 | Len: 59 | Eps: 0.091 | Loss: 0.7407 | 3.74s/ep | 45.5m
+Ep 830/3000 | Lv: 1 (180/200) | Reward: 99.6 | Crash: 62% | Speed: 27.5 | Len: 59 | Eps: 0.082 | Loss: 0.8157 | 3.57s/ep | 46.1m
+Ep 840/3000 | Lv: 1 (190/200) | Reward: 168.4 | Crash: 57% | Speed: 27.6 | Len: 83 | Eps: 0.074 | Loss: 0.8415 | 5.35s/ep | 47.0m
+Ep 850/3000 | Lv: 1 (200/200) | Reward: 95.6 | Crash: 56% | Speed: 27.7 | Len: 58 | Eps: 0.067 | Loss: 0.7224 | 3.48s/ep | 47.6m
+Ep 860/3000 | Lv: 1 (210/200) | Reward: 173.3 | Crash: 53% | Speed: 27.7 | Len: 85 | Eps: 0.061 | Loss: 0.8768 | 5.50s/ep | 48.5m
+Ep 870/3000 | Lv: 1 (220/200) | Reward: 126.3 | Crash: 51% | Speed: 27.7 | Len: 68 | Eps: 0.055 | Loss: 0.7991 | 4.13s/ep | 49.2m
+Ep 880/3000 | Lv: 1 (230/200) | Reward: 115.1 | Crash: 49% | Speed: 27.8 | Len: 64 | Eps: 0.050 | Loss: 0.8043 | 4.04s/ep | 49.9m
+Ep 890/3000 | Lv: 1 (240/200) | Reward: 192.3 | Crash: 44% | Speed: 27.9 | Len: 93 | Eps: 0.045 | Loss: 0.8779 | 5.82s/ep | 50.8m
+Ep 900/3000 | Lv: 1 (250/200) | Reward: 127.0 | Crash: 42% | Speed: 28.1 | Len: 65 | Eps: 0.041 | Loss: 0.8993 | 4.16s/ep | 51.5m
+Ep 910/3000 | Lv: 1 (260/200) | Reward: 111.3 | Crash: 41% | Speed: 28.2 | Len: 62 | Eps: 0.037 | Loss: 0.7576 | 3.67s/ep | 52.2m
+Ep 920/3000 | Lv: 1 (270/200) | Reward: 157.6 | Crash: 38% | Speed: 28.2 | Len: 81 | Eps: 0.033 | Loss: 1.0007 | 5.22s/ep | 53.0m
+Ep 930/3000 | Lv: 1 (280/200) | Reward: 147.7 | Crash: 36% | Speed: 28.3 | Len: 73 | Eps: 0.030 | Loss: 0.8280 | 4.45s/ep | 53.8m
+Ep 940/3000 | Lv: 1 (290/200) | Reward: 116.6 | Crash: 39% | Speed: 28.3 | Len: 64 | Eps: 0.027 | Loss: 0.8731 | 4.13s/ep | 54.5m
+Ep 950/3000 | Lv: 1 (300/200) | Reward: 156.3 | Crash: 36% | Speed: 28.3 | Len: 76 | Eps: 0.025 | Loss: 0.9085 | 4.67s/ep | 55.2m
+Ep 960/3000 | Lv: 1 (310/200) | Reward: 124.8 | Crash: 38% | Speed: 28.3 | Len: 66 | Eps: 0.022 | Loss: 0.8423 | 4.19s/ep | 55.9m
+Ep 970/3000 | Lv: 1 (320/200) | Reward: 110.8 | Crash: 39% | Speed: 28.4 | Len: 61 | Eps: 0.020 | Loss: 0.7684 | 3.61s/ep | 56.5m
+Ep 980/3000 | Lv: 1 (330/200) | Reward: 146.3 | Crash: 37% | Speed: 28.3 | Len: 74 | Eps: 0.020 | Loss: 0.8991 | 4.78s/ep | 57.3m
+Ep 990/3000 | Lv: 1 (340/200) | Reward: 145.8 | Crash: 39% | Speed: 28.3 | Len: 73 | Eps: 0.020 | Loss: 0.9463 | 4.49s/ep | 58.1m
+Ep 1000/3000 | Lv: 1 (350/200) | Reward: 159.2 | Crash: 38% | Speed: 28.3 | Len: 77 | Eps: 0.020 | Loss: 0.9059 | 5.03s/ep | 58.9m
+Ep 1010/3000 | Lv: 1 (360/200) | Reward: 159.1 | Crash: 36% | Speed: 28.3 | Len: 78 | Eps: 0.020 | Loss: 0.9574 | 4.89s/ep | 59.7m
+Ep 1020/3000 | Lv: 1 (370/200) | Reward: 180.9 | Crash: 35% | Speed: 28.4 | Len: 84 | Eps: 0.020 | Loss: 0.8687 | 5.24s/ep | 1.0h
+Ep 1030/3000 | Lv: 1 (380/200) | Reward: 156.5 | Crash: 35% | Speed: 28.5 | Len: 76 | Eps: 0.020 | Loss: 1.0037 | 4.92s/ep | 1.0h
+Ep 1040/3000 | Lv: 1 (390/200) | Reward: 156.7 | Crash: 33% | Speed: 28.5 | Len: 75 | Eps: 0.020 | Loss: 0.9743 | 4.64s/ep | 1.0h
+Ep 1050/3000 | Lv: 1 (400/200) | Reward: 190.2 | Crash: 32% | Speed: 28.5 | Len: 88 | Eps: 0.020 | Loss: 1.1439 | 5.56s/ep | 1.1h
+Ep 1060/3000 | Lv: 1 (410/200) | Reward: 62.2 | Crash: 35% | Speed: 28.4 | Len: 46 | Eps: 0.020 | Loss: 1.1908 | 2.95s/ep | 1.1h
+Ep 1070/3000 | Lv: 1 (420/200) | Reward: 179.4 | Crash: 32% | Speed: 28.4 | Len: 84 | Eps: 0.020 | Loss: 0.9640 | 5.50s/ep | 1.1h
+Ep 1080/3000 | Lv: 1 (430/200) | Reward: 156.6 | Crash: 32% | Speed: 28.5 | Len: 77 | Eps: 0.020 | Loss: 0.8916 | 4.77s/ep | 1.1h
+Ep 1090/3000 | Lv: 1 (440/200) | Reward: 126.9 | Crash: 32% | Speed: 28.5 | Len: 66 | Eps: 0.020 | Loss: 0.9803 | 4.27s/ep | 1.1h
+Ep 1100/3000 | Lv: 1 (450/200) | Reward: 101.1 | Crash: 34% | Speed: 28.5 | Len: 57 | Eps: 0.020 | Loss: 1.5733 | 3.42s/ep | 1.1h
+Ep 1110/3000 | Lv: 1 (460/200) | Reward: 112.7 | Crash: 36% | Speed: 28.4 | Len: 64 | Eps: 0.020 | Loss: 1.1530 | 4.10s/ep | 1.1h
+Ep 1120/3000 | Lv: 1 (470/200) | Reward: 128.7 | Crash: 38% | Speed: 28.4 | Len: 68 | Eps: 0.020 | Loss: 1.2138 | 4.42s/ep | 1.1h
+Ep 1130/3000 | Lv: 1 (480/200) | Reward: 145.2 | Crash: 39% | Speed: 28.3 | Len: 75 | Eps: 0.020 | Loss: 1.2433 | 4.65s/ep | 1.1h
+Ep 1140/3000 | Lv: 1 (490/200) | Reward: 157.8 | Crash: 39% | Speed: 28.4 | Len: 78 | Eps: 0.020 | Loss: 1.2364 | 4.84s/ep | 1.2h
+Ep 1150/3000 | Lv: 1 (500/200) | Reward: 100.5 | Crash: 43% | Speed: 28.3 | Len: 62 | Eps: 0.020 | Loss: 1.2368 | 3.97s/ep | 1.2h
+Ep 1160/3000 | Lv: 1 (510/200) | Reward: 99.5 | Crash: 41% | Speed: 28.4 | Len: 58 | Eps: 0.020 | Loss: 1.1712 | 3.70s/ep | 1.2h
+Ep 1170/3000 | Lv: 1 (520/200) | Reward: 205.9 | Crash: 40% | Speed: 28.4 | Len: 92 | Eps: 0.020 | Loss: 1.2849 | 5.82s/ep | 1.2h
+Ep 1180/3000 | Lv: 1 (530/200) | Reward: 136.8 | Crash: 41% | Speed: 28.4 | Len: 70 | Eps: 0.020 | Loss: 1.3978 | 4.29s/ep | 1.2h
+Ep 1190/3000 | Lv: 1 (540/200) | Reward: 130.8 | Crash: 41% | Speed: 28.4 | Len: 67 | Eps: 0.020 | Loss: 1.1524 | 4.34s/ep | 1.2h
+Ep 1200/3000 | Lv: 1 (550/200) | Reward: 208.4 | Crash: 37% | Speed: 28.4 | Len: 94 | Eps: 0.020 | Loss: 1.1898 | 5.96s/ep | 1.2h
+Ep 1210/3000 | Lv: 1 (560/200) | Reward: 185.6 | Crash: 34% | Speed: 28.5 | Len: 88 | Eps: 0.020 | Loss: 1.2406 | 5.57s/ep | 1.3h
+Ep 1220/3000 | Lv: 1 (570/200) | Reward: 162.4 | Crash: 33% | Speed: 28.5 | Len: 78 | Eps: 0.020 | Loss: 1.2866 | 4.88s/ep | 1.3h
+Ep 1230/3000 | Lv: 1 (580/200) | Reward: 144.7 | Crash: 33% | Speed: 28.6 | Len: 72 | Eps: 0.020 | Loss: 1.3663 | 4.73s/ep | 1.3h
+Ep 1240/3000 | Lv: 1 (590/200) | Reward: 135.8 | Crash: 34% | Speed: 28.5 | Len: 68 | Eps: 0.020 | Loss: 1.4916 | 4.21s/ep | 1.3h
+Ep 1250/3000 | Lv: 1 (600/200) | Reward: 147.2 | Crash: 31% | Speed: 28.6 | Len: 73 | Eps: 0.020 | Loss: 1.1279 | 4.77s/ep | 1.3h
+Ep 1260/3000 | Lv: 1 (610/200) | Reward: 146.4 | Crash: 29% | Speed: 28.6 | Len: 73 | Eps: 0.020 | Loss: 1.2517 | 4.58s/ep | 1.3h
+Ep 1270/3000 | Lv: 1 (620/200) | Reward: 140.6 | Crash: 32% | Speed: 28.5 | Len: 73 | Eps: 0.020 | Loss: 1.4501 | 4.79s/ep | 1.3h
+Ep 1280/3000 | Lv: 1 (630/200) | Reward: 147.6 | Crash: 31% | Speed: 28.5 | Len: 77 | Eps: 0.020 | Loss: 1.6655 | 4.79s/ep | 1.3h
+Ep 1290/3000 | Lv: 1 (640/200) | Reward: 128.1 | Crash: 31% | Speed: 28.4 | Len: 71 | Eps: 0.020 | Loss: 1.4299 | 4.62s/ep | 1.4h
+Ep 1300/3000 | Lv: 1 (650/200) | Reward: 109.5 | Crash: 35% | Speed: 28.4 | Len: 61 | Eps: 0.020 | Loss: 1.5996 | 3.75s/ep | 1.4h
+Ep 1310/3000 | Lv: 1 (660/200) | Reward: 91.3 | Crash: 39% | Speed: 28.4 | Len: 55 | Eps: 0.020 | Loss: 1.8348 | 3.50s/ep | 1.4h
+Ep 1320/3000 | Lv: 1 (670/200) | Reward: 118.3 | Crash: 40% | Speed: 28.3 | Len: 64 | Eps: 0.020 | Loss: 1.7083 | 4.18s/ep | 1.4h
+Ep 1330/3000 | Lv: 1 (680/200) | Reward: 218.6 | Crash: 36% | Speed: 28.2 | Len: 100 | Eps: 0.020 | Loss: 1.7032 | 6.41s/ep | 1.4h
+Ep 1340/3000 | Lv: 1 (690/200) | Reward: 106.4 | Crash: 37% | Speed: 28.2 | Len: 61 | Eps: 0.020 | Loss: 0.9479 | 3.99s/ep | 1.4h
+Ep 1350/3000 | Lv: 1 (700/200) | Reward: 82.1 | Crash: 40% | Speed: 28.1 | Len: 51 | Eps: 0.020 | Loss: 1.7357 | 3.59s/ep | 1.4h
+Ep 1360/3000 | Lv: 1 (710/200) | Reward: 35.0 | Crash: 45% | Speed: 28.0 | Len: 38 | Eps: 0.020 | Loss: 1.8592 | 2.58s/ep | 1.4h
+Ep 1370/3000 | Lv: 1 (720/200) | Reward: 182.1 | Crash: 43% | Speed: 28.0 | Len: 88 | Eps: 0.020 | Loss: 1.8072 | 5.89s/ep | 1.5h
+Ep 1380/3000 | Lv: 1 (730/200) | Reward: 110.4 | Crash: 45% | Speed: 28.1 | Len: 61 | Eps: 0.020 | Loss: 1.9347 | 4.20s/ep | 1.5h
+Ep 1390/3000 | Lv: 1 (740/200) | Reward: 173.7 | Crash: 43% | Speed: 28.2 | Len: 83 | Eps: 0.020 | Loss: 1.7679 | 5.51s/ep | 1.5h
+Ep 1400/3000 | Lv: 1 (750/200) | Reward: 196.2 | Crash: 39% | Speed: 28.1 | Len: 93 | Eps: 0.020 | Loss: 2.0282 | 6.06s/ep | 1.5h
+Ep 1410/3000 | Lv: 1 (760/200) | Reward: 107.7 | Crash: 38% | Speed: 28.2 | Len: 59 | Eps: 0.020 | Loss: 2.1363 | 3.91s/ep | 1.5h
+Ep 1420/3000 | Lv: 1 (770/200) | Reward: 113.3 | Crash: 39% | Speed: 28.2 | Len: 64 | Eps: 0.020 | Loss: 2.1550 | 4.09s/ep | 1.5h
+Ep 1430/3000 | Lv: 1 (780/200) | Reward: 155.2 | Crash: 42% | Speed: 28.1 | Len: 77 | Eps: 0.020 | Loss: 1.9615 | 5.17s/ep | 1.5h
+Ep 1440/3000 | Lv: 1 (790/200) | Reward: 131.8 | Crash: 41% | Speed: 28.1 | Len: 68 | Eps: 0.020 | Loss: 2.0413 | 4.34s/ep | 1.5h
+Ep 1450/3000 | Lv: 1 (800/200) | Reward: 104.9 | Crash: 40% | Speed: 28.2 | Len: 59 | Eps: 0.020 | Loss: 2.1615 | 3.94s/ep | 1.6h
+Ep 1460/3000 | Lv: 1 (810/200) | Reward: 164.9 | Crash: 35% | Speed: 28.3 | Len: 81 | Eps: 0.020 | Loss: 1.9632 | 5.24s/ep | 1.6h
+Ep 1470/3000 | Lv: 1 (820/200) | Reward: 207.5 | Crash: 34% | Speed: 28.4 | Len: 92 | Eps: 0.020 | Loss: 2.0738 | 6.07s/ep | 1.6h
+Ep 1480/3000 | Lv: 1 (830/200) | Reward: 146.2 | Crash: 32% | Speed: 28.3 | Len: 73 | Eps: 0.020 | Loss: 2.2619 | 4.79s/ep | 1.6h
+Ep 1490/3000 | Lv: 1 (840/200) | Reward: 137.6 | Crash: 34% | Speed: 28.2 | Len: 71 | Eps: 0.020 | Loss: 2.1363 | 4.93s/ep | 1.6h
+Ep 1500/3000 | Lv: 1 (850/200) | Reward: 179.4 | Crash: 35% | Speed: 28.3 | Len: 84 | Eps: 0.020 | Loss: 2.3577 | 5.85s/ep | 1.6h
+Ep 1510/3000 | Lv: 1 (860/200) | Reward: 226.2 | Crash: 30% | Speed: 28.3 | Len: 100 | Eps: 0.020 | Loss: 2.3894 | 6.80s/ep | 1.6h
+Ep 1520/3000 | Lv: 1 (870/200) | Reward: 134.3 | Crash: 29% | Speed: 28.4 | Len: 68 | Eps: 0.020 | Loss: 2.0239 | 4.43s/ep | 1.7h
+Ep 1530/3000 | Lv: 1 (880/200) | Reward: 129.6 | Crash: 30% | Speed: 28.3 | Len: 70 | Eps: 0.020 | Loss: 2.2157 | 4.73s/ep | 1.7h
+Ep 1540/3000 | Lv: 1 (890/200) | Reward: 181.0 | Crash: 28% | Speed: 28.3 | Len: 89 | Eps: 0.020 | Loss: 1.9922 | 5.92s/ep | 1.7h
+Ep 1550/3000 | Lv: 1 (900/200) | Reward: 125.1 | Crash: 27% | Speed: 28.3 | Len: 66 | Eps: 0.020 | Loss: 2.5655 | 4.24s/ep | 1.7h
+Ep 1560/3000 | Lv: 1 (910/200) | Reward: 180.1 | Crash: 26% | Speed: 28.3 | Len: 88 | Eps: 0.020 | Loss: 2.4400 | 5.84s/ep | 1.7h
+Ep 1570/3000 | Lv: 1 (920/200) | Reward: 129.7 | Crash: 29% | Speed: 28.2 | Len: 72 | Eps: 0.020 | Loss: 2.3985 | 4.91s/ep | 1.7h
+Ep 1580/3000 | Lv: 1 (930/200) | Reward: 172.0 | Crash: 28% | Speed: 28.2 | Len: 82 | Eps: 0.020 | Loss: 2.8538 | 5.41s/ep | 1.7h
+Ep 1590/3000 | Lv: 1 (940/200) | Reward: 131.0 | Crash: 28% | Speed: 28.3 | Len: 68 | Eps: 0.020 | Loss: 2.6160 | 4.40s/ep | 1.8h
+Ep 1600/3000 | Lv: 1 (950/200) | Reward: 169.5 | Crash: 28% | Speed: 28.2 | Len: 81 | Eps: 0.020 | Loss: 2.9222 | 5.32s/ep | 1.8h
+Ep 1610/3000 | Lv: 1 (960/200) | Reward: 189.4 | Crash: 30% | Speed: 28.2 | Len: 87 | Eps: 0.020 | Loss: 2.5312 | 5.78s/ep | 1.8h
+Ep 1620/3000 | Lv: 1 (970/200) | Reward: 152.0 | Crash: 29% | Speed: 28.2 | Len: 74 | Eps: 0.020 | Loss: 2.8838 | 5.10s/ep | 1.8h
+Ep 1630/3000 | Lv: 1 (980/200) | Reward: 165.4 | Crash: 28% | Speed: 28.3 | Len: 80 | Eps: 0.020 | Loss: 2.8576 | 5.25s/ep | 1.8h
+Ep 1640/3000 | Lv: 1 (990/200) | Reward: 84.3 | Crash: 32% | Speed: 28.3 | Len: 52 | Eps: 0.020 | Loss: 2.9480 | 3.65s/ep | 1.8h
+Ep 1650/3000 | Lv: 1 (1000/200) | Reward: 172.8 | Crash: 30% | Speed: 28.3 | Len: 84 | Eps: 0.020 | Loss: 2.6597 | 5.65s/ep | 1.8h
+Ep 1660/3000 | Lv: 1 (1010/200) | Reward: 169.1 | Crash: 30% | Speed: 28.3 | Len: 83 | Eps: 0.020 | Loss: 2.7347 | 5.48s/ep | 1.9h
+Ep 1670/3000 | Lv: 1 (1020/200) | Reward: 196.8 | Crash: 27% | Speed: 28.4 | Len: 91 | Eps: 0.020 | Loss: 2.8881 | 6.15s/ep | 1.9h
+Ep 1680/3000 | Lv: 1 (1030/200) | Reward: 129.1 | Crash: 29% | Speed: 28.4 | Len: 67 | Eps: 0.020 | Loss: 3.2128 | 4.59s/ep | 1.9h
+Ep 1690/3000 | Lv: 1 (1040/200) | Reward: 174.9 | Crash: 27% | Speed: 28.4 | Len: 84 | Eps: 0.020 | Loss: 2.7948 | 5.58s/ep | 1.9h
+Ep 1700/3000 | Lv: 1 (1050/200) | Reward: 99.5 | Crash: 30% | Speed: 28.3 | Len: 59 | Eps: 0.020 | Loss: 2.4989 | 3.77s/ep | 1.9h
+Ep 1710/3000 | Lv: 1 (1060/200) | Reward: 175.0 | Crash: 30% | Speed: 28.3 | Len: 86 | Eps: 0.020 | Loss: 3.0191 | 5.75s/ep | 1.9h
+Ep 1720/3000 | Lv: 1 (1070/200) | Reward: 147.8 | Crash: 31% | Speed: 28.2 | Len: 83 | Eps: 0.020 | Loss: 2.8354 | 5.70s/ep | 1.9h
+Ep 1730/3000 | Lv: 1 (1080/200) | Reward: 136.0 | Crash: 32% | Speed: 28.2 | Len: 71 | Eps: 0.020 | Loss: 2.8202 | 4.67s/ep | 2.0h
+Ep 1740/3000 | Lv: 1 (1090/200) | Reward: 166.0 | Crash: 28% | Speed: 28.2 | Len: 83 | Eps: 0.020 | Loss: 2.8078 | 5.55s/ep | 2.0h
+Ep 1750/3000 | Lv: 1 (1100/200) | Reward: 145.3 | Crash: 29% | Speed: 28.1 | Len: 75 | Eps: 0.020 | Loss: 3.1200 | 4.95s/ep | 2.0h
+Ep 1760/3000 | Lv: 1 (1110/200) | Reward: 122.9 | Crash: 31% | Speed: 28.1 | Len: 67 | Eps: 0.020 | Loss: 3.1386 | 4.57s/ep | 2.0h
+Ep 1770/3000 | Lv: 1 (1120/200) | Reward: 141.8 | Crash: 34% | Speed: 28.0 | Len: 74 | Eps: 0.020 | Loss: 3.0149 | 4.84s/ep | 2.0h
+Ep 1780/3000 | Lv: 1 (1130/200) | Reward: 155.6 | Crash: 33% | Speed: 28.0 | Len: 77 | Eps: 0.020 | Loss: 3.0932 | 5.29s/ep | 2.0h
+Ep 1790/3000 | Lv: 1 (1140/200) | Reward: 168.4 | Crash: 33% | Speed: 28.0 | Len: 85 | Eps: 0.020 | Loss: 3.2441 | 5.62s/ep | 2.0h
+Ep 1800/3000 | Lv: 1 (1150/200) | Reward: 173.0 | Crash: 30% | Speed: 28.1 | Len: 84 | Eps: 0.020 | Loss: 3.0453 | 5.62s/ep | 2.1h
+Ep 1810/3000 | Lv: 1 (1160/200) | Reward: 120.1 | Crash: 33% | Speed: 28.1 | Len: 66 | Eps: 0.020 | Loss: 3.7076 | 4.30s/ep | 2.1h
+Ep 1820/3000 | Lv: 1 (1170/200) | Reward: 154.1 | Crash: 32% | Speed: 28.2 | Len: 78 | Eps: 0.020 | Loss: 3.5701 | 5.29s/ep | 2.1h
+Ep 1830/3000 | Lv: 1 (1180/200) | Reward: 202.7 | Crash: 29% | Speed: 28.1 | Len: 94 | Eps: 0.020 | Loss: 3.6995 | 6.21s/ep | 2.1h
+Ep 1840/3000 | Lv: 1 (1190/200) | Reward: 149.3 | Crash: 30% | Speed: 28.2 | Len: 74 | Eps: 0.020 | Loss: 3.5372 | 4.80s/ep | 2.1h
+Ep 1850/3000 | Lv: 1 (1200/200) | Reward: 151.8 | Crash: 30% | Speed: 28.2 | Len: 77 | Eps: 0.020 | Loss: 3.1914 | 4.98s/ep | 2.1h
+Ep 1860/3000 | Lv: 1 (1210/200) | Reward: 100.4 | Crash: 32% | Speed: 28.3 | Len: 62 | Eps: 0.020 | Loss: 4.0249 | 4.21s/ep | 2.1h
+Ep 1870/3000 | Lv: 1 (1220/200) | Reward: 200.9 | Crash: 29% | Speed: 28.3 | Len: 95 | Eps: 0.020 | Loss: 3.6221 | 6.30s/ep | 2.2h
+Ep 1880/3000 | Lv: 1 (1230/200) | Reward: 202.1 | Crash: 27% | Speed: 28.3 | Len: 92 | Eps: 0.020 | Loss: 3.6092 | 6.12s/ep | 2.2h
+Ep 1890/3000 | Lv: 1 (1240/200) | Reward: 154.8 | Crash: 28% | Speed: 28.4 | Len: 77 | Eps: 0.020 | Loss: 4.0180 | 5.06s/ep | 2.2h
+Ep 1900/3000 | Lv: 1 (1250/200) | Reward: 176.9 | Crash: 28% | Speed: 28.3 | Len: 87 | Eps: 0.020 | Loss: 3.5636 | 5.79s/ep | 2.2h
+Ep 1910/3000 | Lv: 1 (1260/200) | Reward: 168.5 | Crash: 25% | Speed: 28.3 | Len: 84 | Eps: 0.020 | Loss: 3.7639 | 5.57s/ep | 2.2h
+Ep 1920/3000 | Lv: 1 (1270/200) | Reward: 193.5 | Crash: 23% | Speed: 28.3 | Len: 93 | Eps: 0.020 | Loss: 3.5202 | 6.20s/ep | 2.2h
+Ep 1930/3000 | Lv: 1 (1280/200) | Reward: 154.4 | Crash: 25% | Speed: 28.2 | Len: 79 | Eps: 0.020 | Loss: 3.5202 | 5.18s/ep | 2.3h
+Ep 1940/3000 | Lv: 1 (1290/200) | Reward: 168.5 | Crash: 24% | Speed: 28.2 | Len: 84 | Eps: 0.020 | Loss: 3.4280 | 5.56s/ep | 2.3h
+Ep 1950/3000 | Lv: 1 (1300/200) | Reward: 171.9 | Crash: 23% | Speed: 28.3 | Len: 82 | Eps: 0.020 | Loss: 3.4291 | 5.70s/ep | 2.3h
+Ep 1960/3000 | Lv: 1 (1310/200) | Reward: 172.0 | Crash: 19% | Speed: 28.3 | Len: 87 | Eps: 0.020 | Loss: 3.8156 | 5.82s/ep | 2.3h
+Ep 1970/3000 | Lv: 1 (1320/200) | Reward: 199.9 | Crash: 19% | Speed: 28.4 | Len: 91 | Eps: 0.020 | Loss: 3.9233 | 6.07s/ep | 2.3h
+Ep 1980/3000 | Lv: 1 (1330/200) | Reward: 198.5 | Crash: 19% | Speed: 28.3 | Len: 93 | Eps: 0.020 | Loss: 3.8551 | 6.00s/ep | 2.3h
+Ep 1990/3000 | Lv: 1 (1340/200) | Reward: 155.7 | Crash: 19% | Speed: 28.3 | Len: 79 | Eps: 0.020 | Loss: 3.6426 | 5.49s/ep | 2.4h
+
+============================================================
+LEVEL UP! Now at Level 2: {'vehicles_count': 15, 'vehicles_density': 1.0}
+Previous stats: Crash rate 19.0%, Speed 28.3
+New epsilon: 0.3 -> 0.02
+Buffer size: 100000
+============================================================
+
+Ep 2000/3000 | Lv: 2 (0/200) | Reward: 185.4 | Crash: 0% | Speed: 0.0 | Len: 89 | Eps: 0.300 | Loss: 3.1443 | 5.94s/ep | 2.4h
+Ep 2010/3000 | Lv: 2 (10/200) | Reward: 4.1 | Crash: 90% | Speed: 26.8 | Len: 23 | Eps: 0.271 | Loss: 4.0062 | 1.65s/ep | 2.4h
+Ep 2020/3000 | Lv: 2 (20/200) | Reward: -15.5 | Crash: 95% | Speed: 26.6 | Len: 18 | Eps: 0.245 | Loss: 4.3941 | 1.51s/ep | 2.4h
+Ep 2030/3000 | Lv: 2 (30/200) | Reward: 44.7 | Crash: 90% | Speed: 26.6 | Len: 40 | Eps: 0.222 | Loss: 3.4566 | 3.06s/ep | 2.4h
+Ep 2040/3000 | Lv: 2 (40/200) | Reward: 19.5 | Crash: 90% | Speed: 26.8 | Len: 31 | Eps: 0.201 | Loss: 4.2185 | 2.27s/ep | 2.4h
+Ep 2050/3000 | Lv: 2 (50/200) | Reward: 31.1 | Crash: 88% | Speed: 26.7 | Len: 36 | Eps: 0.182 | Loss: 3.5353 | 2.77s/ep | 2.4h
+Ep 2060/3000 | Lv: 2 (60/200) | Reward: 32.3 | Crash: 87% | Speed: 26.8 | Len: 34 | Eps: 0.164 | Loss: 2.4390 | 2.53s/ep | 2.4h
+Ep 2070/3000 | Lv: 2 (70/200) | Reward: 103.0 | Crash: 81% | Speed: 26.9 | Len: 60 | Eps: 0.148 | Loss: 3.9618 | 4.51s/ep | 2.4h
+Ep 2080/3000 | Lv: 2 (80/200) | Reward: 102.2 | Crash: 78% | Speed: 26.8 | Len: 63 | Eps: 0.134 | Loss: 3.3709 | 4.95s/ep | 2.4h
+Ep 2090/3000 | Lv: 2 (90/200) | Reward: 57.7 | Crash: 77% | Speed: 26.8 | Len: 46 | Eps: 0.121 | Loss: 3.5750 | 3.58s/ep | 2.4h
+Ep 2100/3000 | Lv: 2 (100/200) | Reward: 76.6 | Crash: 75% | Speed: 26.8 | Len: 54 | Eps: 0.110 | Loss: 3.6621 | 3.99s/ep | 2.5h
+Ep 2110/3000 | Lv: 2 (110/200) | Reward: 44.3 | Crash: 74% | Speed: 26.9 | Len: 40 | Eps: 0.099 | Loss: 3.8669 | 3.02s/ep | 2.5h
+Ep 2120/3000 | Lv: 2 (120/200) | Reward: 55.6 | Crash: 71% | Speed: 27.0 | Len: 42 | Eps: 0.090 | Loss: 4.5304 | 3.23s/ep | 2.5h
+Ep 2130/3000 | Lv: 2 (130/200) | Reward: 97.6 | Crash: 69% | Speed: 27.0 | Len: 61 | Eps: 0.081 | Loss: 3.7712 | 4.85s/ep | 2.5h
+Ep 2140/3000 | Lv: 2 (140/200) | Reward: 72.7 | Crash: 67% | Speed: 27.0 | Len: 52 | Eps: 0.073 | Loss: 3.9127 | 3.85s/ep | 2.5h
+Ep 2150/3000 | Lv: 2 (150/200) | Reward: 61.2 | Crash: 66% | Speed: 27.1 | Len: 46 | Eps: 0.066 | Loss: 3.8069 | 3.56s/ep | 2.5h
+Ep 2160/3000 | Lv: 2 (160/200) | Reward: 99.1 | Crash: 63% | Speed: 27.1 | Len: 58 | Eps: 0.060 | Loss: 2.7210 | 4.57s/ep | 2.5h
+Ep 2170/3000 | Lv: 2 (170/200) | Reward: 105.5 | Crash: 63% | Speed: 27.1 | Len: 62 | Eps: 0.054 | Loss: 3.6685 | 4.57s/ep | 2.5h
+Ep 2180/3000 | Lv: 2 (180/200) | Reward: 83.1 | Crash: 65% | Speed: 27.0 | Len: 62 | Eps: 0.049 | Loss: 3.6877 | 4.59s/ep | 2.5h
+Ep 2190/3000 | Lv: 2 (190/200) | Reward: 125.5 | Crash: 63% | Speed: 27.1 | Len: 72 | Eps: 0.044 | Loss: 3.9828 | 5.68s/ep | 2.6h
+Ep 2200/3000 | Lv: 2 (200/200) | Reward: 67.9 | Crash: 64% | Speed: 27.2 | Len: 49 | Eps: 0.040 | Loss: 3.8883 | 3.60s/ep | 2.6h
+Ep 2210/3000 | Lv: 2 (210/200) | Reward: 114.6 | Crash: 60% | Speed: 27.1 | Len: 64 | Eps: 0.036 | Loss: 3.9882 | 5.05s/ep | 2.6h
+Ep 2220/3000 | Lv: 2 (220/200) | Reward: 72.1 | Crash: 59% | Speed: 27.1 | Len: 47 | Eps: 0.033 | Loss: 4.0934 | 3.39s/ep | 2.6h
+Ep 2230/3000 | Lv: 2 (230/200) | Reward: 147.4 | Crash: 56% | Speed: 27.2 | Len: 76 | Eps: 0.030 | Loss: 3.8553 | 6.04s/ep | 2.6h
+Ep 2240/3000 | Lv: 2 (240/200) | Reward: 124.9 | Crash: 53% | Speed: 27.3 | Len: 68 | Eps: 0.027 | Loss: 4.2998 | 5.10s/ep | 2.6h
+Ep 2250/3000 | Lv: 2 (250/200) | Reward: 104.9 | Crash: 52% | Speed: 27.2 | Len: 67 | Eps: 0.024 | Loss: 3.8700 | 5.00s/ep | 2.6h
+Ep 2260/3000 | Lv: 2 (260/200) | Reward: 54.1 | Crash: 54% | Speed: 27.1 | Len: 45 | Eps: 0.022 | Loss: 6.8616 | 3.47s/ep | 2.6h
+Ep 2270/3000 | Lv: 2 (270/200) | Reward: 131.8 | Crash: 53% | Speed: 27.2 | Len: 69 | Eps: 0.020 | Loss: 4.9297 | 5.17s/ep | 2.7h
+Ep 2280/3000 | Lv: 2 (280/200) | Reward: 148.5 | Crash: 49% | Speed: 27.4 | Len: 75 | Eps: 0.020 | Loss: 3.7363 | 5.66s/ep | 2.7h
+Ep 2290/3000 | Lv: 2 (290/200) | Reward: 6.9 | Crash: 53% | Speed: 27.3 | Len: 26 | Eps: 0.020 | Loss: 3.8504 | 2.18s/ep | 2.7h
+Ep 2300/3000 | Lv: 2 (300/200) | Reward: 137.2 | Crash: 50% | Speed: 27.3 | Len: 72 | Eps: 0.020 | Loss: 3.8586 | 5.48s/ep | 2.7h
+Ep 2310/3000 | Lv: 2 (310/200) | Reward: 30.9 | Crash: 54% | Speed: 27.4 | Len: 34 | Eps: 0.020 | Loss: 5.3836 | 2.53s/ep | 2.7h
+Ep 2320/3000 | Lv: 2 (320/200) | Reward: 104.1 | Crash: 53% | Speed: 27.3 | Len: 61 | Eps: 0.020 | Loss: 4.5635 | 4.51s/ep | 2.7h
+Ep 2330/3000 | Lv: 2 (330/200) | Reward: 149.5 | Crash: 53% | Speed: 27.4 | Len: 74 | Eps: 0.020 | Loss: 3.8714 | 5.69s/ep | 2.7h
+Ep 2340/3000 | Lv: 2 (340/200) | Reward: 100.1 | Crash: 54% | Speed: 27.3 | Len: 59 | Eps: 0.020 | Loss: 4.1974 | 4.61s/ep | 2.7h
+Ep 2350/3000 | Lv: 2 (350/200) | Reward: 105.1 | Crash: 53% | Speed: 27.4 | Len: 61 | Eps: 0.020 | Loss: 5.2486 | 4.51s/ep | 2.8h
+Ep 2360/3000 | Lv: 2 (360/200) | Reward: 162.7 | Crash: 48% | Speed: 27.5 | Len: 85 | Eps: 0.020 | Loss: 5.9671 | 6.56s/ep | 2.8h
+Ep 2370/3000 | Lv: 2 (370/200) | Reward: 134.0 | Crash: 48% | Speed: 27.4 | Len: 69 | Eps: 0.020 | Loss: 5.2148 | 5.23s/ep | 2.8h
+Ep 2380/3000 | Lv: 2 (380/200) | Reward: 79.4 | Crash: 51% | Speed: 27.4 | Len: 53 | Eps: 0.020 | Loss: 4.0785 | 4.18s/ep | 2.8h
+Ep 2390/3000 | Lv: 2 (390/200) | Reward: 129.0 | Crash: 46% | Speed: 27.4 | Len: 70 | Eps: 0.020 | Loss: 4.4238 | 5.26s/ep | 2.8h
+Ep 2400/3000 | Lv: 2 (400/200) | Reward: 98.4 | Crash: 47% | Speed: 27.4 | Len: 58 | Eps: 0.020 | Loss: 6.2915 | 4.61s/ep | 2.8h
+Ep 2410/3000 | Lv: 2 (410/200) | Reward: 141.8 | Crash: 42% | Speed: 27.3 | Len: 78 | Eps: 0.020 | Loss: 4.3622 | 5.97s/ep | 2.8h
+Ep 2420/3000 | Lv: 2 (420/200) | Reward: 75.7 | Crash: 43% | Speed: 27.3 | Len: 50 | Eps: 0.020 | Loss: 4.2927 | 3.66s/ep | 2.9h
+Ep 2430/3000 | Lv: 2 (430/200) | Reward: 145.2 | Crash: 43% | Speed: 27.2 | Len: 81 | Eps: 0.020 | Loss: 5.2281 | 6.18s/ep | 2.9h
+Ep 2440/3000 | Lv: 2 (440/200) | Reward: 39.4 | Crash: 46% | Speed: 27.3 | Len: 37 | Eps: 0.020 | Loss: 4.9106 | 2.81s/ep | 2.9h
+Ep 2450/3000 | Lv: 2 (450/200) | Reward: 55.5 | Crash: 48% | Speed: 27.3 | Len: 43 | Eps: 0.020 | Loss: 3.3695 | 3.36s/ep | 2.9h
+Ep 2460/3000 | Lv: 2 (460/200) | Reward: 102.2 | Crash: 51% | Speed: 27.4 | Len: 60 | Eps: 0.020 | Loss: 4.6626 | 4.74s/ep | 2.9h
+Ep 2470/3000 | Lv: 2 (470/200) | Reward: 133.6 | Crash: 50% | Speed: 27.2 | Len: 73 | Eps: 0.020 | Loss: 4.7175 | 5.50s/ep | 2.9h
+Ep 2480/3000 | Lv: 2 (480/200) | Reward: 51.3 | Crash: 51% | Speed: 27.2 | Len: 40 | Eps: 0.020 | Loss: 4.6366 | 3.07s/ep | 2.9h
+Ep 2490/3000 | Lv: 2 (490/200) | Reward: 82.3 | Crash: 52% | Speed: 27.1 | Len: 55 | Eps: 0.020 | Loss: 3.1877 | 4.05s/ep | 2.9h
+Ep 2500/3000 | Lv: 2 (500/200) | Reward: 51.0 | Crash: 55% | Speed: 27.1 | Len: 46 | Eps: 0.020 | Loss: 3.3451 | 3.56s/ep | 3.0h
+Ep 2510/3000 | Lv: 2 (510/200) | Reward: 57.1 | Crash: 59% | Speed: 27.1 | Len: 46 | Eps: 0.020 | Loss: 4.3159 | 3.57s/ep | 3.0h
+Ep 2520/3000 | Lv: 2 (520/200) | Reward: 71.5 | Crash: 59% | Speed: 27.0 | Len: 49 | Eps: 0.020 | Loss: 4.0794 | 3.84s/ep | 3.0h
+Ep 2530/3000 | Lv: 2 (530/200) | Reward: 136.1 | Crash: 60% | Speed: 27.1 | Len: 75 | Eps: 0.020 | Loss: 4.7693 | 5.84s/ep | 3.0h
+Ep 2540/3000 | Lv: 2 (540/200) | Reward: 107.1 | Crash: 57% | Speed: 27.0 | Len: 65 | Eps: 0.020 | Loss: 4.5154 | 4.84s/ep | 3.0h
+Ep 2550/3000 | Lv: 2 (550/200) | Reward: 162.8 | Crash: 52% | Speed: 27.0 | Len: 87 | Eps: 0.020 | Loss: 4.3343 | 6.71s/ep | 3.0h
+Ep 2560/3000 | Lv: 2 (560/200) | Reward: 94.7 | Crash: 52% | Speed: 27.0 | Len: 59 | Eps: 0.020 | Loss: 4.3104 | 4.33s/ep | 3.0h
+Ep 2570/3000 | Lv: 2 (570/200) | Reward: 87.0 | Crash: 54% | Speed: 27.0 | Len: 54 | Eps: 0.020 | Loss: 4.3957 | 4.20s/ep | 3.0h
+Ep 2580/3000 | Lv: 2 (580/200) | Reward: 76.8 | Crash: 53% | Speed: 26.9 | Len: 52 | Eps: 0.020 | Loss: 5.1075 | 4.04s/ep | 3.1h
+Ep 2590/3000 | Lv: 2 (590/200) | Reward: 97.8 | Crash: 53% | Speed: 27.0 | Len: 58 | Eps: 0.020 | Loss: 4.2525 | 4.30s/ep | 3.1h
+Ep 2600/3000 | Lv: 2 (600/200) | Reward: 127.5 | Crash: 49% | Speed: 27.1 | Len: 67 | Eps: 0.020 | Loss: 5.0045 | 5.05s/ep | 3.1h
+Ep 2610/3000 | Lv: 2 (610/200) | Reward: 142.4 | Crash: 45% | Speed: 27.2 | Len: 73 | Eps: 0.020 | Loss: 5.3144 | 5.81s/ep | 3.1h
+Ep 2620/3000 | Lv: 2 (620/200) | Reward: 106.5 | Crash: 44% | Speed: 27.4 | Len: 59 | Eps: 0.020 | Loss: 5.1236 | 4.35s/ep | 3.1h
+Ep 2630/3000 | Lv: 2 (630/200) | Reward: 153.7 | Crash: 43% | Speed: 27.5 | Len: 76 | Eps: 0.020 | Loss: 4.4926 | 5.73s/ep | 3.1h
+Ep 2640/3000 | Lv: 2 (640/200) | Reward: 76.5 | Crash: 44% | Speed: 27.6 | Len: 50 | Eps: 0.020 | Loss: 4.3838 | 3.87s/ep | 3.1h
+Ep 2650/3000 | Lv: 2 (650/200) | Reward: 91.3 | Crash: 47% | Speed: 27.6 | Len: 56 | Eps: 0.020 | Loss: 4.6666 | 4.12s/ep | 3.1h
+Ep 2660/3000 | Lv: 2 (660/200) | Reward: 90.6 | Crash: 48% | Speed: 27.6 | Len: 57 | Eps: 0.020 | Loss: 4.8827 | 4.44s/ep | 3.2h
+Ep 2670/3000 | Lv: 2 (670/200) | Reward: 74.0 | Crash: 49% | Speed: 27.6 | Len: 48 | Eps: 0.020 | Loss: 6.7636 | 3.74s/ep | 3.2h
+Ep 2680/3000 | Lv: 2 (680/200) | Reward: 105.9 | Crash: 48% | Speed: 27.7 | Len: 61 | Eps: 0.020 | Loss: 4.6053 | 4.61s/ep | 3.2h
+Ep 2690/3000 | Lv: 2 (690/200) | Reward: 98.8 | Crash: 48% | Speed: 27.7 | Len: 58 | Eps: 0.020 | Loss: 6.4111 | 4.57s/ep | 3.2h
+Ep 2700/3000 | Lv: 2 (700/200) | Reward: 99.6 | Crash: 49% | Speed: 27.6 | Len: 58 | Eps: 0.020 | Loss: 2.6822 | 4.26s/ep | 3.2h
+Ep 2710/3000 | Lv: 2 (710/200) | Reward: 117.8 | Crash: 50% | Speed: 27.5 | Len: 67 | Eps: 0.020 | Loss: 4.6406 | 5.08s/ep | 3.2h
+Ep 2720/3000 | Lv: 2 (720/200) | Reward: 188.5 | Crash: 46% | Speed: 27.4 | Len: 93 | Eps: 0.020 | Loss: 4.7023 | 7.26s/ep | 3.2h
+Ep 2730/3000 | Lv: 2 (730/200) | Reward: 149.6 | Crash: 46% | Speed: 27.3 | Len: 79 | Eps: 0.020 | Loss: 4.2488 | 5.98s/ep | 3.3h
+Ep 2740/3000 | Lv: 2 (740/200) | Reward: 78.0 | Crash: 46% | Speed: 27.3 | Len: 50 | Eps: 0.020 | Loss: 2.4833 | 3.84s/ep | 3.3h
+Ep 2750/3000 | Lv: 2 (750/200) | Reward: 97.1 | Crash: 46% | Speed: 27.3 | Len: 56 | Eps: 0.020 | Loss: 5.0736 | 4.08s/ep | 3.3h
+Ep 2760/3000 | Lv: 2 (760/200) | Reward: 112.2 | Crash: 45% | Speed: 27.4 | Len: 64 | Eps: 0.020 | Loss: 4.9150 | 5.00s/ep | 3.3h
+Ep 2770/3000 | Lv: 2 (770/200) | Reward: 151.2 | Crash: 42% | Speed: 27.5 | Len: 77 | Eps: 0.020 | Loss: 4.8819 | 5.77s/ep | 3.3h
+Ep 2780/3000 | Lv: 2 (780/200) | Reward: 134.7 | Crash: 41% | Speed: 27.5 | Len: 70 | Eps: 0.020 | Loss: 4.8842 | 5.25s/ep | 3.3h
+Ep 2790/3000 | Lv: 2 (790/200) | Reward: 167.6 | Crash: 38% | Speed: 27.5 | Len: 84 | Eps: 0.020 | Loss: 4.9147 | 6.17s/ep | 3.3h
+Ep 2800/3000 | Lv: 2 (800/200) | Reward: 125.8 | Crash: 37% | Speed: 27.5 | Len: 67 | Eps: 0.020 | Loss: 5.1239 | 5.20s/ep | 3.4h
+Ep 2810/3000 | Lv: 2 (810/200) | Reward: 86.6 | Crash: 39% | Speed: 27.6 | Len: 56 | Eps: 0.020 | Loss: 5.3427 | 4.06s/ep | 3.4h
+Ep 2820/3000 | Lv: 2 (820/200) | Reward: 149.5 | Crash: 41% | Speed: 27.6 | Len: 78 | Eps: 0.020 | Loss: 2.2770 | 5.88s/ep | 3.4h
+Ep 2830/3000 | Lv: 2 (830/200) | Reward: 56.4 | Crash: 45% | Speed: 27.7 | Len: 43 | Eps: 0.020 | Loss: 5.5312 | 3.23s/ep | 3.4h
+Ep 2840/3000 | Lv: 2 (840/200) | Reward: 96.3 | Crash: 44% | Speed: 27.6 | Len: 60 | Eps: 0.020 | Loss: 5.4890 | 4.67s/ep | 3.4h
+Ep 2850/3000 | Lv: 2 (850/200) | Reward: 135.4 | Crash: 42% | Speed: 27.5 | Len: 74 | Eps: 0.020 | Loss: 4.8644 | 5.58s/ep | 3.4h
+Ep 2860/3000 | Lv: 2 (860/200) | Reward: 116.2 | Crash: 41% | Speed: 27.5 | Len: 66 | Eps: 0.020 | Loss: 5.2726 | 4.96s/ep | 3.4h
+Ep 2870/3000 | Lv: 2 (870/200) | Reward: 156.9 | Crash: 41% | Speed: 27.6 | Len: 78 | Eps: 0.020 | Loss: 5.3331 | 5.85s/ep | 3.5h
+Ep 2880/3000 | Lv: 2 (880/200) | Reward: 181.2 | Crash: 39% | Speed: 27.5 | Len: 90 | Eps: 0.020 | Loss: 6.1516 | 6.91s/ep | 3.5h
+Ep 2890/3000 | Lv: 2 (890/200) | Reward: 137.0 | Crash: 40% | Speed: 27.4 | Len: 75 | Eps: 0.020 | Loss: 5.3718 | 5.61s/ep | 3.5h
+Ep 2900/3000 | Lv: 2 (900/200) | Reward: 102.5 | Crash: 41% | Speed: 27.5 | Len: 58 | Eps: 0.020 | Loss: 4.8840 | 4.33s/ep | 3.5h
+Ep 2910/3000 | Lv: 2 (910/200) | Reward: 94.6 | Crash: 40% | Speed: 27.4 | Len: 58 | Eps: 0.020 | Loss: 5.5791 | 4.57s/ep | 3.5h
+Ep 2920/3000 | Lv: 2 (920/200) | Reward: 107.2 | Crash: 42% | Speed: 27.5 | Len: 61 | Eps: 0.020 | Loss: 4.7245 | 4.51s/ep | 3.5h
+Ep 2930/3000 | Lv: 2 (930/200) | Reward: 140.5 | Crash: 39% | Speed: 27.5 | Len: 73 | Eps: 0.020 | Loss: 4.9201 | 5.48s/ep | 3.5h
+Ep 2940/3000 | Lv: 2 (940/200) | Reward: 149.8 | Crash: 37% | Speed: 27.6 | Len: 77 | Eps: 0.020 | Loss: 5.1720 | 5.90s/ep | 3.6h
+Ep 2950/3000 | Lv: 2 (950/200) | Reward: 115.8 | Crash: 38% | Speed: 27.5 | Len: 65 | Eps: 0.020 | Loss: 4.8340 | 5.10s/ep | 3.6h
+Ep 2960/3000 | Lv: 2 (960/200) | Reward: 93.1 | Crash: 40% | Speed: 27.4 | Len: 66 | Eps: 0.020 | Loss: 5.3645 | 4.85s/ep | 3.6h
+Ep 2970/3000 | Lv: 2 (970/200) | Reward: 88.7 | Crash: 43% | Speed: 27.2 | Len: 56 | Eps: 0.020 | Loss: 5.9015 | 4.35s/ep | 3.6h
+Ep 2980/3000 | Lv: 2 (980/200) | Reward: 171.8 | Crash: 43% | Speed: 27.2 | Len: 86 | Eps: 0.020 | Loss: 4.9429 | 6.61s/ep | 3.6h
+Ep 2990/3000 | Lv: 2 (990/200) | Reward: 96.5 | Crash: 45% | Speed: 27.3 | Len: 59 | Eps: 0.020 | Loss: 5.1664 | 4.30s/ep | 3.6h
+Ep 3000/3000 | Lv: 2 (1000/200) | Reward: 79.6 | Crash: 46% | Speed: 27.1 | Len: 56 | Eps: 0.020 | Loss: 6.1389 | 4.40s/ep | 3.6h
+
+Training completed! Final level: 2
+Training progress plot saved to training_progress_curriculum.png
+Model saved to highway_dqn_curriculum.pth
+Model loaded from highway_dqn_curriculum.pth
+
+Evaluating agent for 30 episodes...
+Episode 1: Reward = 39.37, Steps = 53, Speed = 23.6, Crashed = True
+Episode 2: Reward = 162.04, Steps = 100, Speed = 23.1, Crashed = False
+Episode 3: Reward = 64.20, Steps = 65, Speed = 24.4, Crashed = True
+Episode 4: Reward = 165.54, Steps = 100, Speed = 23.5, Crashed = False
+Episode 5: Reward = 143.56, Steps = 100, Speed = 22.9, Crashed = False
+Episode 6: Reward = 196.88, Steps = 100, Speed = 26.4, Crashed = False
+Episode 7: Reward = 201.15, Steps = 100, Speed = 25.9, Crashed = False
+Episode 8: Reward = 188.99, Steps = 100, Speed = 25.7, Crashed = False
+Episode 9: Reward = 93.99, Steps = 94, Speed = 22.5, Crashed = True
+Episode 10: Reward = 135.44, Steps = 100, Speed = 21.9, Crashed = False
+Episode 11: Reward = 200.54, Steps = 100, Speed = 26.5, Crashed = False
+Episode 12: Reward = -34.60, Steps = 8, Speed = 25.4, Crashed = True
+Episode 13: Reward = 170.27, Steps = 100, Speed = 23.8, Crashed = False
+Episode 14: Reward = -19.11, Steps = 18, Speed = 24.2, Crashed = True
+Episode 15: Reward = 152.44, Steps = 100, Speed = 22.2, Crashed = False
+Episode 16: Reward = 7.75, Steps = 27, Speed = 27.4, Crashed = True
+Episode 17: Reward = -42.00, Steps = 5, Speed = 25.7, Crashed = True
+Episode 18: Reward = 190.05, Steps = 100, Speed = 25.3, Crashed = False
+Episode 19: Reward = 42.14, Steps = 55, Speed = 24.3, Crashed = True
+Episode 20: Reward = 207.13, Steps = 100, Speed = 26.4, Crashed = False
+Episode 21: Reward = -32.93, Steps = 11, Speed = 23.5, Crashed = True
+Episode 22: Reward = 210.90, Steps = 100, Speed = 26.7, Crashed = False
+Episode 23: Reward = 180.15, Steps = 100, Speed = 24.8, Crashed = False
+Episode 24: Reward = 190.41, Steps = 100, Speed = 25.5, Crashed = False
+Episode 25: Reward = 198.64, Steps = 100, Speed = 26.0, Crashed = False
+Episode 26: Reward = 213.48, Steps = 100, Speed = 27.2, Crashed = False
+Episode 27: Reward = 190.24, Steps = 100, Speed = 24.9, Crashed = False
+Episode 28: Reward = 62.06, Steps = 62, Speed = 24.9, Crashed = True
+Episode 29: Reward = 162.38, Steps = 100, Speed = 23.2, Crashed = False
+Episode 30: Reward = -2.85, Steps = 21, Speed = 28.4, Crashed = True
+
+========================================
+Average Reward: 121.28
+Average Speed: 24.88
+Crash Rate: 37%
+========================================
