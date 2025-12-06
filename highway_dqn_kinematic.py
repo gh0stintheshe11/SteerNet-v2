@@ -22,7 +22,7 @@ class SpeedRewardWrapper(gymnasium.Wrapper):
     3: FASTER
     4: SLOWER
     """
-    def __init__(self, env, absolute_min_speed=0.0, cutoff_speed=20.0, max_speed=30.0, crash_reward=-1.0):
+    def __init__(self, env, absolute_min_speed=0.0, cutoff_speed=20.0, max_speed=30.0, crash_reward=0.0):
 
         super().__init__(env)
         self.absolute_min_speed = absolute_min_speed
@@ -50,14 +50,10 @@ class SpeedRewardWrapper(gymnasium.Wrapper):
             # If speed is below threshold, penalize the reward
             if crashed == True:
                 reward = self.crash_reward
-            #elif ego_speed < self.cutoff_speed:
-            #    reward = 0.0
             else:
                 reward = (ego_speed - self.absolute_min_speed) / (self.max_speed - self.absolute_min_speed)
                 if ego_speed > 20.0:
                     reward = reward + ego_speed/20.0
-                #else:
-                #    reward = 0.0
                 if (action == 0 or action == 2):
                     reward = reward - 0.5
                     reward = max(reward, 0.0)
@@ -73,8 +69,8 @@ class DQN(nn.Module):
     
     def __init__(self, num_actions, feature_size):
         super(DQN, self).__init__()
-        self.fc1 = nn.Linear(feature_size, 364)
-        self.fc2 = nn.Linear(364, 64)
+        self.fc1 = nn.Linear(feature_size, 512)
+        self.fc2 = nn.Linear(512, 64)
         self.out = nn.Linear(64, num_actions)
 
     def forward(self, x):
@@ -132,8 +128,8 @@ class HighwayKinematicDQNAgent:
         print(f"Using device: {self.device}")
         
         # Networks
-        self.online_net = DQN(num_actions=self.num_actions, feature_size=10*5).to(self.device)
-        self.target_net = DQN(num_actions=self.num_actions, feature_size=10*5).to(self.device)
+        self.online_net = DQN(num_actions=self.num_actions, feature_size=6*5).to(self.device)
+        self.target_net = DQN(num_actions=self.num_actions, feature_size=6*5).to(self.device)
         self.target_net.load_state_dict(self.online_net.state_dict())
         self.target_net.eval()
         
@@ -155,6 +151,8 @@ class HighwayKinematicDQNAgent:
         self.steps = 0
         self.episode_rewards = []
         self.episode_lengths = []
+        self.episode_speeds = []
+        self.episode_collisions = []
         
     def preprocess_state(self, state):
         """Preprocess state from kinematic observation"""
@@ -219,13 +217,21 @@ class HighwayKinematicDQNAgent:
             episode_reward = 0
             episode_loss = 0
             loss_count = 0
+            episode_speed_sum = 0.0
+            episode_crashed = False
             
             for step in range(max_steps_per_episode):
                 # Select and perform action
                 action = self.select_action(state, training=True)
-                next_state, reward, terminated, truncated, _ = self.env.step(action)
+                next_state, reward, terminated, truncated, info = self.env.step(action)
                 done = terminated or truncated
                 next_state = self.preprocess_state(next_state)
+                
+                # Track speed and collision
+                if 'speed' in info:
+                    episode_speed_sum += info['speed']
+                if 'crashed' in info and info['crashed']:
+                    episode_crashed = True
                 
                 # Store transition
                 self.replay_buffer.push(state, action, reward, next_state, done)
@@ -254,7 +260,10 @@ class HighwayKinematicDQNAgent:
             # Store statistics
             self.episode_rewards.append(episode_reward)
             self.episode_lengths.append(step + 1)
-            
+            avg_speed = episode_speed_sum / (step + 1)
+            self.episode_speeds.append(avg_speed)
+            self.episode_collisions.append(1 if episode_crashed else 0)
+
             # Print progress
             if (episode + 1) % print_every == 0:
                 avg_reward = np.mean(self.episode_rewards[-print_every:])
@@ -275,16 +284,35 @@ class HighwayKinematicDQNAgent:
         """Evaluate the trained agent"""
         print(f"\nEvaluating agent for {num_episodes} episodes...")
         eval_rewards = []
+        eval_avg_speeds = []
+        eval_collisions = []
         for episode in range(num_episodes):
             state, _ = self.env.reset()
             state = self.preprocess_state(state)
             episode_reward = 0
             done = False
             steps = 0
-            
+            speeds = []
+            crashed = False
             while not done and steps < 1000:
                 action = self.select_action(state, training=False)
-                next_state, reward, terminated, truncated, _ = self.env.step(action)
+                next_state, reward, terminated, truncated, info = self.env.step(action)
+
+                # Try to get ego speed: robust to wrappers
+                ego_speed = None
+                try:
+                    if hasattr(self.env.unwrapped, 'controlled_vehicles') and len(self.env.unwrapped.controlled_vehicles) > 0:
+                        ego_speed = self.env.unwrapped.controlled_vehicles[0].speed
+                except Exception:
+                    pass
+                if ego_speed is None and isinstance(info, dict):
+                    # Sometimes speed is in info
+                    ego_speed = info.get("speed", None)
+                if ego_speed is not None:
+                    speeds.append(ego_speed)
+                if 'crashed' in info and info['crashed']:
+                    crashed = True
+
                 done = terminated or truncated
                 next_state = self.preprocess_state(next_state)
                 
@@ -293,18 +321,24 @@ class HighwayKinematicDQNAgent:
                 steps += 1
             
             eval_rewards.append(episode_reward)
+            avg_speed = np.mean(speeds) if speeds else 0.0
+            eval_avg_speeds.append(avg_speed)
+            eval_collisions.append(1 if crashed else 0)
             print(f"Episode {episode + 1}: Reward = {episode_reward:.2f}, Steps = {steps}")
         
         avg_reward = np.mean(eval_rewards)
-        print(f"\nAverage Evaluation Reward: {avg_reward:.2f}")
-        return eval_rewards
+        avg_speed_overall = np.mean(eval_avg_speeds)
+        avg_collisions_per_episode = np.sum(eval_collisions)/num_episodes
+        print(f"\nAverage Evaluation Collisions Per Episode: {avg_collisions_per_episode*100:.2f}%")
+        print(f"Average Evaluation Speed: {avg_speed_overall:.2f}")
+        print(f"Average Evaluation Reward: {avg_reward:.2f}")
+        return eval_rewards, eval_avg_speeds, eval_collisions
 
     def plot_training_progress(self, save_path="training_progress_dqn_kinematic.png"):
-        """Plot training progress"""
-        fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8))
-        
-        # Plot rewards
-        ax1.plot(self.episode_rewards, alpha=0.6, label='Episode Reward')
+        """Plot training progress (only moving averages)"""
+        fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(15, 10))
+
+        # Plot moving average rewards
         if len(self.episode_rewards) >= 10:
             window = 10
             moving_avg = np.convolve(self.episode_rewards, 
@@ -316,9 +350,8 @@ class HighwayKinematicDQNAgent:
         ax1.set_title('Training Rewards Over Time DQN Kinematic')
         ax1.legend()
         ax1.grid(True)
-        
-        # Plot episode lengths
-        ax2.plot(self.episode_lengths, alpha=0.6, label='Episode Length')
+
+        # Plot moving average episode lengths
         if len(self.episode_lengths) >= 10:
             window = 10
             moving_avg = np.convolve(self.episode_lengths, 
@@ -326,15 +359,42 @@ class HighwayKinematicDQNAgent:
             ax2.plot(range(window-1, len(self.episode_lengths)), 
                     moving_avg, 'r-', linewidth=2, label=f'{window}-Episode Moving Avg')
         ax2.set_xlabel('Episode')
-        ax2.set_ylabel('Steps')
+        ax2.set_ylabel('Episodes Length')
         ax2.set_title('Episode Lengths Over Time DQN Kinematic')
         ax2.legend()
         ax2.grid(True)
-        
+
+        # Plot moving average speed
+        if len(self.episode_speeds) >= 20:
+            window = 20
+            moving_avg = np.convolve(self.episode_speeds, 
+                                     np.ones(window)/window, mode='valid')
+            ax3.plot(range(window-1, len(self.episode_speeds)), 
+                    moving_avg, 'r-', linewidth=2, label=f'{window}-Episode Moving Avg')
+        ax3.set_xlabel('Episode')
+        ax3.set_ylabel('Average Speed')
+        ax3.set_title('Average Speed Over Time DQN Kinematic')
+        ax3.legend()
+        ax3.grid(True)
+
+        # Plot moving average collision rate
+        if len(self.episode_collisions) >= 20:
+            window = 20
+            moving_avg = np.convolve(self.episode_collisions, 
+                                     np.ones(window)/window, mode='valid')
+            ax4.plot(range(window-1, len(self.episode_collisions)), 
+                    moving_avg, 'r-', linewidth=2, label=f'{window}-Episode Moving Avg (Collision Rate)')
+        ax4.set_xlabel('Episode')
+        ax4.set_ylabel('Collision Rate Per Episode')
+        ax4.set_title('Collision Rate Over Time DQN Kinematic')
+        ax4.legend()
+        ax4.grid(True)
+
         plt.tight_layout()
         plt.savefig(save_path)
         print(f"Training progress plot saved to {save_path}")
         plt.close()
+
     
     def save_model(self, path="highway_dqn_kinematic.pth"):
         """Save the trained model"""
@@ -399,7 +459,7 @@ def main():
         #"policy_frequency": 1,  # Hz (higher = fewer steps per episode, default is 1)
         "duration": 100,  # Shorter episodes (default is 40)
         "vehicles_count": 20,  # Fewer vehicles to simulate (default is 50)
-        "vehicles_density": 1.5, # Increases traffic density
+        "vehicles_density": 1.25, # Increases traffic density
         #'lane_change_reward': -0.5,
         "action": {
             "type": "DiscreteMetaAction",
@@ -407,7 +467,7 @@ def main():
         },
         "observation": {
             "type": "Kinematics",
-            "vehicles_count": 10,
+            "vehicles_count": 6,
             "features": [
                 "presence",
                 "x",
@@ -420,7 +480,7 @@ def main():
         #"offscreen_rendering": False,
         #"real_time_rendering": False,
     }
-    env = gymnasium.make('highway-v0', config=config, render_mode=None)
+    env = gymnasium.make('highway-v0', config=config, render_mode="human")
     # Create agent
     env = SpeedRewardWrapper(env, absolute_min_speed=0.0, cutoff_speed=20.0, max_speed=30.0, crash_reward=0)
 
@@ -432,26 +492,23 @@ def main():
         epsilon_end=0.02,
         epsilon_decay=0.9975,
         batch_size=64,
-        target_update_freq=1000,
-        buffer_capacity=40000,
+        target_update_freq=1600,
+        buffer_capacity=60000,
     )
-    #agent.load_model("highway_dqn_kinematic.pth")
     # Train agent
-    agent.train(num_episodes=1500, max_steps_per_episode=1000, print_every=10)
+    #agent.train(num_episodes=00, max_steps_per_episode=1000, print_every=10)
     
     # Plot progress
-    agent.plot_training_progress("training_progress_dqn_kinematic.png")
+    #agent.plot_training_progress("training_progress_dqn_kinematic.png")
     
     # Save model
-    agent.save_model("highway_dqn_kinematic.pth")
+    #agent.save_model("highway_dqn_kinematic.pth")
     
     # Evaluate agent
     agent.load_model("highway_dqn_kinematic.pth")
-    rewards = agent.evaluate(num_episodes=30)
-    print(f"Average reward: {np.mean(rewards):.2f}")
+    #rewards = agent.evaluate(num_episodes=30)
 
-    
-    #steps = agent.render_episode(num_episodes=5)
+    steps = agent.render_episode(num_episodes=5)
     # Close environment
     agent.close()
 
