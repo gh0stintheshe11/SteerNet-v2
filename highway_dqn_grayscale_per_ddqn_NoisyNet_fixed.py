@@ -656,18 +656,18 @@ def main():
         env=env,
         learning_rate=1e-4,
         gamma=0.99,
-        batch_size=128,              # Good for A30 FP32
+        batch_size=256,              # 4090
         target_update_freq=2000,
         buffer_capacity=100000,
         stack_size=stack_size,
         per_alpha=0.6,
         per_beta=0.4,
         per_beta_increment=0.001,
-        sigma_init=0.5               # NoisyNet noise scale
+        sigma_init=0.3               # NoisyNet noise scale
     )
     
     # Train
-    agent.train(num_episodes=3000, max_steps_per_episode=1000, print_every=10)
+    agent.train(num_episodes=5000, max_steps_per_episode=1000, print_every=10)
     
     # Save
     agent.plot_training_progress("training_progress_per_ddqn_NoisyNet_fixed.png")
