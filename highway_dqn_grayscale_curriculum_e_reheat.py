@@ -34,8 +34,8 @@ class FrameStackResetWrapper(gymnasium.Wrapper):
 
 
 class SpeedRewardWrapper(gymnasium.Wrapper):
-    """Custom reward function with crash penalty"""
-    def __init__(self, env, absolute_min_speed=0.0, cutoff_speed=20.0, max_speed=30.0, crash_reward=-50.0):
+    """Custom reward function"""
+    def __init__(self, env, absolute_min_speed=0.0, cutoff_speed=20.0, max_speed=30.0, crash_reward=0.0):
         super().__init__(env)
         self.absolute_min_speed = absolute_min_speed
         self.cutoff_speed = cutoff_speed
@@ -168,7 +168,7 @@ class PrioritizedReplayBuffer:
 
 
 class HighwayGrayscaleDQNAgent:
-    """DQN Agent with Curriculum Learning, Simulated Annealing, and Adaptive Reheating"""
+    """DQN Agent with Curriculum Learning and Smart Reheating"""
     
     def __init__(
         self,
@@ -178,9 +178,9 @@ class HighwayGrayscaleDQNAgent:
         epsilon_start=1.0,
         epsilon_end=0.02,
         epsilon_decay=0.99,
-        batch_size=32,
+        batch_size=128,
         target_update_freq=1000,
-        buffer_capacity=10000,
+        buffer_capacity=100000,
         stack_size=4,
         per_alpha=0.6,
         per_beta=0.4,
@@ -233,7 +233,7 @@ class HighwayGrayscaleDQNAgent:
         self.episode_speeds = []
         self.episode_collisions = []
         self.episode_levels = []
-        self.episode_epsilons = []  # Track epsilon over time
+        self.episode_epsilons = []
         
     def preprocess_state(self, state):
         return state.astype('float32') / 255.0
@@ -281,8 +281,8 @@ class HighwayGrayscaleDQNAgent:
         
         return loss.item()
 
-    def train(self, num_episodes=10000, max_steps_per_episode=1000, print_every=10):
-        """Train with Curriculum Learning, Simulated Annealing, and Adaptive Reheating"""
+    def train(self, num_episodes=6000, max_steps_per_episode=1000, print_every=10):
+        """Train with Curriculum Learning and Smart Reheating"""
         print(f"Starting training for {num_episodes} episodes...")
         print(f"Observation shape: {self.env.observation_space.shape}")
         
@@ -295,17 +295,22 @@ class HighwayGrayscaleDQNAgent:
         ]
         
         # Per-level epsilon settings (simulated annealing)
-        # Same floor, different ceilings
         level_epsilon_start = [1.0, 0.5, 0.3, 0.15]
         level_epsilon_end = [0.02, 0.02, 0.02, 0.02]
         level_epsilon_decay = [0.99, 0.99, 0.99, 0.99]
         
-        # Reheating settings
-        reheat_check_interval = 100  # Check every 100 episodes
-        reheat_window = 100          # Compare last 100 vs previous 100
-        reheat_threshold = 0.02      # If improvement < 2%, consider stuck
-        reheat_factor = 2.0          # Multiply epsilon by this when reheating
-        reheat_cap = 0.5             # Maximum epsilon after reheat
+        # ==================== SMART REHEATING SETTINGS ====================
+        reheat_check_interval = 100      # Check every 100 episodes
+        reheat_window = 100              # Compare last 100 vs previous 100
+        min_regression_threshold = -0.05 # Only reheat if 5% WORSE (not just flat)
+        reheat_cooldown = 300            # Wait 300 episodes after reheat
+        min_epsilon_for_reheat = 0.05    # Only reheat if epsilon already low
+        max_reheats_per_level = 3        # Max 3 reheats per level
+        reheat_factor = 1.5              # Smaller boost (was 2.0)
+        reheat_cap = 0.20                # Lower cap (was 0.5)
+        
+        print(f"Smart Reheating: trigger on {-min_regression_threshold:.0%} regression, "
+              f"cooldown {reheat_cooldown} eps, max {max_reheats_per_level}/level")
         
         # Initialize level 0
         current_level = 0
@@ -316,21 +321,20 @@ class HighwayGrayscaleDQNAgent:
         
         print(f"Starting at Level {current_level}: {curriculum_levels[current_level]}")
         print(f"Epsilon: {self.epsilon} -> {self.epsilon_end} (decay: {self.epsilon_decay})")
-        print(f"Reheating enabled: check every {reheat_check_interval} eps, threshold {reheat_threshold}")
         
         # Level up requirements
         min_episodes_per_level = 200
         crash_rate_threshold = 0.20
         min_avg_speed = 22.0
         
-        # Per-level tracking (reset on level up)
+        # Per-level tracking
         level_collisions = []
         level_speeds = []
         episodes_at_current_level = 0
         
-        # Tracking best crash rate for reheating
-        best_crash_rate = 1.0
-        episodes_since_improvement = 0
+        # Smart reheating tracking
+        episodes_since_last_reheat = reheat_cooldown  # Start ready to reheat if needed
+        reheats_this_level = 0
         
         # ==================== TRAINING LOOP ====================
         training_start_time = time.time()
@@ -383,10 +387,10 @@ class HighwayGrayscaleDQNAgent:
                 if done:
                     break
             
-            # Decay epsilon (within current level bounds)
+            # Decay epsilon
             self.epsilon = max(self.epsilon_end, self.epsilon * self.epsilon_decay)
             
-            # Store global statistics (for plotting)
+            # Store global statistics
             self.episode_rewards.append(episode_reward)
             self.episode_lengths.append(step + 1)
             avg_speed = episode_speed_sum / (step + 2)
@@ -395,45 +399,42 @@ class HighwayGrayscaleDQNAgent:
             self.episode_levels.append(current_level)
             self.episode_epsilons.append(self.epsilon)
             
-            # Store per-level statistics (for level up check)
+            # Store per-level statistics
             level_collisions.append(1 if episode_crashed else 0)
             level_speeds.append(avg_speed)
             episodes_at_current_level += 1
+            episodes_since_last_reheat += 1
             
-            # ==================== ADAPTIVE REHEATING ====================
+            # ==================== SMART REHEATING ====================
             if (episode + 1) % reheat_check_interval == 0 and len(level_collisions) >= 2 * reheat_window:
-                recent_crash = np.mean(level_collisions[-reheat_window:])
-                previous_crash = np.mean(level_collisions[-2*reheat_window:-reheat_window])
                 
-                improvement = previous_crash - recent_crash  # Positive = getting better
+                # Check ALL conditions before reheating
+                can_reheat = (
+                    self.epsilon <= min_epsilon_for_reheat and         # Already exploiting
+                    episodes_since_last_reheat >= reheat_cooldown and  # Cooldown passed
+                    reheats_this_level < max_reheats_per_level         # Haven't exceeded limit
+                )
                 
-                # Check if we improved
-                if recent_crash < best_crash_rate - 0.01:
-                    best_crash_rate = recent_crash
-                    episodes_since_improvement = 0
-                else:
-                    episodes_since_improvement += reheat_check_interval
-                
-                # Reheat conditions:
-                # 1. No improvement (stuck)
-                # 2. Getting worse (regressing)
-                # 3. Been a while since last improvement
-                if improvement < reheat_threshold or episodes_since_improvement >= 300:
-                    old_epsilon = self.epsilon
+                if can_reheat:
+                    recent_crash = np.mean(level_collisions[-reheat_window:])
+                    previous_crash = np.mean(level_collisions[-2*reheat_window:-reheat_window])
+                    improvement = previous_crash - recent_crash  # Positive = better
                     
-                    # Reheat: boost epsilon
-                    self.epsilon = min(self.epsilon * reheat_factor, reheat_cap)
-                    self.epsilon = max(self.epsilon, 0.1)  # At least 10% exploration
-                    
-                    print(f"\n{'='*60}")
-                    print(f"REHEATING at Episode {episode + 1}!")
-                    print(f"Previous crash: {previous_crash:.1%} -> Recent crash: {recent_crash:.1%}")
-                    print(f"Improvement: {improvement:.1%} (threshold: {reheat_threshold:.1%})")
-                    print(f"Episodes since improvement: {episodes_since_improvement}")
-                    print(f"Epsilon: {old_epsilon:.3f} -> {self.epsilon:.3f}")
-                    print(f"{'='*60}\n")
-                    
-                    episodes_since_improvement = 0  # Reset counter
+                    # Only reheat if ACTUALLY REGRESSING
+                    if improvement < min_regression_threshold:
+                        old_epsilon = self.epsilon
+                        self.epsilon = min(self.epsilon * reheat_factor, reheat_cap)
+                        
+                        # Reset cooldown counter
+                        episodes_since_last_reheat = 0
+                        reheats_this_level += 1
+                        
+                        print(f"\n{'='*60}")
+                        print(f"SMART REHEAT #{reheats_this_level}/{max_reheats_per_level} at Episode {episode + 1}")
+                        print(f"Crash: {previous_crash:.1%} -> {recent_crash:.1%} (regression: {-improvement:.1%})")
+                        print(f"Epsilon: {old_epsilon:.3f} -> {self.epsilon:.3f}")
+                        print(f"Next reheat possible after episode {episode + 1 + reheat_cooldown}")
+                        print(f"{'='*60}\n")
             
             # ==================== CHECK LEVEL UP ====================
             if (episode + 1) % 50 == 0 and episodes_at_current_level >= min_episodes_per_level:
@@ -453,8 +454,10 @@ class HighwayGrayscaleDQNAgent:
                         level_collisions = []
                         level_speeds = []
                         episodes_at_current_level = 0
-                        best_crash_rate = 1.0  # Reset best crash rate for new level
-                        episodes_since_improvement = 0
+                        
+                        # Reset reheating tracking for new level
+                        episodes_since_last_reheat = reheat_cooldown  # Ready to reheat if needed
+                        reheats_this_level = 0
                         
                         # Update environment
                         self.env.unwrapped.config.update(curriculum_levels[current_level])
@@ -469,6 +472,7 @@ class HighwayGrayscaleDQNAgent:
                         print(f"Previous stats: Crash rate {recent_crash_rate:.1%}, Speed {recent_avg_speed:.1f}")
                         print(f"New epsilon: {self.epsilon} -> {self.epsilon_end}")
                         print(f"Buffer size: {len(self.replay_buffer)}")
+                        print(f"Reheats reset: 0/{max_reheats_per_level}")
                         print(f"{'='*60}\n")
             
             # ==================== PRINT PROGRESS ====================
@@ -499,6 +503,7 @@ class HighwayGrayscaleDQNAgent:
                     elapsed_str = f"{total_elapsed/3600:.1f}h"
                 
                 level_ep_str = f"({episodes_at_current_level}/{min_episodes_per_level})"
+                reheat_str = f"R:{reheats_this_level}/{max_reheats_per_level}"
                 
                 print(f"Ep {episode + 1}/{num_episodes} | "
                       f"Lv: {current_level} {level_ep_str} | "
@@ -507,6 +512,7 @@ class HighwayGrayscaleDQNAgent:
                       f"Speed: {recent_avg_speed:.1f} | "
                       f"Len: {avg_length:.0f} | "
                       f"Eps: {self.epsilon:.3f} | "
+                      f"{reheat_str} | "
                       f"Loss: {avg_loss:.4f} | "
                       f"{avg_episode_time:.2f}s/ep | "
                       f"{elapsed_str}")
@@ -566,7 +572,7 @@ class HighwayGrayscaleDQNAgent:
         print(f"{'='*40}")
         return eval_rewards, eval_avg_speeds
 
-    def plot_training_progress(self, save_path="training_progress_curriculum.png"):
+    def plot_training_progress(self, save_path="training_progress_curriculum_smart_reheat.png"):
         """Plot training progress with level indicators and epsilon"""
         fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(15, 10))
         
@@ -587,7 +593,7 @@ class HighwayGrayscaleDQNAgent:
             ax1.axvline(x=lc, color='g', linestyle='--', alpha=0.7)
         ax1.set_xlabel('Episode')
         ax1.set_ylabel('Reward')
-        ax1.set_title('Training Rewards (Curriculum + Reheating)')
+        ax1.set_title('Training Rewards (Curriculum + Smart Reheating)')
         ax1.legend()
         ax1.grid(True)
         
@@ -601,7 +607,7 @@ class HighwayGrayscaleDQNAgent:
             ax2.axvline(x=lc, color='g', linestyle='--', alpha=0.7)
         ax2.set_xlabel('Episode')
         ax2.set_ylabel('Episode Length')
-        ax2.set_title('Episode Lengths (Curriculum + Reheating)')
+        ax2.set_title('Episode Lengths (Curriculum + Smart Reheating)')
         ax2.legend()
         ax2.grid(True)
         
@@ -616,7 +622,7 @@ class HighwayGrayscaleDQNAgent:
             ax3.axvline(x=lc, color='g', linestyle='--', alpha=0.7)
         ax3.set_xlabel('Episode')
         ax3.set_ylabel('Average Speed')
-        ax3.set_title('Average Speed (Curriculum + Reheating)')
+        ax3.set_title('Average Speed (Curriculum + Smart Reheating)')
         ax3.legend(loc='lower right')
         ax3.grid(True)
         
@@ -633,6 +639,7 @@ class HighwayGrayscaleDQNAgent:
             window = 50
             moving_avg = np.convolve(self.episode_collisions, np.ones(window)/window, mode='valid')
             ax4.plot(range(window-1, len(self.episode_collisions)), moving_avg, 'r-', linewidth=2, label='50-ep Crash Rate')
+        ax4.axhline(y=0.15, color='g', linestyle='--', label='15% Target')
         ax4.axhline(y=0.2, color='orange', linestyle='--', label='20% Threshold')
         for lc in level_changes:
             ax4.axvline(x=lc, color='g', linestyle='--', alpha=0.7, label='Level Up' if lc == level_changes[0] else '')
@@ -655,7 +662,7 @@ class HighwayGrayscaleDQNAgent:
         print(f"Training progress plot saved to {save_path}")
         plt.close()
     
-    def save_model(self, path="highway_dqn_curriculum.pth"):
+    def save_model(self, path="highway_dqn_curriculum_smart_reheat.pth"):
         torch.save({
             'online_net_state_dict': self.online_net.state_dict(),
             'target_net_state_dict': self.target_net.state_dict(),
@@ -670,7 +677,7 @@ class HighwayGrayscaleDQNAgent:
         }, path)
         print(f"Model saved to {path}")
     
-    def load_model(self, path="highway_dqn_curriculum.pth"):
+    def load_model(self, path="highway_dqn_curriculum_smart_reheat.pth"):
         checkpoint = torch.load(path, map_location=self.device, weights_only=False)
         self.online_net.load_state_dict(checkpoint['online_net_state_dict'])
         self.target_net.load_state_dict(checkpoint['target_net_state_dict'])
@@ -712,7 +719,7 @@ def main():
     
     env = gymnasium.make('highway-v0', config=config, render_mode=None)
     env = FrameStackResetWrapper(env)
-    env = SpeedRewardWrapper(env, crash_reward=-50.0)
+    env = SpeedRewardWrapper(env, crash_reward=0.0)  # No crash penalty
     
     agent = HighwayGrayscaleDQNAgent(
         env=env,
@@ -721,7 +728,7 @@ def main():
         epsilon_start=1.0,
         epsilon_end=0.02,
         epsilon_decay=0.99,
-        batch_size=512,
+        batch_size=128,              # For A30
         target_update_freq=2000,
         buffer_capacity=100000,
         stack_size=stack_size,
@@ -730,15 +737,15 @@ def main():
         per_beta_increment=0.001
     )
     
-    # Train for 10000 episodes
-    agent.train(num_episodes=10000, max_steps_per_episode=1000, print_every=10)
+    # Train for 5000 episodes
+    agent.train(num_episodes=5000, max_steps_per_episode=1000, print_every=10)
     
     # Save
-    agent.plot_training_progress("training_progress_grayscale_curriculum_e_reheat.png")
-    agent.save_model("highway_dqn_grayscale_curriculum_e_reheat.pth")
+    agent.plot_training_progress("training_progress_curriculum_smart_reheat.png")
+    agent.save_model("highway_dqn_curriculum_smart_reheat.pth")
     
     # Evaluate
-    agent.load_model("highway_dqn_grayscale_curriculum_e_reheat.pth")
+    agent.load_model("highway_dqn_curriculum_smart_reheat.pth")
     agent.evaluate(num_episodes=30)
     
     agent.close()
