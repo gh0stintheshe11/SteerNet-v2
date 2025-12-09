@@ -2,6 +2,66 @@
 
 A highway driving agent implementation using the highway-env Gymnasium environment.
 
+## Quick Start
+
+### Running the Baseline Agent
+
+```bash
+python highway_baseline.py
+```
+
+### Running the DQN Kinematic Agent
+
+#### Training
+
+```bash
+# Train for 1000 episodes (default)
+python highway_dqn_kinematic.py --train
+
+# Train for 500 episodes
+python highway_dqn_kinematic.py --train --episodes 500
+```
+
+#### Evaluation
+
+```bash
+# Evaluate with 30 episodes (no rendering)
+python highway_dqn_kinematic.py --evaluate
+
+# Evaluate with rendering enabled
+python highway_dqn_kinematic.py --evaluate --render
+
+# Evaluate 10 episodes with rendering
+python highway_dqn_kinematic.py --evaluate --episodes 10 --render
+```
+
+### Running the DQN Grayscale Agent
+
+#### Training
+
+```bash
+# Train for 2000 episodes (default)
+python highway_dqn_grayscale.py --train
+
+# Train for 500 episodes
+python highway_dqn_grayscale.py --train --episodes 500
+```
+
+#### Evaluation
+
+```bash
+# Evaluate with 30 episodes (no rendering)
+python highway_dqn_grayscale.py --evaluate
+
+# Evaluate with rendering enabled
+python highway_dqn_grayscale.py --evaluate --render
+
+# Evaluate 10 episodes with rendering
+python highway_dqn_grayscale.py --evaluate --episodes 10 --render
+```
+
+---
+
 ## Baseline Agent
 
 The baseline agent implements a rule-based driving strategy that maintains safe highway driving behavior.
@@ -31,7 +91,7 @@ The observation is a 5×5 matrix:
 
 The baseline agent follows a simple driving strategy:
 
-1. **No car ahead**: Speed up until reaching the target velocity (default 1.0)
+1. **No car ahead**: Speed up until reaching the maximum velocity
 
 2. **Car ahead detected**:
    - If too close (distance < 0.2):
@@ -43,23 +103,17 @@ The baseline agent follows a simple driving strategy:
      - If distance > 0.2: Speed up (too far)
      - Otherwise: Match the velocity of the car ahead
 
-## Running the Baseline Agent
-
-To run the baseline agent:
-
-```bash
-python highway_baseline.py
-```
-
 ### Environment Configuration
 
 - Environment: `highway-v0`
 - Duration: 100 steps (modified from default 40)
 - Render mode: `rgb_array`
 
-## DQN Agent
+---
 
-The DQN (Deep Q-Network) agent implements a reinforcement learning approach to learn optimal driving behavior using deep neural networks.
+## DQN Kinematic Agent
+
+The DQN (Deep Q-Network) agent implements a reinforcement learning approach to learn optimal driving behavior using deep neural networks with kinematic observations.
 
 ### Model Architecture
 
@@ -89,11 +143,9 @@ Default training configuration:
 - Target Network Update Frequency: `1000` steps
 - Training Episodes: `1000`
 
-## Running the DQN Agent
-
 ### Command Line Arguments
 
-The kinematic DQN agent supports several command line arguments for flexible training and evaluation:
+The kinematic DQN agent supports several command line arguments:
 
 - `--train`: Enable training mode
 - `--evaluate`: Enable evaluation mode
@@ -101,47 +153,11 @@ The kinematic DQN agent supports several command line arguments for flexible tra
 - `--render`: Enable rendering during evaluation
 - `--model_path PATH`: Specify model save/load path (default: `highway_dqn_kinematic.pth`)
 
-### Usage Examples
-
-#### Training
-
-```bash
-# Train for 1000 episodes (default)
-python highway_dqn_kinematic.py --train
-
-# Train for 500 episodes
-python highway_dqn_kinematic.py --train --episodes 500
-
-# Train with custom model path
-python highway_dqn_kinematic.py --train --model_path my_model.pth
-```
-
-#### Evaluation
-
-```bash
-# Evaluate with 30 episodes (no rendering)
-python highway_dqn_kinematic.py --evaluate
-
-# Evaluate with rendering enabled
-python highway_dqn_kinematic.py --evaluate --render
-
-# Evaluate 10 episodes with rendering
-python highway_dqn_kinematic.py --evaluate --episodes 10 --render
-
-# Evaluate using a custom model
-python highway_dqn_kinematic.py --evaluate --model_path my_model.pth --render
-```
-
-#### Combined Training and Evaluation
-
-```bash
-# Train and then evaluate
-python highway_dqn_kinematic.py --train --evaluate --episodes 100
-```
-
 **Note**: If you don't specify `--train` or `--evaluate`, the script defaults to training mode.
 
-## DQN Agent with Grayscale Observations
+---
+
+## DQN Grayscale Agent
 
 The grayscale DQN agent uses CNN-based deep learning to process visual observations from the highway environment.
 
@@ -158,7 +174,7 @@ The grayscale DQN uses a convolutional neural network:
 
 ### Command Line Arguments
 
-The grayscale DQN agent supports several command line arguments for flexible training and evaluation:
+The grayscale DQN agent supports several command line arguments:
 
 - `--train`: Enable training mode
 - `--evaluate`: Enable evaluation mode
@@ -166,45 +182,9 @@ The grayscale DQN agent supports several command line arguments for flexible tra
 - `--render`: Enable rendering during evaluation
 - `--model_path PATH`: Specify model save/load path (default: `highway_dqn_grayscale.pth`)
 
-### Usage Examples
-
-#### Training
-
-```bash
-# Train for 2000 episodes (default)
-python highway_dqn_grayscale.py --train
-
-# Train for 500 episodes
-python highway_dqn_grayscale.py --train --episodes 500
-
-# Train with custom model path
-python highway_dqn_grayscale.py --train --model_path my_model.pth
-```
-
-#### Evaluation
-
-```bash
-# Evaluate with 30 episodes (no rendering)
-python highway_dqn_grayscale.py --evaluate
-
-# Evaluate with rendering enabled
-python highway_dqn_grayscale.py --evaluate --render
-
-# Evaluate 10 episodes with rendering
-python highway_dqn_grayscale.py --evaluate --episodes 10 --render
-
-# Evaluate using a custom model
-python highway_dqn_grayscale.py --evaluate --model_path my_model.pth --render
-```
-
-#### Combined Training and Evaluation
-
-```bash
-# Train and then evaluate
-python highway_dqn_grayscale.py --train --evaluate --episodes 100
-```
-
 **Note**: If you don't specify `--train` or `--evaluate`, the script defaults to training mode.
+
+---
 
 ## Files
 
