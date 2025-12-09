@@ -1,0 +1,17 @@
+# Core RL and Environment
+gymnasium>=1.2.0
+highway-env>=1.10.2
+
+# Deep Learning
+torch>=2.0.0
+torchvision>=0.15.0
+
+# Numerical Computing
+numpy>=1.24.0
+
+# Visualization
+matplotlib>=3.7.0
+
+# Rendering (optional, for visualization)
+pygame>=2.6.0
+

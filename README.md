@@ -2,6 +2,14 @@
 
 A highway driving agent implementation using the highway-env Gymnasium environment.
 
+## Installation
+
+Install the required Python packages:
+
+```bash
+pip install -r requirements.txt
+```
+
 ## Quick Start
 
 ### Running the Baseline Agent
@@ -188,6 +196,7 @@ The grayscale DQN agent supports several command line arguments:
 
 ## Files
 
+- `requirements.txt` - Python package dependencies
 - `highway_baseline.py` - Rule-based baseline agent implementation
 - `highway_dqn_kinematic.py` - DQN agent implementation with kinematic observations
 - `highway_dqn_kinematic.pth` - Trained DQN model weights (generated after training)
