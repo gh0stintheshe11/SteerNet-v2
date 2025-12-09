@@ -91,34 +91,127 @@ Default training configuration:
 
 ## Running the DQN Agent
 
-### Training a New Model
+### Command Line Arguments
 
-To train a new DQN agent from scratch:
+The kinematic DQN agent supports several command line arguments for flexible training and evaluation:
+
+- `--train`: Enable training mode
+- `--evaluate`: Enable evaluation mode
+- `--episodes N`: Set number of episodes (default: 1000 for training, 30 for evaluation)
+- `--render`: Enable rendering during evaluation
+- `--model_path PATH`: Specify model save/load path (default: `highway_dqn_kinematic.pth`)
+
+### Usage Examples
+
+#### Training
 
 ```bash
-python highway_dqn_kinematic.py
+# Train for 1000 episodes (default)
+python highway_dqn_kinematic.py --train
+
+# Train for 500 episodes
+python highway_dqn_kinematic.py --train --episodes 500
+
+# Train with custom model path
+python highway_dqn_kinematic.py --train --model_path my_model.pth
 ```
 
-This will:
-- Train for 1000 episodes
-- Save the trained model to `highway_dqn_kinematic.pth`
-- Generate a training progress plot: `training_progress_dqn_kinematic.png`
-- Evaluate the trained model for 10 episodes
+#### Evaluation
 
-### Visualizing Performance
+```bash
+# Evaluate with 30 episodes (no rendering)
+python highway_dqn_kinematic.py --evaluate
 
-To render episodes with the trained model, set `render_mode="human"` or `render_mode="rgb_array"`:
+# Evaluate with rendering enabled
+python highway_dqn_kinematic.py --evaluate --render
 
-```python
-agent = HighwayKinematicDQNAgent(render_mode="human")
-agent.load_model("highway_dqn_kinematic.pth")
-agent.render_episode(num_episodes=5)
-agent.close()
+# Evaluate 10 episodes with rendering
+python highway_dqn_kinematic.py --evaluate --episodes 10 --render
+
+# Evaluate using a custom model
+python highway_dqn_kinematic.py --evaluate --model_path my_model.pth --render
 ```
+
+#### Combined Training and Evaluation
+
+```bash
+# Train and then evaluate
+python highway_dqn_kinematic.py --train --evaluate --episodes 100
+```
+
+**Note**: If you don't specify `--train` or `--evaluate`, the script defaults to training mode.
+
+## DQN Agent with Grayscale Observations
+
+The grayscale DQN agent uses CNN-based deep learning to process visual observations from the highway environment.
+
+### Model Architecture
+
+The grayscale DQN uses a convolutional neural network:
+- **Input**: 4 stacked grayscale frames (4 × 240 × 64)
+- **Conv Layer 1**: 32 filters, kernel=(8,4), stride=(4,4) with ReLU
+- **Conv Layer 2**: 64 filters, kernel=(4,3), stride=(2,2) with ReLU
+- **Conv Layer 3**: 64 filters, kernel=(3,3), stride=(1,1) with ReLU
+- **FC Layer 1**: 512 neurons with ReLU
+- **FC Layer 2**: 256 neurons with ReLU
+- **Output Layer**: 5 neurons (one Q-value per action)
+
+### Command Line Arguments
+
+The grayscale DQN agent supports several command line arguments for flexible training and evaluation:
+
+- `--train`: Enable training mode
+- `--evaluate`: Enable evaluation mode
+- `--episodes N`: Set number of episodes (default: 2000 for training, 30 for evaluation)
+- `--render`: Enable rendering during evaluation
+- `--model_path PATH`: Specify model save/load path (default: `highway_dqn_grayscale.pth`)
+
+### Usage Examples
+
+#### Training
+
+```bash
+# Train for 2000 episodes (default)
+python highway_dqn_grayscale.py --train
+
+# Train for 500 episodes
+python highway_dqn_grayscale.py --train --episodes 500
+
+# Train with custom model path
+python highway_dqn_grayscale.py --train --model_path my_model.pth
+```
+
+#### Evaluation
+
+```bash
+# Evaluate with 30 episodes (no rendering)
+python highway_dqn_grayscale.py --evaluate
+
+# Evaluate with rendering enabled
+python highway_dqn_grayscale.py --evaluate --render
+
+# Evaluate 10 episodes with rendering
+python highway_dqn_grayscale.py --evaluate --episodes 10 --render
+
+# Evaluate using a custom model
+python highway_dqn_grayscale.py --evaluate --model_path my_model.pth --render
+```
+
+#### Combined Training and Evaluation
+
+```bash
+# Train and then evaluate
+python highway_dqn_grayscale.py --train --evaluate --episodes 100
+```
+
+**Note**: If you don't specify `--train` or `--evaluate`, the script defaults to training mode.
 
 ## Files
 
 - `highway_baseline.py` - Rule-based baseline agent implementation
 - `highway_dqn_kinematic.py` - DQN agent implementation with kinematic observations
 - `highway_dqn_kinematic.pth` - Trained DQN model weights (generated after training)
-- `training_progress_dqn_kinematic.png` - Training progress visualization (generated after training)
+- `highway_dqn_grayscale.py` - DQN agent implementation with grayscale (visual) observations
+- `highway_dqn_grayscale.pth` - Trained grayscale DQN model weights (generated after training)
+- `training_progress_dqn_kinematic.png` - Kinematic DQN training progress visualization (generated after training)
+- `training_progress_dqn_grayscale.png` - Grayscale DQN training progress visualization (generated after training)

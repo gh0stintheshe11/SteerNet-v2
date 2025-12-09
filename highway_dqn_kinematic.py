@@ -8,6 +8,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from collections import deque
+import argparse
 
 
 class SpeedRewardWrapper(gymnasium.Wrapper):
@@ -449,6 +450,20 @@ class HighwayKinematicDQNAgent:
 
 def main():
     """Main training function"""
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(description='Highway DQN Kinematic Agent')
+    parser.add_argument('--train', action='store_true', help='Train the agent')
+    parser.add_argument('--evaluate', action='store_true', help='Evaluate the agent')
+    parser.add_argument('--episodes', type=int, default=1000, help='Number of episodes (default: 1000 for training, 30 for evaluation)')
+    parser.add_argument('--render', action='store_true', help='Render the environment during evaluation')
+    parser.add_argument('--model_path', type=str, default='highway_dqn_kinematic.pth', help='Path to save/load model (default: highway_dqn_kinematic.pth)')
+    
+    args = parser.parse_args()
+    
+    # If neither train nor evaluate is specified, default to training
+    if not args.train and not args.evaluate:
+        args.train = True
+    
     # Set random seeds for reproducibility
     #random.seed(42)
     #np.random.seed(42)
@@ -480,7 +495,10 @@ def main():
         #"offscreen_rendering": False,
         #"real_time_rendering": False,
     }
-    env = gymnasium.make('highway-v0', config=config, render_mode="human")
+    
+    # Set render mode based on --render flag
+    render_mode = "human" if args.render else None
+    env = gymnasium.make('highway-v0', config=config, render_mode=render_mode)
     # Create agent
     env = SpeedRewardWrapper(env, absolute_min_speed=0.0, cutoff_speed=20.0, max_speed=30.0, crash_reward=0)
 
@@ -495,20 +513,36 @@ def main():
         target_update_freq=1600,
         buffer_capacity=60000,
     )
-    # Train agent
-    #agent.train(num_episodes=00, max_steps_per_episode=1000, print_every=10)
     
-    # Plot progress
-    #agent.plot_training_progress("training_progress_dqn_kinematic.png")
+    # Training mode
+    if args.train:
+        print(f"Starting training mode with {args.episodes} episodes...")
+        # Train agent
+        agent.train(num_episodes=args.episodes, max_steps_per_episode=1000, print_every=10)
+        
+        # Plot progress
+        agent.plot_training_progress("training_progress_dqn_kinematic.png")
+        
+        # Save model
+        agent.save_model(args.model_path)
+        print(f"Model saved to {args.model_path}")
     
-    # Save model
-    #agent.save_model("highway_dqn_kinematic.pth")
+    # Evaluation mode
+    if args.evaluate:
+        # Use default 30 episodes for evaluation if not specified
+        num_eval_episodes = args.episodes if args.episodes != 1000 else 30
+        print(f"Starting evaluation mode with {num_eval_episodes} episodes...")
+        
+        # Load model
+        agent.load_model(args.model_path)
+        
+        # Evaluate agent
+        if args.render:
+            # Use render_episode if render is enabled
+            agent.render_episode(num_episodes=num_eval_episodes)
+        else:
+            rewards = agent.evaluate(num_episodes=num_eval_episodes)
     
-    # Evaluate agent
-    agent.load_model("highway_dqn_kinematic.pth")
-    #rewards = agent.evaluate(num_episodes=30)
-
-    steps = agent.render_episode(num_episodes=5)
     # Close environment
     agent.close()
 

@@ -10,6 +10,7 @@ import torch.optim as optim
 from collections import deque
 import os
 import pickle
+import argparse
 
 #disable audio to avoid weird warnings
 os.environ["SDL_AUDIODRIVER"] = "dummy"
@@ -644,6 +645,20 @@ class HighwayGrayscaleDQNAgent:
 
 def main():
     """Main training function"""
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(description='Highway DQN Grayscale Agent')
+    parser.add_argument('--train', action='store_true', help='Train the agent')
+    parser.add_argument('--evaluate', action='store_true', help='Evaluate the agent')
+    parser.add_argument('--episodes', type=int, default=2000, help='Number of episodes (default: 2000 for training, 30 for evaluation)')
+    parser.add_argument('--render', action='store_true', help='Render the environment during evaluation')
+    parser.add_argument('--model_path', type=str, default='highway_dqn_grayscale.pth', help='Path to save/load model (default: highway_dqn_grayscale.pth)')
+    
+    args = parser.parse_args()
+    
+    # If neither train nor evaluate is specified, default to training
+    if not args.train and not args.evaluate:
+        args.train = True
+    
     # Set random seeds for reproducibility
     #random.seed(42)
     #np.random.seed(42)
@@ -673,9 +688,13 @@ def main():
         #"offscreen_rendering": False,
         #"real_time_rendering": False,
     }
-    env = gymnasium.make('highway-v0', config=config, render_mode=None)
+    
+    # Set render mode based on --render flag
+    render_mode = "human" if args.render else None
+    env = gymnasium.make('highway-v0', config=config, render_mode=render_mode)
     #env = FrameStackResetWrapper(env)
     env = SpeedRewardWrapper(env, absolute_min_speed=0.0, cutoff_speed=20.0, max_speed=30.0, crash_reward=0.0)
+    
     # Create agent
     agent = HighwayGrayscaleDQNAgent(
         env=env,
@@ -689,26 +708,41 @@ def main():
         buffer_capacity=100000,
         stack_size=stack_size
     )
-    #agent.load_model("highway_dqn_grayscale.pth")
-    # Train agent
-    agent.train(num_episodes=2000, max_steps_per_episode=1000, print_every=10)
     
-    # Train offline using pre-generated replay buffer
-    #agent.load_replay_buffer("replay_buffer.pkl")
-    #agent.train_offline(num_steps=10000, print_every=1000)
+    # Training mode
+    if args.train:
+        print(f"Starting training mode with {args.episodes} episodes...")
+        # Train agent
+        agent.train(num_episodes=args.episodes, max_steps_per_episode=1000, print_every=10)
+        
+        # Train offline using pre-generated replay buffer
+        #agent.load_replay_buffer("replay_buffer.pkl")
+        #agent.train_offline(num_steps=10000, print_every=1000)
 
-    # Plot progress
-    agent.plot_training_progress("training_progress_dqn_grayscale.png")
+        # Plot progress
+        agent.plot_training_progress("training_progress_dqn_grayscale.png")
+        
+        # Save model
+        agent.save_model(args.model_path)
+        print(f"Model saved to {args.model_path}")
+        #agent.save_replay_buffer("replay_buffer.pkl")
     
-    # Save model
-    agent.save_model("highway_dqn_grayscale.pth")
-    #agent.save_replay_buffer("replay_buffer.pkl")
-
-    # Evaluate agent
-    agent.load_model("highway_dqn_grayscale.pth")
-    rewards = agent.evaluate(num_episodes=30)
+    # Evaluation mode
+    if args.evaluate:
+        # Use default 30 episodes for evaluation if not specified
+        num_eval_episodes = args.episodes if args.episodes != 2000 else 30
+        print(f"Starting evaluation mode with {num_eval_episodes} episodes...")
+        
+        # Load model
+        agent.load_model(args.model_path)
+        
+        # Evaluate agent
+        if args.render:
+            # Use render_episode if render is enabled
+            agent.render_episode(num_episodes=num_eval_episodes)
+        else:
+            rewards = agent.evaluate(num_episodes=num_eval_episodes)
     
-    #steps = agent.render_episode(num_episodes=5)
     # Close environment
     agent.close()
 
